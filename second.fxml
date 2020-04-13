@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line endX="200.0" endY="88.5" startX="21.0" startY="88.5" strokeWidth="7.0" />
+      <Line endX="203.5" endY="297.0" startX="203.5" startY="88.5" strokeWidth="7.0" />
+      <Line endX="295.0" endY="300.5" startX="200.0" startY="300.5" strokeWidth="7.0" />
+      <Line endX="196.5" endY="300.5" startX="103.5" startY="300.5" strokeWidth="7.0" />
+      <Line endX="397.0" endY="453.5" startX="298.5" startY="453.5" strokeWidth="7.0" />
+      <Line endX="298.5" endY="450.0" startX="298.5" startY="300.5" strokeWidth="7.0" />
+      <Line endX="100.0" endY="300.0" startX="100.0" startY="92.0" strokeWidth="7.0" />
+      <Line endX="21.0" endY="16.0" startX="21.0" startY="85.0" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="21.0" layoutY="14.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="400.5" endY="172.0" startX="400.5" startY="453.5" strokeWidth="7.0" />
+      <Line endX="278.0" endY="168.5" startX="400.5" startY="168.5" strokeWidth="7.0" />
+      <Line endX="274.5" endY="237.0" startX="274.5" startY="168.5" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="152.0" layoutY="87.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="100.0" layoutY="250.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="299.0" layoutY="418.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="401.0" layoutY="202.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="397.0" endY="240.5" startX="274.5" startY="240.5" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="275.0" layoutY="193.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="274.5" endY="87.0" startX="274.5" startY="168.5" strokeWidth="7.0" />
+      <Line endX="725.0" endY="83.5" startX="274.5" startY="83.5" strokeWidth="7.0" />
+      <Line endX="728.5" endY="535.0" startX="728.5" startY="83.5" strokeWidth="7.0" />
+      <Line endX="55.0" endY="538.5" startX="728.5" startY="538.5" stroke="#fc0000" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="611.0" layoutY="84.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="636.0" layoutY="539.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="111.0" layoutY="539.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="546.0" endY="168.5" startX="725.0" startY="168.5" strokeWidth="7.0" />
+      <Line endX="542.5" endY="471.0" startX="542.5" startY="168.5" strokeWidth="7.0" />
+      <Line endX="638.0" endY="474.5" startX="542.5" startY="474.5" strokeWidth="7.0" />
+      <Line endX="641.5" endY="243.0" startX="641.5" startY="474.5" strokeWidth="7.0" />
+      <Line endX="725.0" endY="242.0" startX="642.0" startY="242.0" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="543.0" layoutY="384.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="473.0" endY="535.0" startX="473.0" startY="87.0" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="473.0" layoutY="250.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="155.5" endY="457.0" startX="155.5" startY="538.5" strokeWidth="7.0" />
+      <Line endX="295.0" endY="453.5" startX="156.0" startY="453.5" strokeWidth="7.0" />
+      <Line endX="51.0" endY="343.5" startX="51.5" startY="538.5" stroke="#fc0000" strokeWidth="7.0" />
+      <Line endX="254.0" endY="414.5" startX="55.0" startY="414.5" stroke="#fc0000" strokeWidth="7.0" />
+      <Line endX="254.0" endY="341.0" startX="254.0" startY="411.0" stroke="#fc0000" strokeWidth="7.0" />
+      <Line endX="205.0" endY="342.0" startX="205.0" startY="411.0" strokeWidth="7.0" />
+      <Line endX="51.0" endY="341.0" startX="250.5" startY="341.0" stroke="#fc0000" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="52.0" layoutY="375.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="205.0" layoutY="377.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="254.0" layoutY="375.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="216.0" layoutY="454.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="413.0" endY="51.0" startX="413.0" startY="80.0" strokeWidth="7.0" />
+      <Line endX="610.0" endY="47.5" startX="262.0" startY="47.5" strokeWidth="7.0" />
+      <Line endX="258.5" endY="8.0" startX="607.0" startY="8.0" strokeWidth="7.0" />
+      <Line endX="258.5" endY="47.50000762939453" startX="258.5" startY="11.5" strokeWidth="7.0" />
+      <Line endX="610.5" endY="7.999998092651367" startX="610.5" startY="44.0" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="464.0" layoutY="44.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="542.5" endY="319.75" startX="404.0" startY="319.75" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="436.0" layoutY="320.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="404.0" endY="485.5" startX="404.0" startY="535.0" strokeWidth="7.0" />
+      <Line endX="272.0" endY="485.5" startX="400.5" startY="485.5" strokeWidth="7.0" />
+      <Line endX="268.5" endY="535.0" startX="268.5" startY="485.5" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="336.0" layoutY="486.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="369.0" layoutY="84.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="401.0" layoutY="394.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="543.0" layoutY="211.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="599.0" layoutY="475.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="642.0" layoutY="304.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="445.0" layoutY="539.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="275.0" layoutY="301.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="204.0" layoutY="196.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="729.0" layoutY="297.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fill="#20ff1f" layoutX="360.0" layoutY="8.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label layoutX="76.0" layoutY="67.0" text="St. Forever" />
+      <Label layoutX="92.0" layoutY="179.0" rotate="90.0" text="St. First" />
+      <Label layoutX="188.0" layoutY="142.0" prefHeight="18.0" prefWidth="56.0" rotate="90.0" text="St. Second" />
+      <Label layoutX="287.0" layoutY="335.0" rotate="90.0" text="St. Next" />
+      <Label layoutX="360.0" layoutY="350.0" rotate="-90.0" text="St. Favorite" />
+      <Label layoutX="306.0" layoutY="220.0" text="St. If1" />
+      <Label layoutX="324.0" layoutY="143.0" text="St. If2" />
+      <Label layoutX="507.0" layoutY="57.0" prefHeight="18.0" prefWidth="64.0" text="St. First Big" />
+      <Label layoutX="479.0" layoutY="21.0" prefHeight="18.0" prefWidth="76.0" text="St. First Circle" />
+      <Label layoutX="700.0" layoutY="335.0" prefHeight="18.0" prefWidth="83.0" rotate="90.0" text="St. Second Big" />
+      <Label layoutX="510.0" layoutY="256.0" prefHeight="18.0" prefWidth="90.0" rotate="90.0" text="St. Second Circle" />
+      <Label layoutX="482.0" layoutY="301.0" text="St. Bridge" />
+      <Label layoutX="458.0" layoutY="152.0" rotate="90.0" text="St. In Centre" />
+      <Label layoutX="414.0" layoutY="548.0" prefHeight="18.0" prefWidth="83.0" text="St. Third Big" />
+      <Label layoutX="351.0" layoutY="466.0" prefHeight="18.0" prefWidth="83.0" text="St. Apendix" />
+      <Label layoutX="20.0" layoutY="288.0" prefHeight="18.0" prefWidth="83.0" rotate="90.0" text="St. Last Big" />
+      <Label layoutX="161.0" layoutY="458.0" text="St. Back" />
+      <Label layoutX="123.0" layoutY="395.0" text="St. In" />
+      <Label layoutX="148.0" layoutY="321.0" text="St. Out" />
+      <Label layoutX="124.0" layoutY="360.0" text="St. Alternative" />
+      <Label layoutX="250.0" layoutY="321.0" text="St. Small" />
+      <Line endX="728.5" endY="582.0" startX="728.5" startY="538.5" stroke="#fc0000" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="729.0" layoutY="581.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="51.25" endY="89.0" startX="51.25" startY="338.5502624511719" strokeWidth="7.0" />
+      <Circle fill="#20ff1f" layoutX="52.0" layoutY="165.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="299.0" endY="341.0" startX="254.0" startY="341.0" strokeWidth="7.0" />
+   </children>
+</AnchorPane>
