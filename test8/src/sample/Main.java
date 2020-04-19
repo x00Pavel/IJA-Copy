@@ -1,27 +1,23 @@
 package sample;
 
-import javafx.animation.TranslateTransition;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
-public class Main extends Application {
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.show();
-    }
+public class Main{
 
+    public static void main(String[] args) throws IOException, InterruptedException {
+//        BackEnd myBackEnd = new BackEnd();
+//        myBackEnd.Back();
+//        new FrontEnd().run();
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+        executorService.submit(new FrontEnd());
 
-    public static void main(String[] args) {
-        launch(args);
+        new BackEnd().Back();
+
+        System.out.println("main ended!");
     }
 }

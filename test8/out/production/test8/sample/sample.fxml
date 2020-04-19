@@ -97,17 +97,19 @@
       <Line endX="51.25" endY="89.0" layoutX="-3.0" layoutY="9.0" startX="51.25" startY="338.5502624511719" strokeWidth="7.0" />
       <Circle fill="#20ff1f" layoutX="49.0" layoutY="174.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Line endX="299.0" endY="341.0" layoutX="-3.0" layoutY="9.0" startX="254.0" startY="341.0" strokeWidth="7.0" />
-      <Line endX="728.5" endY="80.0" layoutX="-3.0" layoutY="9.0" startX="728.5" startY="14.0" strokeWidth="7.0" />
-      <Circle fill="#20ff1f" layoutX="726.0" layoutY="23.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="728.5" endY="80.0" layoutX="-3.0" layoutY="9.0" startX="729.0" startY="14.0" strokeWidth="7.0" />
+      <Circle centerX="726.0" centerY="132.0" fill="#20ff1f" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Line endX="56.449737548828125" endY="538.25" layoutX="-3.0" layoutY="9.0" startX="150.55023193359375" startY="538.25" strokeWidth="7.0" />
       <Line endX="400.5" endY="172.0" layoutX="-3.0" layoutY="9.0" startX="400.5" startY="319.75" strokeWidth="7.0" />
       <Line endX="542.5" endY="319.75" layoutX="-3.0" layoutY="9.0" startX="480.0" startY="319.75" strokeWidth="7.0" />
-      <Line endX="463.0" endY="523.0502319335938" layoutX="7.0" layoutY="19.0" startX="463.0" startY="316.75" strokeWidth="7.0" />
+      <Line endX="473.0" endY="533.0502319335938" layoutX="-3.0" layoutY="9.0" startX="473.0" startY="326.75" strokeWidth="7.0" />
       <Line endX="469.5" endY="83.5" layoutX="-3.0" layoutY="9.0" startX="274.5" startY="83.5" strokeWidth="7.0" />
       <Circle fill="#20ff1f" layoutX="100.0" layoutY="546.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fill="#20ff1f" layoutX="398.0" layoutY="212.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Circle fill="#20ff1f" layoutX="357.0" layoutY="93.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle id="bus1" fx:id="busOne" fill="#ffbb21" layoutX="726.0" layoutY="75.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle id="bus1" fx:id="busOneOne" centerX="726.0" centerY="57.0" fill="#ffbb21" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Button id="busMove" fx:id="busMoveDown" layoutX="642.0" layoutY="32.0" mnemonicParsing="false" text="Button" />
+      <Circle centerX="726.0" centerY="132.0" fill="#20ff1f" layoutY="-110.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button fx:id="calculate" layoutX="75.0" layoutY="32.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>
