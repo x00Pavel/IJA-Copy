@@ -18,6 +18,11 @@ public class BackEnd {
 
 //        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
+        Coordinate c01 = Coordinate.create(20, 10);
+        Coordinate c02 = Coordinate.create(90, 20);
+        Coordinate c03 = Coordinate.create(90, 90);
+        Street s01 = Street.defaultStreet("first", c01, c02, c03);
+
         Coordinate c1 = Coordinate.create(728, 14);
         Coordinate c2 = Coordinate.create(728, 538);
         Coordinate c3 = Coordinate.create(473, 538);
