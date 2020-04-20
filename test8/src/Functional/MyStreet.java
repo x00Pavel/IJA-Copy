@@ -1,107 +1,58 @@
 package Functional;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
+import Functional.Street;
+
 import java.util.List;
 
-public class MyStreet implements Street {
+/**
+ * Reprezentuje jednu ulici v mapě. Ulice má svůj identifikátor (název) a je definována souřadnicemi. Pro 1. úkol
+ * předpokládejte pouze souřadnice začátku a konce ulice.
+ * Na ulici se mohou nacházet zastávky.
+ * @author koci
+ */
+public interface MyStreet {
+    /**
+     * @return Vrací souřadnice konce ulice.
+     */
+    public Coordinate end();
 
-	private String myStreetName;
-	private List<Coordinate> coordinates = new ArrayList<>();
-	private List<Stop> stops = new ArrayList<>();
-	private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
-
-	public MyStreet(String name, Coordinate[] arrayOfCoordinates) {
-		this.myStreetName = name;
-		for (int i = 0; i < arrayOfCoordinates.length;i++) {
-			this.coordinates.add(arrayOfCoordinates[i]);
-		}
-	}
-
-	@Override
-	public String getId() {
-		return this.myStreetName;
-	}
-
-	@Override
-	public List<Coordinate> getCoordinates() {
-		return this.coordinates;
-	}
-
-	@Override
-	public List<Stop> getStops() {
-		return this.stops;
-	}
-
-	@Override
-	public boolean addStop(Stop stop) {
-		Coordinate ofStop = stop.getCoordinate(); // a
-		for (int i = 0; i < this.coordinates.size()-1; i++) {
-			Coordinate first = this.coordinates.get(i); // b
-			Coordinate second = this.coordinates.get(i+1); // c
-			if ((ofStop.getX()-first.getX())*(ofStop.getY()+first.getY()) + (first.getX()-second.getX())*(first.getY()+second.getY()) + (second.getX()-ofStop.getX())*(second.getY()+ofStop.getY()) == 0) {
-				if ((first.getX() <= ofStop.getX() && ofStop.getX() <= second.getX() && first.getY() <= ofStop.getY() && ofStop.getY() <= second.getY())) {
-					this.stops.add(stop);
-
-					AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(stop,i);
-					stopLocation.add(e);
-
-					stop.setStreet(this);
-					return true;
-				} else if ((first.getX() >= ofStop.getX() && ofStop.getX() >= second.getX() && first.getY() >= ofStop.getY() && ofStop.getY() >= second.getY())) {
-					this.stops.add(stop);
-
-					AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(stop,i);
-					stopLocation.add(e);
-
-					stop.setStreet(this);
-					return true;
-				} else if ((first.getX() >= ofStop.getX() && ofStop.getX() >= second.getX() && first.getY() <= ofStop.getY() && ofStop.getY() <= second.getY())) {
-					this.stops.add(stop);
-
-					AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(stop,i);
-					stopLocation.add(e);
-
-					stop.setStreet(this);
-					return true;
-				} else if ((first.getX() <= ofStop.getX() && ofStop.getX() <= second.getX() && first.getY() >= ofStop.getY() && ofStop.getY() >= second.getY())) {
-					this.stops.add(stop);
-
-					AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(stop,i);
-					stopLocation.add(e);
-
-					stop.setStreet(this);
-					return true;
-				}
-			} else {
-				continue;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public Object begin() {
-		return this.coordinates.get(0);
-	}
-
-	@Override
-	public Object end() {
-		return this.coordinates.get(this.coordinates.size()-1);
-	}
-
-	@Override
-	public boolean follows(Street s) {
-		if (this.begin().equals(s.begin()) || this.end().equals(s.end()) || this.begin().equals(s.end()) || this.end().equals(s.begin())) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-
-	@Override
-	public List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> getStopLocation(){
-		return this.stopLocation;
-	}
-
+    /**
+     * @return Vrací souřadnice začátku ulice.
+     */
+    public Coordinate begin();
+    
+    /**
+     * Vytvoří ulici (instance implicitní implementace).
+     * 
+     * @param id
+     * @param coordinates list of coordinates that represents
+     */
+    public static Street defaultStreet(String id, Coordinate... coordinates){
+        return Street.defaultStreet(id, coordinates);
+    }
+    public boolean follows(Street s);
+    /**
+     * Vrátí identifikátor ulice.
+     * @return Identifikátor ulice.
+     */
+    public String getId();
+    
+    /**
+     * Vrátí seznam souřadnic definujících ulici. První v seznamu je vždy počátek a poslední v seznamu konec ulice.
+     * @return Seznam souřadnic ulice.
+     */
+    
+    public List<Coordinate> getCoordinates();
+    
+    /**
+     * Vrátí seznam zastávek na ulici.
+     * @return Seznam zastávek na ulici. Pokud ulize nemá žádnou zastávku, je seznam prázdný.
+     */
+    public List<Stop> getStops();
+    
+    /**
+     * Přidá do seznamu zastávek novou zastávku.
+     * @param stop Nově přidávaná zastávka.
+     */
+    public boolean addStop(Stop stop);
 }

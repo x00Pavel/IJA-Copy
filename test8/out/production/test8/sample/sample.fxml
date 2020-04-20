@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<?import javafx.scene.layout.Pane?>
+<Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Line endX="200.0" endY="88.5" layoutX="-3.0" layoutY="9.0" startX="21.0" startY="88.5" strokeWidth="7.0" />
       <Line endX="203.5" endY="297.0" layoutX="-3.0" layoutY="9.0" startX="203.5" startY="88.5" strokeWidth="7.0" />
@@ -112,4 +112,4 @@
       <Circle centerX="726.0" centerY="132.0" fill="#20ff1f" layoutY="-110.0" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
       <Button fx:id="calculate" layoutX="75.0" layoutY="32.0" mnemonicParsing="false" text="Button" />
    </children>
-</AnchorPane>
+</Pane>

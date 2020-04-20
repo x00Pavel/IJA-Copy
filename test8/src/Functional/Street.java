@@ -1,65 +1,155 @@
-/*
- * Zdrojové kódy josu součástí zadání 1. úkolu pro předmětu IJA v ak. roce 2019/2020.
- * (C) Radek Kočí
- */
 package Functional;
 
-import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-/**
- * Reprezentuje jednu ulici v mapě. Ulice má svůj identifikátor (název) a je definována souřadnicemi. Pro 1. úkol
- * předpokládejte pouze souřadnice začátku a konce ulice.
- * Na ulici se mohou nacházet zastávky.
- * @author koci
- */
-public interface Street {
-    /**
-     * Vrátí identifikátor ulice.
-     * @return Identifikátor ulice.
-     */
-    public String getId();
-    
-    /**
-     * Vrátí seznam souřadnic definujících ulici. První v seznamu je vždy počátek a poslední v seznamu konec ulice.
-     * @return Seznam souřadnic ulice.
-     */
-    
-    public List<Coordinate> getCoordinates();
-    
-    /**
-     * Vrátí seznam zastávek na ulici.
-     * @return Seznam zastávek na ulici. Pokud ulize nemá žádnou zastávku, je seznam prázdný.
-     */
-    public List<Stop> getStops();
-    
-    /**
-     * Přidá do seznamu zastávek novou zastávku.
-     * @param stop Nově přidávaná zastávka.
-     */
-    public boolean addStop(Stop stop);
-    
-    public static Street defaultStreet(String string, Coordinate ... coordinates) {
-		Street street = new MyStreet(string, coordinates);
-		
-//		for (int i = 0; i < coordinates.length - 2; i++) {
-//			Coordinate start = coordinates[i];
-//			Coordinate end = coordinates[i+2];
-//			Coordinate midl = coordinates[i+1];
-//			Coordinate vektor1 = Coordinate.create(midl.getX()-start.getX(), midl.getY()-start.getY());
-//			Coordinate vektor2 = Coordinate.create(end.getX()-midl.getX(), end.getY()-midl.getY());
-//			if (vektor1.getX()*vektor2.getX()+vektor1.getY()*vektor2.getY() != 0) {
-//				return null;
-//			}
-//		}
-		return street;
-	}
+import Functional.MyStreet;
 
-	public Object begin();
+public class Street implements MyStreet {
+    private String street_name;
+    private List<Coordinate> cords;
+    private List<Stop> street_stops = null;
 
-	public Object end();
+    public Street(String name) {
+        this.street_name = name;
+        this.cords = new ArrayList<>();
+        this.street_stops = new ArrayList<>();
+    }
 
-	public boolean follows(Street s);
+    public Coordinate end() {
+        List<Coordinate> lst = this.getCoordinates();
+        return this.getCoordinates().get(lst.size() - 1);
+    }
 
-	public List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> getStopLocation();
+    public Coordinate begin() {
+        List<Coordinate> lst = this.getCoordinates();
+        return lst.get(0);
+    }
+
+    public boolean follows(Street s) {
+        if (this.begin().equals(s.begin()) || this.begin().equals(s.end()) || this.end().equals(s.begin())
+                || this.end().equals(s.end())) {
+            return true;
+        }
+        return false;
+    }
+
+    private void addCoord(Coordinate c) {
+        if (!this.cords.contains(c)) {
+            this.cords.add(c);
+        }
+    }
+
+    private boolean is_right_angle(int... num) {
+        boolean result = false;
+        if (num[0] > num[1] && num[0] > num[2]) {
+            result = num[0] == num[1] + num[2];
+
+        }
+        if (num[1] > num[0] && num[1] > num[2]) {
+            result = num[1] == num[0] + num[2];
+        }
+        if (num[2] > num[0] && num[2] > num[1]) {
+            result = num[2] == num[0] + num[1];
+        }
+        return result;
+    }
+
+    public static Street defaultStreet(String id, Coordinate... coordinates) {
+        Street street = new Street(id);
+        int length = coordinates.length;
+        if (length < 2) {
+            System.out.println("There is not enough coordinates to create street");
+            return null;
+        } else if (length == 2) {
+            street.addCoord(coordinates[0]);
+            street.addCoord(coordinates[1]);
+        } else {
+            for (int i = 0; i < length; i++) {
+                if (i + 2 >= length) {
+                    break;
+                }
+                Coordinate a = coordinates[i];
+                Coordinate b = coordinates[i + 1];
+                Coordinate c = coordinates[i + 2];
+
+                int a_sqrt = (int) (Math.pow(a.diffX(b), 2) + Math.pow(a.diffY(b), 2));
+                int b_sqrt = (int) (Math.pow(b.diffX(c), 2) + Math.pow(b.diffY(c), 2));
+                int c_sqrt = (int) (Math.pow(c.diffX(a), 2) + Math.pow(c.diffY(a), 2));
+
+                if (street.is_right_angle(a_sqrt, b_sqrt, c_sqrt)) {
+                    // Duplicity of elements is solved inside addCoord
+                    street.addCoord(a);
+                    street.addCoord(b);
+                    street.addCoord(c);
+                } else {
+                    return null;
+                }
+
+            }
+        }
+        return street;
+    }
+
+    public String getId() {
+        return this.street_name;
+    }
+
+    public List<Stop> getStops() {
+        return this.street_stops;
+    }
+
+    public static Boolean onLine(Coordinate first, Coordinate second, Coordinate coord){
+        int first_coord_x = (int)(Math.pow(first.diffX(coord), 2));
+        int first_coord_y = (int)(Math.pow(first.diffY(coord), 2));
+        int first_coord_z = first_coord_x + first_coord_y;
+
+        int second_coord_x = (int)(Math.pow(second.diffX(coord), 2));
+        int second_coord_y = (int)(Math.pow(second.diffY(coord), 2));
+        int second_coord_z = second_coord_x + second_coord_y;
+
+        int second_first_x = (int)(Math.pow(second.diffX(first), 2));
+        int second_first_y = (int)(Math.pow(second.diffY(first), 2));
+        int second_first_z = second_first_x + second_first_y;
+        if ((int)Math.sqrt(second_coord_z) + (int)Math.sqrt(first_coord_z) == (int)Math.sqrt(second_first_z)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addStop(Stop stop) {
+        Coordinate coord = stop.getCoordinate();
+        List<Coordinate> lst = this.getCoordinates();
+        for (int i = 0; i < lst.size(); i++) {
+            if (Street.onLine(lst.get(i), lst.get(i + 1), coord)){
+                stop.setStreet(this);
+                this.street_stops.add(stop);
+                return true;
+            }
+            if (i + 2 == lst.size()){
+                break;
+            }
+
+        }
+        return false;
+    }
+
+    public String toString() {
+        String str = "{\n\t" + this.street_name + " - (" + this.cords.toString() + " " + this.cords.toString() + ")\n";
+        if (this.street_stops != null) {
+            String tmp = "\tStops: " + this.street_stops.toString() + "\n}\n";
+            return str + tmp;
+        } else {
+            assert this.street_stops != null;
+            String tmp = "\tStops: " + Arrays.toString(this.street_stops.toArray()) + "\n}\n";
+            return str + tmp;
+        }
+
+    }
+
+    public List<Coordinate> getCoordinates() {
+        return this.cords;
+    }
+
 }
