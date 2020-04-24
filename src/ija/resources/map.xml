@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Map>
+    <Street name="First street">
+        <Stops>
+            <Stop name="First stop">
+                <Coordinate x="40" y="20"/>
+            </Stop>
+            <Stop name="Second stop">
+                <Coordinate x="200" y="40"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="20" y="20"/>
+            <Coordinate x="200" y="20"/>
+            <Coordinate x="200" y="90"/>
+        </Coordinates>
+    </Street>
+    <Street name="New street">
+        <Stops>
+            <Stop name="New Stop">
+                <Coordinate x="170" y="110"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="140" y="130"/>
+            <Coordinate x="200" y="90"/>
+        </Coordinates>
+    </Street>
+    <Street name="Second street">
+        <Stops>
+            <Stop name="Stop 3">
+                <Coordinate x="50" y="150"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="50" y="200"/>
+            <Coordinate x="50" y="130"/>
+            <Coordinate x="140" y="130"/>
+        </Coordinates>
+    </Street>
+</Map>

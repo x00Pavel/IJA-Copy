@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.sample.MainController">
+   <center>
+      <ScrollPane pannable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <Group>
+               <children>
+                  <Pane fx:id="content" onScroll="#onScroll" prefHeight="1000.0" prefWidth="1000.0">
+                  </Pane>
+               </children>
+            </Group>
+         </content>
+      </ScrollPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="579.0" prefWidth="193.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="plus" layoutX="50.0" layoutY="553.0" mnemonicParsing="false" onAction="#makeBigger" text="+" />
+            <Button fx:id="minus" layoutX="14.0" layoutY="553.0" mnemonicParsing="false" onAction="#makeSmaller" prefHeight="26.0" prefWidth="29.0" text="-" />
+         </children></AnchorPane>
+   </right>
+</BorderPane>
