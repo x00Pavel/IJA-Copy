@@ -204,6 +204,11 @@ public class Street implements Drawable {
             new Thread( ()->{
                 paintElement(color, element);
             }).start();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
