@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Transports>
-    <Line name="109">
+    <Line name="109" color="#800080">
         <Streets>
-            <Street name="First street"/>
-            <Street name="New street"/>
-            <Street name="Second street"/>
+            <Street name="Street 1"/>
+            <Street name="Street 2"/>
+            <Street name="Street 3"/>
+            <Street name="Street 4"/>
         </Streets>
+        <Stops>
+            <Stop name="Stop 1"/>
+            <Stop name="Stop 2"/>
+            <Stop name="Stop 3"/>
+            <Stop name="Stop 5"/>
+            <Stop name="Stop 6"/>
+        </Stops>
+    </Line>
+    <Line name="999" color="#FF0000">
+        <Streets>
+            <Street name="Street 5"/>
+            <Street name="Street 2"/>
+            <Street name="Street 6"/>
+        </Streets>
+        <Stops>
+            <Stop name="Stop 7"/>
+            <Stop name="Stop 3"/>
+            <Stop name="Stop 8"/>
+            <Stop name="Stop 9"/>
+            <Stop name="Stop 10"/>
+        </Stops>
+    </Line>
+    <Line name="777" color="#00FF00">
+        <Streets>
+            <Street name="Street 7"/>
+            <Street name="Street 3"/>
+            <Street name="Street 8"/>
+        </Streets>
+        <Stops>
+            <Stop name="Stop 11"/>
+            <Stop name="Stop 4"/>
+            <Stop name="Stop 12"/>
+            <Stop name="Stop 13"/>
+        </Stops>
     </Line>
 </Transports>

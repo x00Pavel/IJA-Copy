@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Circle;
 
-import static ija.sample.BackEnd.firstBus;
+//import static ija.sample.BackEnd.firstBus;
 
 public class Controller {
 
@@ -30,8 +30,8 @@ public class Controller {
 
     @FXML
     void initialize() {
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        executorService.submit(new Updater(busOneOne));
+//        ExecutorService executorService = Executors.newFixedThreadPool(1);
+//        executorService.submit(new Updater(busOneOne));
 //        busMoveDown.setOnAction(event -> {
 ////            firstBus.Move(busOne);
 //            double tempBusOneX = busOneOne.getCenterX();

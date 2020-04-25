@@ -25,7 +25,7 @@ public class MyLine implements Line{
 	public boolean addStreet(Street street) {
 		if (this.streets.isEmpty()) {
 			if (street.getStops().isEmpty()) {
-				return false;
+				return false; // ----------------------------------------------------Think about it
 			} else {
 				this.streets.add(street);
 				if (street.getStops().isEmpty()) {
