@@ -53,14 +53,8 @@ public class Main extends Application {
             e.printStackTrace();
         }
         list_bus = controller.buildLines(fileTransport);
-        for (Bus temp_bus:list_bus) {
-            items.add(temp_bus);
-        }
+        items.addAll(list_bus);
 
-        List<Thread> th_list = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
-            th_list.add(new Thread(new BackEnd(list_bus.get(0)), "b1"));
-        }
         Thread b1 = new Thread(new BackEnd(list_bus.get(0)), "b1");
         Thread b2 = new Thread(new BackEnd(list_bus.get(1)), "b2");
         Thread b3 = new Thread(new BackEnd(list_bus.get(2)), "b3");

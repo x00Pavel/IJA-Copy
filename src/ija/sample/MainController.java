@@ -59,13 +59,13 @@ public class MainController{
     @FXML
     public List<Drawable> buildMap(File file) throws IOException {
         // Make grid for testing
-//        for (int i = 0; i < 1000; i += 10){
-//            Line line = new Line(i, 0, i, 1000);
-//            line.setStroke(Color.LIGHTGRAY);
-//            Line hor = new Line(0, i, 1000, i);
-//            hor.setStroke(Color.LIGHTGRAY);
-//            content.getChildren().addAll(line, hor);
-//        }
+        for (int i = 0; i < 1000; i += 10){
+            Line line = new Line(i, 0, i, 1000);
+            line.setStroke(Color.LIGHTGRAY);
+            Line hor = new Line(0, i, 1000, i);
+            hor.setStroke(Color.LIGHTGRAY);
+            content.getChildren().addAll(line, hor);
+        }
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -125,11 +125,11 @@ public class MainController{
     @FXML
     private void onScroll(ScrollEvent event){
         // If this would not be set, then zooming would be propagate to parent elements
-//        event.consume();
-//        double zoom = event.getDeltaY() > 0 ? 1.1 : 0.9;
-//        content.setScaleX(zoom * content.getScaleX());
-//        content.setScaleY(zoom * content.getScaleY());
-//        content.layout();
+        event.consume();
+        double zoom = event.getDeltaY() > 0 ? 1.1 : 0.9;
+        content.setScaleX(zoom * content.getScaleX());
+        content.setScaleY(zoom * content.getScaleY());
+        content.layout();
     }
 
     @FXML

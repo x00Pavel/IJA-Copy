@@ -114,59 +114,78 @@ public class Street implements Drawable {
             }
         }
 
-        // Setting proprietes for interacting with lines
-//        Polyline line = new Polyline();
-//        ContextMenu contextMenu = new ContextMenu();
-//        CheckMenuItem block = new CheckMenuItem("Bloked");
-//        block.setSelected(false);
-//        block.setOnAction(event -> {
-//            street.blocked = block.isSelected();
-//            if (street.blocked){
-//                line.setStroke(Color.RED);
-//            }
-//            else{
-//                line.setStroke(Color.BLACK);
-//            }
-//            System.out.println("Street blocked? " + street.blocked);
-//        }
-//        );
-//
-////         Add MenuItem to ContextMenu
-//        contextMenu.getItems().addAll(block);
-//        for (Double point: points){
-//            line.getPoints().add(point);
-//        }
-////        pop.getContent().add(text);
-//        line.setStrokeWidth(3);
-//
-//        line.setOnContextMenuRequested(event -> {
-//            contextMenu.show(line, event.getScreenX(), event.getScreenY());
-//            System.out.println("Line clicked");
-//        });
-//        final Paint[] prev_color = new Paint[1];
-//        line.setOnMouseEntered(event -> {
-//            prev_color[0] = line.getStroke();
-//            line.setStroke(Color.BLUE);
-//        });
-//        line.setOnMouseExited(event -> line.setStroke(prev_color[0]));
-//
-
+//         Setting proprietes for interacting with lines
         Polyline line = new Polyline();
+        ContextMenu contextMenu = new ContextMenu();
+        CheckMenuItem block = new CheckMenuItem("Bloked");
+        block.setSelected(false);
+        block.setOnAction(event -> {
+            street.blocked = block.isSelected();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (street.blocked){
+                        line.setStroke(Color.RED);
+                    }
+                    else{
+                        line.setStroke(Color.BLACK);
+                    }
+                }
+            });
+            System.out.println("Street blocked? " + street.blocked);
+        }
+        );
+
+//         Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(block);
         for (Double point: points){
             line.getPoints().add(point);
         }
+//        pop.getContent().add(text);
+        line.setStrokeWidth(3);
 
-        new Thread( ()->{
-            createLine(line);
-        }).start();
+        line.setOnContextMenuRequested(event -> {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    contextMenu.show(line, event.getScreenX(), event.getScreenY());
+                }
+            });
+            System.out.println("Line clicked");
+        });
+        final Paint[] prev_color = new Paint[1];
+        line.setOnMouseEntered(event -> {
+            prev_color[0] = line.getStroke();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    line.setStroke(Color.BLUE);
+                }
+            });
+        });
+        line.setOnMouseExited(event -> Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                line.setStroke(prev_color[0]);
+            }
+        }));
 
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+//        Polyline line = new Polyline();
+//        for (Double point: points){
+//            line.getPoints().add(point);
+//        }
+//
+//        new Thread( ()->{
+//            createLine(line);
+//        }).start();
+//
+//        try {
+//            Thread.sleep(300);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         street.elements.add(line);
-//        street.elements.add(text);
 
 
         if (stops != null){
@@ -200,16 +219,21 @@ public class Street implements Drawable {
 
     //paint street after bus click
     public void paintStreet(String color){ //paint street after click on bus
-        for (Shape element : this.elements) { //go through all elements of street and paint them
-            new Thread( ()->{
-                paintElement(color, element);
-            }).start();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        List<Shape> tmp = this.elements;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Shape element : tmp) { //go through all elements of street and paint them
+                        paintElement(color, element);
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        });
+
     }
 
     public void paintElement(String color, Shape element){
