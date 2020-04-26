@@ -1,15 +1,9 @@
 package ija.functional;
 
-import ija.sample.BackEnd;
-import ija.sample.operationsWithStreet;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -21,8 +15,6 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Street implements Drawable {
     private final String street_name;
@@ -31,6 +23,7 @@ public class Street implements Drawable {
     private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
     private final List<Shape> elements;
     private Boolean blocked;
+    private List<String> colorList = new ArrayList<>();
 
     public Street(String name) {
         this.street_name = name;
@@ -38,6 +31,7 @@ public class Street implements Drawable {
         this.street_stops = new ArrayList<>();
         this.elements = new ArrayList<>();
         this.blocked = false;
+        this.colorList.add("#000000");
     }
 
     public Coordinate end() {
@@ -208,23 +202,32 @@ public class Street implements Drawable {
         return street;
     }
 
-    public static void createLine(Polyline line){
-        line.setStroke(Color.BLACK);
-        line.setStrokeWidth(3);
-    }
+//    public static void createLine(Polyline line){
+//        line.setStroke(Color.BLACK);
+//        line.setStrokeWidth(3);
+//    }
 
     public String getId() {
         return this.street_name;
     }
 
     //paint street after bus click
-    public void paintStreet(String color){ //paint street after click on bus
+    public void paintStreet(String color, String operation){ //paint street after click on bus
         List<Shape> tmp = this.elements;
+
+        if(operation.equals("back")){
+            this.colorList.remove(color);
+        }else{
+            this.colorList.add(color);
+        }
+
+        String finalColor = this.colorList.get(this.colorList.size()-1);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 for (Shape element : tmp) { //go through all elements of street and paint them
-                        paintElement(color, element);
+                        paintElement(finalColor, element);
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -233,7 +236,6 @@ public class Street implements Drawable {
                 }
             }
         });
-
     }
 
     public void paintElement(String color, Shape element){

@@ -43,9 +43,6 @@ public class MainController{
 
     private List<Bus> allBuses = new ArrayList<>();
 
-//    private Circle bus_0;
-//    private Circle bus_1;
-//    private Circle bus_2;
 
     @FXML
     private Pane content;
@@ -230,70 +227,4 @@ public class MainController{
 
         return this.allBuses;
     }
-
-//    private Service<Void> backgroundThread_0;
-//    private Service<Void> backgroundThread_1;
-//    private Service<Void> backgroundThread_2;
-
-//    public void runUpdater(){
-//
-//        bus_0 = (Circle)this.allBuses.get(0).getGUI().get(0);
-//        bus_1 = (Circle)this.allBuses.get(1).getGUI().get(0);
-////        bus_2 = (Circle)this.allBuses.get(2).getGUI().get(0);
-//
-//        Bus bus_0_c = this.allBuses.get(0);
-//        Bus bus_1_c = this.allBuses.get(1);
-////        Bus bus_2_c = this.allBuses.get(2);
-//
-//        backgroundThread_0 = new Service<Void>() {
-//
-//            @Override
-//            protected Task<Void> createTask() {
-//                return new Task<Void>() {
-//                    @Override
-//                    protected Void call() throws Exception {
-//
-//                        while(true) {
-//                            bus_0.setCenterX(bus_0_c.getBusX());
-//                            bus_0.setCenterY(bus_0_c.getBusY());
-//
-//                            bus_1.setCenterX(bus_1_c.getBusX());
-//                            bus_1.setCenterY(bus_1_c.getBusY());
-//                            try {
-//                                Thread.sleep(100);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                };
-//            }
-//        };
-//
-////        backgroundThread_1 = new Service<Void>() {
-////            @Override
-////            protected Task<Void> createTask() {
-////                return new Task<Void>() {
-////                    @Override
-////                    protected Void call() throws Exception {
-////                        while(true) {
-////                            bus_1.setCenterX(bus_1_c.getBusX());
-////                            bus_1.setCenterY(bus_1_c.getBusY());
-////                            try {
-////                                Thread.sleep(100);
-////                            } catch (InterruptedException e) {
-////                                e.printStackTrace();
-////                            }
-////                        }
-////                    }
-////                };
-////            }
-////        };
-//
-////        bus_0.centerXProperty().bind(backgroundThread.);
-////        bus_0.centerYProperty().bind(backgroundThread.totalWorkProperty());
-//
-//        backgroundThread_0.restart();
-////        backgroundThread_1.restart();
-//    }
 }

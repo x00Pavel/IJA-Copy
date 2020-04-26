@@ -18,11 +18,6 @@ public class Updater implements Runnable{
     @Override
     public void run() {
 
-
-//        Circle bus_0 = bus_to_run.get(0).getBus(); // circle
-//        Circle bus_1 = bus_to_run.get(1).getBus(); // circle
-//        Circle bus_2 = bus_to_run.get(2).getBus(); // circle
-
         Circle bus_0 = (Circle)bus_to_run.get(0).getGUI().get(0);
         Circle bus_1 = (Circle)bus_to_run.get(1).getGUI().get(0);
         Circle bus_2 = (Circle)bus_to_run.get(2).getGUI().get(0);

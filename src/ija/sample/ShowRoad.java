@@ -35,13 +35,14 @@ public class ShowRoad implements Runnable{
 //            prev_color[0] = this.bus_circle.getStroke();
 //            this.bus_circle.setStroke(Color.BLACK);
             List<Street> busStreets = this.bus.getBusLine().getStreets();
-            String prev_color = null;
+//            String prev_color = null;
             if (this.checkClicked){
                 for (Street street:busStreets) {
+                    String color = this.color;
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            street.paintStreet("#000000");
+                            street.paintStreet(color, "back");
                         }
                     });
                 }
@@ -52,7 +53,7 @@ public class ShowRoad implements Runnable{
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            street.paintStreet(color);
+                            street.paintStreet(color, "go");
                         }
                     });
                 }

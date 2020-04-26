@@ -81,6 +81,9 @@ public class Main extends Application {
 //        controller.runUpdater();
         executorService.submit(updater);
 
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
 
 //        list_bus.get(0).Move();
 
