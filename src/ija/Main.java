@@ -16,6 +16,7 @@ import ija.sample.MainController;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -56,7 +57,10 @@ public class Main extends Application {
             items.add(temp_bus);
         }
 
-
+        List<Thread> th_list = new ArrayList<>();
+        for (int i = 0; i < 3; i++){
+            th_list.add(new Thread(new BackEnd(list_bus.get(0)), "b1"));
+        }
         Thread b1 = new Thread(new BackEnd(list_bus.get(0)), "b1");
         Thread b2 = new Thread(new BackEnd(list_bus.get(1)), "b2");
         Thread b3 = new Thread(new BackEnd(list_bus.get(2)), "b3");

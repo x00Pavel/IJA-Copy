@@ -134,20 +134,20 @@ public class MainController{
 
     @FXML
     private void makeBigger(ActionEvent event){
-//        event.consume();
-//        double zoom =1.1;
-//        content.setScaleX(zoom * content.getScaleX());
-//        content.setScaleY(zoom * content.getScaleY());
-//        content.layout();
+        event.consume();
+        double zoom =1.1;
+        content.setScaleX(zoom * content.getScaleX());
+        content.setScaleY(zoom * content.getScaleY());
+        content.layout();
     }
 
     @FXML
     private void makeSmaller(ActionEvent event){
-//        event.consume();
-//        double zoom = 0.9;
-//        content.setScaleX(zoom * content.getScaleX());
-//        content.setScaleY(zoom * content.getScaleY());
-//        content.layout();
+        event.consume();
+        double zoom = 0.9;
+        content.setScaleX(zoom * content.getScaleX());
+        content.setScaleY(zoom * content.getScaleY());
+        content.layout();
     }
 
     @FXML

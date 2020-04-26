@@ -2,6 +2,7 @@ package ija.sample;
 
 import ija.functional.Bus;
 import ija.functional.Street;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -34,14 +35,26 @@ public class ShowRoad implements Runnable{
 //            prev_color[0] = this.bus_circle.getStroke();
 //            this.bus_circle.setStroke(Color.BLACK);
             List<Street> busStreets = this.bus.getBusLine().getStreets();
+            String prev_color = null;
             if (this.checkClicked){
                 for (Street street:busStreets) {
-                    street.paintStreet("#000000");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            street.paintStreet("#000000");
+                        }
+                    });
                 }
                 this.checkClicked = false;
             }else{
                 for (Street street:busStreets) {
-                    street.paintStreet(this.color);
+                    String color = this.color;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            street.paintStreet(color);
+                        }
+                    });
                 }
                 this.checkClicked = true;
             }
