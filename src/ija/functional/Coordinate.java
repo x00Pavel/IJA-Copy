@@ -41,18 +41,17 @@ public class Coordinate implements CoordinateInterface {
 	
 	@Override
 	public boolean equals(Object coord) {
-		
 		if((this.getX() == ((Coordinate) coord).getX()) && (this.getY() == ((Coordinate) coord).getY())) {
 			return true;
 		}else {
 			return false;
-		}	
+		}
 	}
-	
+
 	@Override 
 	public int hashCode() { 
-		final int prime = 21; 
-		int result = prime * this.X * this.Y; 
-		return result; 
+		final int prime = 21;
+		int result = prime * this.X * this.Y;
+		return result;
 	}
 }

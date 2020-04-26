@@ -86,29 +86,34 @@ public class MainController{
                         street_cords.add(new Coordinate(x, y));
                     }
                 }
-
-                NodeList stops = street.getElementsByTagName("Stops").item(0).getChildNodes();
-                System.out.println(stops.getLength());
-                for (int i = 0; i < stops.getLength(); i++){
-                    if(stops.item(i).getNodeType() == Node.ELEMENT_NODE) {
-                        Element tmp = (Element)stops.item(i);
-                        String stopName = tmp.getAttribute("name");
-                        System.out.println(tmp.getNodeName());
-                        NodeList tmp_node = tmp.getChildNodes();
-                        for (int j = 0; j < tmp_node.getLength(); j++){
-                            if(tmp_node.item(j).getNodeType() == Node.ELEMENT_NODE){
-                                System.out.println(tmp_node.item(j).getNodeName());
-                                Element tmp_coord = (Element)tmp_node.item(j);
-                                int x = Integer.parseInt(tmp_coord.getAttribute("x"));
-                                int y = Integer.parseInt(tmp_coord.getAttribute("y"));
-                                Stop tmp_stop = new Stop(stopName, new Coordinate(x, y));
-                                street_stops.add(tmp_stop);
-                                list_stops.add(tmp_stop);
+                Street new_street = null;
+                try {
+                    NodeList stops = street.getElementsByTagName("Stops").item(0).getChildNodes();
+                    System.out.println(stops.getLength());
+                    for (int i = 0; i < stops.getLength(); i++) {
+                        if (stops.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                            Element tmp = (Element) stops.item(i);
+                            String stopName = tmp.getAttribute("name");
+                            System.out.println(tmp.getNodeName());
+                            NodeList tmp_node = tmp.getChildNodes();
+                            for (int j = 0; j < tmp_node.getLength(); j++) {
+                                if (tmp_node.item(j).getNodeType() == Node.ELEMENT_NODE) {
+                                    System.out.println(tmp_node.item(j).getNodeName());
+                                    Element tmp_coord = (Element) tmp_node.item(j);
+                                    int x = Integer.parseInt(tmp_coord.getAttribute("x"));
+                                    int y = Integer.parseInt(tmp_coord.getAttribute("y"));
+                                    Stop tmp_stop = new Stop(stopName, new Coordinate(x, y));
+                                    street_stops.add(tmp_stop);
+                                    list_stops.add(tmp_stop);
+                                }
                             }
                         }
                     }
+                    new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, street_stops);
                 }
-                Street new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, street_stops);
+                catch (NullPointerException e){
+                    new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, null);
+                }
                 list_streets.add(new_street);
                 elements.add(new_street);
 
