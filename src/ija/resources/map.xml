@@ -99,4 +99,33 @@
             <Coordinate x="300" y="200"/>
         </Coordinates>
     </Street>
+
+    <Street name="street 10">
+        <Stops>
+            <Stop name="10.1">
+                <Coordinate x="170" y="330"/>
+            </Stop>
+            <Stop name="10.2">
+                <Coordinate x="170" y="250"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="170" y="380"/>
+            <Coordinate x="170" y="230"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 11">
+        <Coordinates>
+            <Coordinate x="170" y="230"/>
+            <Coordinate x="250" y="230"/>
+        </Coordinates>
+    </Street>
+
+    <Street name="12">
+        <Coordinates>
+            <Coordinate x="250" y="230"/>
+            <Coordinate x="250" y="270"/>
+            <Coordinate x="320" y="270"/>
+        </Coordinates>
+    </Street>
 </Map>
