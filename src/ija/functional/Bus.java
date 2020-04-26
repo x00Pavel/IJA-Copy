@@ -70,6 +70,10 @@ public class Bus implements Drawable {
                 Coordinate first = actualStreet.getCoordinates().get(k);
                 Coordinate second = actualStreet.getCoordinates().get(k + 1);
 
+                if(this.getBusX() == second.getX() && this.busY == second.getY()) {
+                    second = first;
+                }
+
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);// think about myBusStops.get(0) <
                 if (stopLocation.contains(e)) {
                     Stop firstStop = stopLocation.get(stopLocation.indexOf(e)).getKey();

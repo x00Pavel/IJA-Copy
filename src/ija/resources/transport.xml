@@ -25,8 +25,6 @@
             <Stop name="Stop 7"/>
             <Stop name="Stop 3"/>
             <Stop name="Stop 8"/>
-            <Stop name="Stop 9"/>
-            <Stop name="Stop 10"/>
         </Stops>
     </Line>
     <Line name="777" color="#00FF00">

@@ -55,29 +55,22 @@
     <Street name="Street 5">
         <Stops>
             <Stop name="Stop 7">
-                <Coordinate x="225" y="55"/>
+                <Coordinate x="250" y="20"/>
             </Stop>
         </Stops>
         <Coordinates>
             <Coordinate x="250" y="20"/>
-            <Coordinate x="200" y="90"/>
+            <Coordinate x="140" y="130"/>
         </Coordinates>
     </Street>
     <Street name="Street 6">
         <Stops>
             <Stop name="Stop 8">
-                <Coordinate x="200" y="130"/>
-            </Stop>
-            <Stop name="Stop 9">
-                <Coordinate x="235" y="130"/>
-            </Stop>
-            <Stop name="Stop 10">
-                <Coordinate x="250" y="55"/>
+                <Coordinate x="200" y="90"/>
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="140" y="130"/>
-            <Coordinate x="250" y="130"/>
+            <Coordinate x="200" y="90"/>
             <Coordinate x="250" y="20"/>
         </Coordinates>
     </Street>
