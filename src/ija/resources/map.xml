@@ -5,12 +5,19 @@
             <Stop name="Stop 1">
                 <Coordinate x="40" y="20"/>
             </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="20" y="20"/>
+            <Coordinate x="200" y="20"/>
+        </Coordinates>
+    </Street>
+    <Street name="1_1">
+        <Stops>
             <Stop name="Stop 2">
                 <Coordinate x="200" y="40"/>
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="20" y="20"/>
             <Coordinate x="200" y="20"/>
             <Coordinate x="200" y="90"/>
         </Coordinates>
@@ -31,12 +38,19 @@
             <Stop name="Stop 4">
                 <Coordinate x="100" y="130"/>
             </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="140" y="130"/>
+            <Coordinate x="50" y="130"/>
+        </Coordinates>
+    </Street>
+    <Street name="3_1">
+        <Stops>
             <Stop name="Stop 5">
                 <Coordinate x="50" y="150"/>
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="140" y="130"/>
             <Coordinate x="50" y="130"/>
             <Coordinate x="50" y="200"/>
         </Coordinates>
@@ -131,12 +145,19 @@
             <Stop name="stop 12.1">
                 <Coordinate x="250" y="250"/>
             </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="250" y="230"/>
+            <Coordinate x="250" y="270"/>
+        </Coordinates>
+    </Street>
+    <Street name="12_1">
+        <Stops>
             <Stop name="stop 12.2">
                 <Coordinate x="290" y="270"/>
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="250" y="230"/>
             <Coordinate x="250" y="270"/>
             <Coordinate x="320" y="270"/>
         </Coordinates>
@@ -147,6 +168,14 @@
             <Stop name="stop 13.1">
                 <Coordinate x="320" y="240"/>
             </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="320" y="270"/>
+            <Coordinate x="320" y="220"/>
+        </Coordinates>
+    </Street>
+    <Street name="13_1">
+        <Stops>
             <Stop name="stop 13.2">
                 <Coordinate x="360" y="220"/>
             </Stop>
@@ -154,8 +183,8 @@
                 <Coordinate x="440" y="220"/>
             </Stop>
         </Stops>
+
         <Coordinates>
-            <Coordinate x="320" y="270"/>
             <Coordinate x="320" y="220"/>
             <Coordinate x="470" y="220"/>
         </Coordinates>
@@ -167,16 +196,63 @@
         </Coordinates>
     </Street>
 
-    <Street name="15">
+    <Street name="street 15">
         <Coordinates>
             <Coordinate x="440" y="250"/>
             <Coordinate x="370" y="250"/>
         </Coordinates>
     </Street>
-    <Street name="15_1">
+    <Street name="street 15_1">
         <Coordinates>
             <Coordinate x="370" y="250"/>
             <Coordinate x="370" y="300"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 16">
+        <Stops>
+            <Stop name="stop 16.1">
+                <Coordinate x="350" y="320"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="370" y="300"/>
+            <Coordinate x="320" y="350"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 17">
+        <Stops>
+            <Stop name="stop 17.1">
+                <Coordinate x="310" y="350"/>
+            </Stop>
+            <Stop name="stop 17.2">
+                <Coordinate x="260" y="350"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="320" y="350"/>
+            <Coordinate x="250" y="350"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 18">
+        <Stops>
+            <Stop name="stop 18.1">
+                <Coordinate x="230" y="370"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="250" y="350"/>
+            <Coordinate x="220" y="380"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 19">
+        <Stops>
+            <Stop name="stop 19.1">
+                <Coordinate x="190" y="380"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="220" y="380"/>
+            <Coordinate x="170" y="380"/>
         </Coordinates>
     </Street>
 </Map>

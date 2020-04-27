@@ -1,5 +1,6 @@
 package ija.functional;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.util.AbstractMap;
@@ -84,5 +85,10 @@ public class MyLine implements Line{
 	@Override
 	public List<Shape> getGUI() {
 		return null;
+	}
+
+	@Override
+	public void setInfo(Pane container) {
+
 	}
 }

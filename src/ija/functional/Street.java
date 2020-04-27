@@ -4,9 +4,12 @@ import javafx.application.Platform;
 
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
+
+import javafx.scene.layout.Pane;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 
@@ -23,7 +26,8 @@ public class Street implements Drawable {
     private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
     private final List<Shape> elements;
     private Boolean blocked;
-    private List<String> colorList = new ArrayList<>();
+    private Color prev_color;
+    protected Polyline line;
 
     public Street(String name) {
         this.street_name = name;
@@ -31,7 +35,7 @@ public class Street implements Drawable {
         this.street_stops = new ArrayList<>();
         this.elements = new ArrayList<>();
         this.blocked = false;
-        this.colorList.add("#000000");
+//        this.colorList.add("#000000");
     }
 
     public Coordinate end() {
@@ -108,138 +112,28 @@ public class Street implements Drawable {
             }
         }
 
-//         Setting proprietes for interacting with lines
-        Polyline line = new Polyline();
-        ContextMenu contextMenu = new ContextMenu();
-        CheckMenuItem block = new CheckMenuItem("Bloked");
-        block.setSelected(false);
-        block.setOnAction(event -> {
-            street.blocked = block.isSelected();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (street.blocked){
-                        line.setStroke(Color.RED);
-                    }
-                    else{
-                        line.setStroke(Color.BLACK);
-                    }
-                }
-            });
-            System.out.println("Street blocked? " + street.blocked);
-        }
-        );
-
-//         Add MenuItem to ContextMenu
-        contextMenu.getItems().addAll(block);
+        street.line = new Polyline();
         for (Double point: points){
-            line.getPoints().add(point);
+            street.line.getPoints().add(point);
         }
-//        pop.getContent().add(text);
-        line.setStrokeWidth(3);
-
-        line.setOnContextMenuRequested(event -> {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    contextMenu.show(line, event.getScreenX(), event.getScreenY());
-                }
-            });
-            System.out.println("Line clicked");
-        });
-        final Paint[] prev_color = new Paint[1];
-        line.setOnMouseEntered(event -> {
-            prev_color[0] = line.getStroke();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    line.setStroke(Color.BLUE);
-                }
-            });
-        });
-        line.setOnMouseExited(event -> Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                line.setStroke(prev_color[0]);
-            }
-        }));
-
-
-//        Polyline line = new Polyline();
-//        for (Double point: points){
-//            line.getPoints().add(point);
-//        }
-//
-//        new Thread( ()->{
-//            createLine(line);
-//        }).start();
-//
-//        try {
-//            Thread.sleep(300);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-        street.elements.add(line);
-
+        street.line.setStrokeWidth(3);
+        street.elements.add(street.line);
 
         if (stops != null){
             for (Stop stop : stops){
                 boolean ok = street.addStop(stop);
-                if (ok){
-                    Circle circle = new Circle(stop.getCoordinate().getX(), stop.getCoordinate().getY(), 5, Color.ORANGE);
-//                    circle.setOnMouseEntered(event -> circle.setStroke(Color.RED));
-//                    circle.setOnMouseExited(event -> circle.setStroke(Color.ORANGE));
-                    street.elements.add(circle);
-                } else{
+                if (!ok){
                     System.out.println("Stop is not in the street, exit");
                     System.exit(1);
-
                 }
-
             }
         }
 
         return street;
     }
 
-//    public static void createLine(Polyline line){
-//        line.setStroke(Color.BLACK);
-//        line.setStrokeWidth(3);
-//    }
-
     public String getId() {
         return this.street_name;
-    }
-
-    //paint street after bus click
-    public void paintStreet(String color, String operation){ //paint street after click on bus
-        List<Shape> tmp = this.elements;
-
-        if(operation.equals("back")){
-            this.colorList.remove(color);
-        }else{
-            this.colorList.add(color);
-        }
-
-        String finalColor = this.colorList.get(this.colorList.size()-1);
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                for (Shape element : tmp) { //go through all elements of street and paint them
-                        paintElement(finalColor, element);
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
-    public void paintElement(String color, Shape element){
-        element.setStroke(Color.web(color, 1.0));
     }
 
     private void setElements(Shape item){
@@ -271,10 +165,8 @@ public class Street implements Drawable {
             if ((int)Math.sqrt(second_coord_z) + (int)Math.sqrt(first_coord_z) == (int)Math.sqrt(second_first_z)){
                 stop.setStreet(this);
                 this.street_stops.add(stop);
-                    Circle circle = new Circle(stop.getCoordinate().getX(), stop.getCoordinate().getY(), 5, Color.ORANGE);
-                    circle.setOnMouseEntered(event -> circle.setStroke(Color.RED));
-                    circle.setOnMouseExited(event -> circle.setStroke(Color.ORANGE));
-                    this.elements.add(circle);
+//                    Circle circle = new Circle(stop.getCoordinate().getX(), stop.getCoordinate().getY(), 5, Color.ORANGE);
+
 
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<>(stop, i);
                 stopLocation.add(e);
@@ -309,7 +201,73 @@ public class Street implements Drawable {
 		return this.elements;
 	}
 
+    @Override
+    public void setInfo(Pane container) {
+        ContextMenu contextMenu = new ContextMenu();
+        CheckMenuItem block = new CheckMenuItem("Bloked");
+
+        contextMenu.getItems().addAll(block);
+
+        block.setSelected(false);
+        block.setOnAction(event -> {
+                    this.blocked = block.isSelected();
+                    Street street = this;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (street.blocked){
+                                street.line.setStroke(Color.RED);
+                            }
+                            else{
+                                street.line.setStroke(Color.BLACK);
+                            }
+                        }
+                    });
+                    System.out.println("Street blocked? " + this.blocked);
+                }
+        );
+
+        this.line.setOnContextMenuRequested(event -> {
+            Street street = this;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    contextMenu.show(street.line, event.getScreenX(), event.getScreenY());
+                }
+            });
+            System.out.println("Line clicked");
+        });
+        final Paint[] prev_color = new Paint[1];
+        this.line.setOnMouseEntered(event -> {
+            Street street = this;
+            prev_color[0] = street.line.getStroke();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    street.line.setStroke(Color.BLUE);
+                }
+            });
+        });
+        this.line.setOnMouseExited(event -> {
+            Street street = this;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    street.line.setStroke(prev_color[0]);
+                }
+            });
+        });
+    }
+
     public List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> getStopLocation() {
             return this.stopLocation;
+    }
+
+    public void changeLineColor(Color color) {
+        this.prev_color = (Color) this.line.getStroke();
+        this.line.setStroke(color);
+    }
+    public void rollBackLineColor(){
+        this.line.setStroke(this.prev_color);
     }
 }

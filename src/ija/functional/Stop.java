@@ -1,16 +1,19 @@
 package ija.functional;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import javafx.scene.shape.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Stop implements Drawable {
     private String stop_id = "Empty";
     private Coordinate stop_cord = null;
     private Street stop_street = null;
-    private List<Shape> elements_gui;
+    private Circle elements_gui;
 
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
@@ -18,8 +21,7 @@ public class Stop implements Drawable {
         }
         try {
             this.stop_cord = cord[0];
-            this.elements_gui = new ArrayList<>();
-            this.elements_gui.add(new Circle(cord[0].getX(), cord[0].getY(), 10, Color.ORANGE));
+            this.elements_gui = new Circle(cord[0].getX(), cord[0].getY(), 5, Color.ORANGE);
         } catch (Exception ignored) {
         }
     }
@@ -92,6 +94,12 @@ public class Stop implements Drawable {
 
     @Override
     public List<Shape> getGUI() {
-        return this.elements_gui;
+        return Collections.singletonList(this.elements_gui);
+    }
+
+    @Override
+    public void setInfo(Pane container) {
+        this.elements_gui.setOnMouseEntered(event -> this.elements_gui.setStroke(Color.RED));
+        this.elements_gui.setOnMouseExited(event -> this.elements_gui.setStroke(Color.ORANGE));
     }
 }

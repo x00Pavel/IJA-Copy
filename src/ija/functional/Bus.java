@@ -1,14 +1,10 @@
 package ija.functional;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import ija.sample.BackEnd;
-import ija.sample.ShowRoad;
+import javafx.application.Platform;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -19,17 +15,21 @@ public class Bus implements Drawable {
     private double busX = 0;
     private double busY = 0;
     private final Circle gui;
-    private String busColor;
+    private final Color busColor;
+    private Boolean checked;
 
     public Bus(String busName, Line busLine, String color) {
+        this.checked = false;
         this.busName = busName;
         this.busLine = busLine;
-        this.busColor = color;
-        this.busX = (double) busLine.getStreets().get(0).getCoordinates().get(0).getX();
-        this.busY = (double) busLine.getStreets().get(0).getCoordinates().get(0).getY();
+        this.busColor = Color.web(color);
+        this.busX = busLine.getStreets().get(0).getCoordinates().get(0).getX();
+        this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color,1.0));
 
     }
+
+
 
     public double getBusX(){
         return this.busX;
@@ -47,7 +47,7 @@ public class Bus implements Drawable {
         this.busY = tempY;
     }
 
-    public String getColor(){
+    public Color getColor(){
         return this.busColor;
     }
 
@@ -146,6 +146,30 @@ public class Bus implements Drawable {
     @Override
     public List<Shape> getGUI() {
         return Collections.singletonList(this.gui);
+    }
+
+    @Override
+    public void setInfo(Pane container) {
+        this.gui.setOnMouseClicked(event -> {
+            List<Street> streets = this.busLine.getStreets();
+            this.checked = !this.checked;
+            boolean c = this.checked;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (c){
+                        for (Street street: streets){
+                            street.changeLineColor(Bus.this.busColor);
+                        }
+                    }
+                    else{
+                        for (Street street: streets){
+                            street.rollBackLineColor();
+                        }
+                    }
+                }
+            });
+        });
     }
 
     public Line getBusLine(){

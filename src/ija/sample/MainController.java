@@ -46,6 +46,7 @@ public class MainController{
 
     @FXML
     private Pane content;
+
     public void setElements(List<Drawable> elements) {
         this.elements = elements;
         for(Drawable item: elements){
@@ -110,12 +111,19 @@ public class MainController{
                         }
                     }
                     new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, street_stops);
+                    elements.add(new_street);
+                    for (Stop stop : street_stops){
+                        stop.setInfo(content);
+                        elements.add(stop);
+                    }
+
                 }
                 catch (NullPointerException e){
                     new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, null);
+                    elements.add(new_street);
                 }
+                new_street.setInfo(content);
                 list_streets.add(new_street);
-                elements.add(new_street);
 
             }
         } catch (Exception e) {
@@ -222,6 +230,7 @@ public class MainController{
 
 
                 Bus tempBus = new Bus(lineName, tempLine, busColor); // create new bus, name is same as line name
+                tempBus.setInfo(content);
                 this.allBuses.add(tempBus);
 
             }

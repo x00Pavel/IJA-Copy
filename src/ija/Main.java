@@ -42,8 +42,6 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
         MainController controller = loader.getController();
-//        ExecutorService executorService = Executors.newFixedThreadPool(1);
-//        executorService.submit(new FrontEnd());
 
         try {
             items = controller.buildMap(fileMap);
