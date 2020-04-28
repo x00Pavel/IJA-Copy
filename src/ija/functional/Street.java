@@ -149,19 +149,19 @@ public class Street implements Drawable {
         List<Coordinate> lst = this.getCoordinates();
         for (int i = 0; i < lst.size(); i++) {
             Coordinate first =  lst.get(i);
-            Coordinate second = lst.get(i + 1);           
+            Coordinate second = lst.get(i + 1);
             int first_coord_x = (int)(Math.pow(first.diffX(coord), 2));
             int first_coord_y = (int)(Math.pow(first.diffY(coord), 2));
             int first_coord_z = first_coord_x + first_coord_y;
-            
+
             int second_coord_x = (int)(Math.pow(second.diffX(coord), 2));
             int second_coord_y = (int)(Math.pow(second.diffY(coord), 2));
             int second_coord_z = second_coord_x + second_coord_y;
-            
+
             int second_first_x = (int)(Math.pow(second.diffX(first), 2));
             int second_first_y = (int)(Math.pow(second.diffY(first), 2));
             int second_first_z = second_first_x + second_first_y;
-            
+
             if ((int)Math.sqrt(second_coord_z) + (int)Math.sqrt(first_coord_z) == (int)Math.sqrt(second_first_z)){
                 stop.setStreet(this);
                 this.street_stops.add(stop);

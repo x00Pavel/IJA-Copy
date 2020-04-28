@@ -74,6 +74,11 @@ public class Bus implements Drawable {
                     second = first;
                 }
 
+                if(actualStreet.getStops().isEmpty()){
+                    calculateAndGo(second, 10);
+                    break;
+                }
+
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);// think about myBusStops.get(0) <
                 if (stopLocation.contains(e)) {
                     Stop firstStop = stopLocation.get(stopLocation.indexOf(e)).getKey();

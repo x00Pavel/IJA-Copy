@@ -39,19 +39,34 @@ public class MyLine implements Line{
 				return true;
 			}
 		} else {
-			if (this.streets.get(this.streets.size()-1).follows(street)) {
-				this.streets.add(street);
-				if (street.getStops().isEmpty()) {
-					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,null);
-					line.add(e);
-				} else {
-					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,street.getStops().get(0));
-					line.add(e);
+			for (Street street_for_connet:this.streets) {
+				if (street_for_connet.follows(street)) {
+					this.streets.add(street);
+					if (street.getStops().isEmpty()) {
+						SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,null);
+						line.add(e);
+					} else {
+						SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,street.getStops().get(0));
+						line.add(e);
+					}
+					return true;
 				}
-				return true;
-			} else {
-				return false;
 			}
+
+			return false;
+//			if (this.streets.get(this.streets.size()-1).follows(street)) {
+//				this.streets.add(street);
+//				if (street.getStops().isEmpty()) {
+//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,null);
+//					line.add(e);
+//				} else {
+//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,street.getStops().get(0));
+//					line.add(e);
+//				}
+//				return true;
+//			} else {
+//				return false;
+//			}
 		}
 		
 	}
@@ -60,7 +75,7 @@ public class MyLine implements Line{
 	public boolean addStop(Stop stop) {
 		if (this.addStreet(stop.getStreet())) {
 			this.stops.add(stop);
-			this.streets.remove(stop.getStreet());
+			this.streets.remove(this.streets.lastIndexOf(stop.getStreet()));
 			return true;
 		} else {
 			return false;

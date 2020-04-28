@@ -217,6 +217,7 @@ public class MainController{
                             if (name.equals(need_this_stop.getId())) {
                                 tempLine.addStop(need_this_stop); // add stop in Line
                                 addStopFlag = true;
+                                break;
                             }
                         }
 

@@ -69,7 +69,7 @@
     <Street name="Street 5">
         <Stops>
             <Stop name="Stop 7">
-                <Coordinate x="250" y="20"/>
+                <Coordinate x="275" y="25"/>
             </Stop>
         </Stops>
         <Coordinates>
@@ -80,7 +80,7 @@
     <Street name="Street 6">
         <Stops>
             <Stop name="Stop 8">
-                <Coordinate x="200" y="90"/>
+                <Coordinate x="225" y="55"/>
             </Stop>
         </Stops>
         <Coordinates>
@@ -183,10 +183,9 @@
                 <Coordinate x="440" y="220"/>
             </Stop>
         </Stops>
-
         <Coordinates>
-            <Coordinate x="320" y="220"/>
             <Coordinate x="470" y="220"/>
+            <Coordinate x="320" y="220"/>
         </Coordinates>
     </Street>
     <Street name="street 14">

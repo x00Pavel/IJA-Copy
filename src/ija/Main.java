@@ -66,6 +66,7 @@ public class Main extends Application {
         for (Bus actual_bus:list_bus) {
             executorService.submit(new BackEnd(actual_bus));
         }
+//        executorService.submit(new BackEnd(list_bus.get(0)));
         executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {
