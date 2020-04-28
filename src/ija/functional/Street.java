@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.paint.Color;
@@ -35,7 +36,6 @@ public class Street implements Drawable {
         this.street_stops = new ArrayList<>();
         this.elements = new ArrayList<>();
         this.blocked = false;
-//        this.colorList.add("#000000");
     }
 
     public Coordinate end() {
@@ -205,10 +205,15 @@ public class Street implements Drawable {
     public void setInfo(Pane container) {
         ContextMenu contextMenu = new ContextMenu();
         CheckMenuItem block = new CheckMenuItem("Bloked");
-
+        Label label = new Label(this.getId());
+        label.setVisible(false);
+        label.setLabelFor(this.line);
+        label.setStyle("-fx-background-color:POWDERBLUE");
+        container.getChildren().add(label);
         contextMenu.getItems().addAll(block);
 
         block.setSelected(false);
+        final Paint[] prev_color = new Paint[1];
         block.setOnAction(event -> {
                     this.blocked = block.isSelected();
                     Street street = this;
@@ -216,10 +221,11 @@ public class Street implements Drawable {
                         @Override
                         public void run() {
                             if (street.blocked){
+                                prev_color[0] = street.line.getStroke();
                                 street.line.setStroke(Color.RED);
                             }
                             else{
-                                street.line.setStroke(Color.BLACK);
+                                street.line.setStroke(prev_color[0]);
                             }
                         }
                     });
@@ -237,13 +243,16 @@ public class Street implements Drawable {
             });
             System.out.println("Line clicked");
         });
-        final Paint[] prev_color = new Paint[1];
         this.line.setOnMouseEntered(event -> {
             Street street = this;
             prev_color[0] = street.line.getStroke();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    label.toFront();
+                    label.setLayoutX(event.getSceneX() + 5);
+                    label.setLayoutY(event.getSceneY() - 20);
+                    label.setVisible(true);
                     street.line.setStroke(Color.BLUE);
                 }
             });
@@ -253,6 +262,7 @@ public class Street implements Drawable {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    label.setVisible(false);
                     street.line.setStroke(prev_color[0]);
                 }
             });

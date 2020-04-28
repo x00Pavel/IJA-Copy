@@ -11,7 +11,7 @@
             <Coordinate x="200" y="20"/>
         </Coordinates>
     </Street>
-    <Street name="1_1">
+    <Street name="street 1_1">
         <Stops>
             <Stop name="Stop 2">
                 <Coordinate x="200" y="40"/>
@@ -44,7 +44,7 @@
             <Coordinate x="50" y="130"/>
         </Coordinates>
     </Street>
-    <Street name="3_1">
+    <Street name="street 3_1">
         <Stops>
             <Stop name="Stop 5">
                 <Coordinate x="50" y="150"/>

@@ -105,6 +105,7 @@ public class MainController{
                                     int y = Integer.parseInt(tmp_coord.getAttribute("y"));
                                     Stop tmp_stop = new Stop(stopName, new Coordinate(x, y));
                                     street_stops.add(tmp_stop);
+
                                     list_stops.add(tmp_stop);
                                 }
                             }

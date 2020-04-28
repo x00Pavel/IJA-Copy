@@ -1,11 +1,12 @@
 package ija.functional;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import javafx.scene.shape.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javafx.scene.shape.Shape;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -99,7 +100,22 @@ public class Stop implements Drawable {
 
     @Override
     public void setInfo(Pane container) {
-        this.elements_gui.setOnMouseEntered(event -> this.elements_gui.setStroke(Color.RED));
-        this.elements_gui.setOnMouseExited(event -> this.elements_gui.setStroke(Color.ORANGE));
+        Label label = new Label(this.getId());
+        label.setVisible(false);
+        label.setLabelFor(this.elements_gui);
+        label.setStyle("-fx-background-color:YELLOW");
+        label.setLabelFor(this.elements_gui);
+        container.getChildren().add(label);
+        this.elements_gui.setOnMouseEntered(event -> {
+            label.toFront();
+            label.setLayoutX(event.getSceneX() + 5);
+            label.setLayoutY(event.getSceneY() - 20);
+            label.setVisible(true);
+            this.elements_gui.setStroke(Color.RED);
+        });
+        this.elements_gui.setOnMouseExited(event -> {
+            label.setVisible(false);
+            this.elements_gui.setStroke(Color.ORANGE);
+        });
     }
 }

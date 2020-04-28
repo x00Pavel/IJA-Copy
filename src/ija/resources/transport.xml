@@ -3,8 +3,10 @@
     <Line name="109" color="#800080">
         <Streets>
             <Street name="Street 1"/>
+            <Street name="street 1_1"/>
             <Street name="Street 2"/>
             <Street name="Street 3"/>
+            <Street name="street 3_1"/>
             <Street name="Street 4"/>
         </Streets>
         <Stops>
