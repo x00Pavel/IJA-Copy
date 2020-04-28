@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Transports>
-    <Line name="109" color="#800080">
+    <Line name="109" color="#800080" time="146">
         <Streets>
             <Street name="Street 1"/>
             <Street name="street 1_1"/>
@@ -17,7 +17,7 @@
             <Stop name="Stop 6"/>
         </Stops>
     </Line>
-    <Line name="999" color="#FF0000">
+    <Line name="999" color="#FF0000" time="183">
         <Streets>
             <Street name="street 20"/>
             <Street name="street 21"/>
@@ -38,7 +38,7 @@
             <Stop name="Stop 7"/>
         </Stops>
     </Line>
-    <Line name="777" color="#00FF00">
+    <Line name="777" color="#00FF00" time="130">
         <Streets>
             <Street name="Street 7"/>
             <Street name="Street 3"/>
@@ -53,7 +53,7 @@
             <Stop name="Stop 13"/>
         </Stops>
     </Line>
-    <Line name="53" color="#FFFF00">
+    <Line name="53" color="#FFFF00" time="222">
         <Streets>
             <Street name="13_1"/>
             <Street name="street 13"/>

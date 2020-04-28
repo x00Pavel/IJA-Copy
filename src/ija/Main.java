@@ -4,12 +4,14 @@ import ija.functional.Bus;
 import ija.functional.Drawable;
 
 import ija.sample.BackEnd;
+import ija.sample.Clock;
 import ija.sample.Updater;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import ija.sample.MainController;
 
@@ -25,6 +27,8 @@ public class Main extends Application {
 
     public static List<Bus> list_bus;
     public static List<Drawable> items;
+
+    private static int clock_speed = 100; // here we can set a clock speed
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,7 +55,6 @@ public class Main extends Application {
         list_bus = controller.buildLines(fileTransport);
         items.addAll(list_bus);
 
-
         controller.setElements(items);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -62,16 +65,19 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+1); // change 4->5 for ViewUpdater ON
+        ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2); // change 4->5 for ViewUpdater ON
         for (Bus actual_bus:list_bus) {
             executorService.submit(new BackEnd(actual_bus));
         }
-//        executorService.submit(new BackEnd(list_bus.get(0)));
+        executorService.submit(new Clock(clock_speed,0,0,0));
         executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);
         });
+    }
 
+    public static int getClockSpeed(){
+        return clock_speed;
     }
 }

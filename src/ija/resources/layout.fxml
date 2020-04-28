@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.sample.MainController">
    <center>
@@ -13,7 +14,7 @@
          <content>
             <Group>
                <children>
-                  <Pane fx:id="content"  onScroll="#onScroll" prefHeight="700.0" prefWidth="700.0">
+                  <Pane fx:id="content" onScroll="#onScroll" prefHeight="700.0" prefWidth="700.0">
                   </Pane>
                </children>
             </Group>
@@ -25,6 +26,8 @@
          <children>
             <Button fx:id="plus" layoutX="50.0" layoutY="553.0" mnemonicParsing="false" onAction="#makeBigger" text="+" />
             <Button fx:id="minus" layoutX="14.0" layoutY="553.0" mnemonicParsing="false" onAction="#makeSmaller" prefHeight="26.0" prefWidth="29.0" text="-" />
+            <TextFlow fx:id="clock_field" layoutX="-2.0" layoutY="-1.0" prefHeight="81.0" prefWidth="200.0" style="-fx-background-color: RED;" textAlignment="CENTER" />
+            <Button fx:id="clock_button" layoutX="17.0" layoutY="97.0" mnemonicParsing="false" onAction="#setClock" prefHeight="25.0" prefWidth="166.0" text="Set clock" />
          </children>
       </AnchorPane>
    </right>

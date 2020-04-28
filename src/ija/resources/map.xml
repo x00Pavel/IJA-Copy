@@ -124,8 +124,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="170" y="380"/>
             <Coordinate x="170" y="230"/>
+            <Coordinate x="170" y="380"/>
         </Coordinates>
     </Street>
     <Street name="street 11">
@@ -135,8 +135,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="170" y="230"/>
             <Coordinate x="250" y="230"/>
+            <Coordinate x="170" y="230"/>
         </Coordinates>
     </Street>
 
@@ -147,8 +147,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="250" y="230"/>
             <Coordinate x="250" y="270"/>
+            <Coordinate x="250" y="230"/>
         </Coordinates>
     </Street>
     <Street name="12_1">
@@ -158,8 +158,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="250" y="270"/>
             <Coordinate x="320" y="270"/>
+            <Coordinate x="250" y="270"/>
         </Coordinates>
     </Street>
 
@@ -170,8 +170,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="320" y="270"/>
             <Coordinate x="320" y="220"/>
+            <Coordinate x="320" y="270"/>
         </Coordinates>
     </Street>
     <Street name="13_1">
@@ -190,21 +190,21 @@
     </Street>
     <Street name="street 14">
         <Coordinates>
-            <Coordinate x="470" y="220"/>
             <Coordinate x="440" y="250"/>
+            <Coordinate x="470" y="220"/>
         </Coordinates>
     </Street>
 
     <Street name="street 15">
         <Coordinates>
-            <Coordinate x="440" y="250"/>
             <Coordinate x="370" y="250"/>
+            <Coordinate x="440" y="250"/>
         </Coordinates>
     </Street>
     <Street name="street 15_1">
         <Coordinates>
-            <Coordinate x="370" y="250"/>
             <Coordinate x="370" y="300"/>
+            <Coordinate x="370" y="250"/>
         </Coordinates>
     </Street>
     <Street name="street 16">
@@ -214,8 +214,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="370" y="300"/>
             <Coordinate x="320" y="350"/>
+            <Coordinate x="370" y="300"/>
         </Coordinates>
     </Street>
     <Street name="street 17">
@@ -228,8 +228,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="320" y="350"/>
             <Coordinate x="250" y="350"/>
+            <Coordinate x="320" y="350"/>
         </Coordinates>
     </Street>
     <Street name="street 18">
@@ -239,8 +239,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="250" y="350"/>
             <Coordinate x="220" y="380"/>
+            <Coordinate x="250" y="350"/>
         </Coordinates>
     </Street>
     <Street name="street 19">
@@ -250,8 +250,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="220" y="380"/>
             <Coordinate x="170" y="380"/>
+            <Coordinate x="220" y="380"/>
         </Coordinates>
     </Street>
     <Street name="street 20">

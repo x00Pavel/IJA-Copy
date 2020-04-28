@@ -16,6 +16,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -46,6 +50,10 @@ public class MainController{
 
     @FXML
     private Pane content;
+
+    public void setClock(){
+        System.out.println("alomalo");
+    }
 
     public void setElements(List<Drawable> elements) {
         this.elements = elements;
@@ -178,6 +186,7 @@ public class MainController{
                 Element line = (Element) lines.item(temp);
                 String lineName = line.getAttribute("name");
                 String busColor = line.getAttribute("color");
+                Integer time_for_ring = Integer.parseInt(line.getAttribute("time"));
 
                 ija.functional.Line tempLine = ija.functional.Line.defaultLine(lineName); // create Line
 
@@ -215,7 +224,7 @@ public class MainController{
 
                         for (Stop need_this_stop : list_stops) {
                             if (name.equals(need_this_stop.getId())) {
-                                tempLine.addStop(need_this_stop); // add stop in Line
+                                tempLine.addStop(new Stop(need_this_stop)); // add stop in Line
                                 addStopFlag = true;
                                 break;
                             }
@@ -231,7 +240,7 @@ public class MainController{
                 }
 
 
-                Bus tempBus = new Bus(lineName, tempLine, busColor); // create new bus, name is same as line name
+                Bus tempBus = new Bus(lineName, tempLine, busColor, time_for_ring); // create new bus, name is same as line name
                 tempBus.setInfo(content);
                 this.allBuses.add(tempBus);
 

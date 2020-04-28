@@ -2,6 +2,7 @@ package ija.functional;
 
 import java.util.*;
 
+import ija.Main;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,8 +18,11 @@ public class Bus implements Drawable {
     private final Circle gui;
     private final Color busColor;
     private Boolean checked;
+    private int speed = 5;
+    private Street actual_bus_street = null;
+    private int time_for_ring = 0;
 
-    public Bus(String busName, Line busLine, String color) {
+    public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
         this.busName = busName;
         this.busLine = busLine;
@@ -26,6 +30,7 @@ public class Bus implements Drawable {
         this.busX = busLine.getStreets().get(0).getCoordinates().get(0).getX();
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color,1.0));
+        this.time_for_ring = time_for_ring;
 
     }
 
@@ -47,6 +52,22 @@ public class Bus implements Drawable {
         this.busY = tempY;
     }
 
+    public String getBusName(){
+        return this.busName;
+    }
+
+    public Street getActualBusStreet(){
+        return this.actual_bus_street;
+    }
+
+    public Integer getSpeed(){
+        return this.speed;
+    }
+
+    public Integer getTimeForRing(){
+        return this.time_for_ring;
+    }
+
     public Color getColor(){
         return this.busColor;
     }
@@ -64,6 +85,7 @@ public class Bus implements Drawable {
 //        System.out.println(myBusStreets);
 
         for (Street actualStreet : myBusStreets) {
+            this.actual_bus_street = actualStreet;
             List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<>(actualStreet.getStopLocation());
             for (int k = 0; k < actualStreet.getCoordinates().size() - 1; k++) {
 
@@ -75,23 +97,23 @@ public class Bus implements Drawable {
                 }
 
                 if(actualStreet.getStops().isEmpty()){
-                    calculateAndGo(second, 10);
+                    calculateAndGo(second);
                     break;
                 }
 
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);// think about myBusStops.get(0) <
                 if (stopLocation.contains(e)) {
                     Stop firstStop = stopLocation.get(stopLocation.indexOf(e)).getKey();
-                    calculateAndGo(firstStop.getCoordinate(), 10);
+                    calculateAndGo(firstStop.getCoordinate());
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(Main.getClockSpeed()*3);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
                     stopLocation.remove(e);
                     myBusStops.remove(0);
                 } else {
-                    calculateAndGo(second, 10);
+                    calculateAndGo(second);
                     continue;
                 }
 
@@ -99,30 +121,41 @@ public class Bus implements Drawable {
                     AbstractMap.SimpleImmutableEntry<Stop, Integer> nextStopPair = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);
                     if (stopLocation.contains(nextStopPair)) {
                         Stop nextStop = stopLocation.get(stopLocation.indexOf(nextStopPair)).getKey();
-                        calculateAndGo(nextStop.getCoordinate(), 10);
+                        calculateAndGo(nextStop.getCoordinate());
                         try {
-                            Thread.sleep(3000);
+                            Thread.sleep(Main.getClockSpeed()*3);
                         } catch (InterruptedException interruptedException) {
                             interruptedException.printStackTrace();
                         }
                         stopLocation.remove(nextStopPair);
                         myBusStops.remove(0);
                     } else {
-                        calculateAndGo(second, 10);
+                        calculateAndGo(second);
                         break;
                     }
                 }
 
                 if (stopLocation.isEmpty()) {
-                    calculateAndGo(second, 10);
+                    calculateAndGo(second);
                 }
             }
         }
     }
 
-    public void calculateAndGo(Coordinate end, int j){
-        double stepX = 0;
-        double stepY = 0;
+    public void calculateAndGo(Coordinate end){
+        double rangeX = end.getX() - this.busX;
+        double rangeY = end.getY() - this.busY;
+        double stepX;
+        double stepY;
+
+        int j = 0;
+
+        try{
+            j = (int)((Math.sqrt((rangeX*rangeX)+(rangeY*rangeY)))/this.speed);
+        }catch (ArithmeticException ae){
+            System.out.println("[ERROR] Bus`s speed must be > 0");
+            System.exit(-1);
+       }
 
         try{
             stepX = (end.getX() - this.busX)/j;
@@ -137,14 +170,17 @@ public class Bus implements Drawable {
 
         while(j!=0){
             j--;
-            this.busX = busX + stepX;
-            this.busY = busY + stepY;
+            this.busX = this.busX + stepX;
+            this.busY = this.busY + stepY;
             try {
-                Thread.sleep(250); // if millis 100 or less -> some bugs sometimes
+                Thread.sleep(Main.getClockSpeed()); // if millis 100 or less -> some bugs sometimes
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        this.busX = end.getX();
+        this.busY = end.getY();
     }
 
     // Return circle that represents bus on the map

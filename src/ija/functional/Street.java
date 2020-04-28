@@ -28,6 +28,7 @@ public class Street implements Drawable {
     private final List<Shape> elements;
     private Boolean blocked;
     private Color prev_color;
+    private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
 
     public Street(String name) {
@@ -36,6 +37,16 @@ public class Street implements Drawable {
         this.street_stops = new ArrayList<>();
         this.elements = new ArrayList<>();
         this.blocked = false;
+    }
+
+    public void setLine(Line newLine){
+        if(!(this.street_lines.contains(newLine))){
+            this.street_lines.add(newLine);
+        }
+    }
+
+    public List<Line> getLine(){
+        return this.street_lines;
     }
 
     public Coordinate end() {
