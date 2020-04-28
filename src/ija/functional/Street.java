@@ -165,9 +165,6 @@ public class Street implements Drawable {
             if ((int)Math.sqrt(second_coord_z) + (int)Math.sqrt(first_coord_z) == (int)Math.sqrt(second_first_z)){
                 stop.setStreet(this);
                 this.street_stops.add(stop);
-//                    Circle circle = new Circle(stop.getCoordinate().getX(), stop.getCoordinate().getY(), 5, Color.ORANGE);
-
-
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<>(stop, i);
                 stopLocation.add(e);
                 return true;

@@ -74,7 +74,7 @@
         </Stops>
         <Coordinates>
             <Coordinate x="250" y="20"/>
-            <Coordinate x="140" y="130"/>
+            <Coordinate x="300" y="30"/>
         </Coordinates>
     </Street>
     <Street name="Street 6">
@@ -253,6 +253,29 @@
         <Coordinates>
             <Coordinate x="220" y="380"/>
             <Coordinate x="170" y="380"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 20">
+        <Stops>
+            <Stop name="stop 20.1">
+                <Coordinate x="300" y="70"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="300" y="30"/>
+            <Coordinate x="300" y="100"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 21">
+        <Coordinates>
+            <Coordinate x="300" y="100"/>
+            <Coordinate x="470" y="220"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 22">
+        <Coordinates>
+            <Coordinate x="320" y="220"/>
+            <Coordinate x="300" y="200"/>
         </Coordinates>
     </Street>
 </Map>
