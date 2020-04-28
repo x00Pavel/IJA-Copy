@@ -38,21 +38,21 @@
             <Stop name="Stop 7"/>
         </Stops>
     </Line>
-<!--    <Line name="777" color="#00FF00">-->
-<!--        <Streets>-->
-<!--            <Street name="Street 7"/>-->
-<!--            <Street name="Street 3"/>-->
-<!--            <Street name="street 3_1"/>-->
-<!--            <Street name="Street 8"/>-->
-<!--        </Streets>-->
-<!--        <Stops>-->
-<!--            <Stop name="Stop 11"/>-->
-<!--            <Stop name="Stop 4"/>-->
-<!--            <Stop name="Stop 5"/>-->
-<!--            <Stop name="Stop 12"/>-->
-<!--            <Stop name="Stop 13"/>-->
-<!--        </Stops>-->
-<!--    </Line>-->
+    <Line name="777" color="#00FF00">
+        <Streets>
+            <Street name="Street 7"/>
+            <Street name="Street 3"/>
+            <Street name="street 3_1"/>
+            <Street name="Street 8"/>
+        </Streets>
+        <Stops>
+            <Stop name="Stop 11"/>
+            <Stop name="Stop 4"/>
+            <Stop name="Stop 5"/>
+            <Stop name="Stop 12"/>
+            <Stop name="Stop 13"/>
+        </Stops>
+    </Line>
     <Line name="53" color="#FFFF00">
         <Streets>
             <Street name="13_1"/>
