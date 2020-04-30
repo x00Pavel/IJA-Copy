@@ -8,7 +8,14 @@ public interface Line extends Drawable {
 		Line line = new MyLine(id);
 		return line;
 	}
-	
+
+	public static Line defaultLine(Line newLine){
+		Line line = new MyLine(newLine);
+		return line;
+	}
+
+	public String getId();
+
 	public boolean addStreet(Street street);
 	
 	public boolean addStop(Stop stop);

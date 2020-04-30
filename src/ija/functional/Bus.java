@@ -13,6 +13,7 @@ public class Bus implements Drawable {
 
     private String busName;
     private final Line busLine;
+    private Line busLineForUse;
     private double busX = 0;
     private double busY = 0;
     private final Circle gui;
@@ -21,11 +22,17 @@ public class Bus implements Drawable {
     private int speed = 5;
     private Street actual_bus_street = null;
     private int time_for_ring = 0;
+    private int time_in_stop_left = 0;
 
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
         this.busName = busName;
         this.busLine = busLine;
+        this.busLineForUse = Line.defaultLine(busLine);
+
+//        System.out.println("bus_line:   " + this.getBusLine());
+//        System.out.println("bus_line_for_use:   " + this.getBusLineForUse());
+
         this.busColor = Color.web(color);
         this.busX = busLine.getStreets().get(0).getCoordinates().get(0).getX();
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
@@ -64,6 +71,10 @@ public class Bus implements Drawable {
         return this.speed;
     }
 
+    public Integer getTimeInStopLeft(){
+        return this.time_in_stop_left;
+    }
+
     public Integer getTimeForRing(){
         return this.time_for_ring;
     }
@@ -72,29 +83,207 @@ public class Bus implements Drawable {
         return this.busColor;
     }
 
-    public void Move(){
-//        List <Street> myBusStreets = null;
-//        myBusStreets.addAll(busLine.getStreets());
+    public void calculatePosition(Integer hours, Integer minutes, Integer seconds){
+        int position_time = (hours*3600+minutes*60+seconds) % this.time_for_ring;
+
+        System.out.println("position time = " + position_time);
+
+        boolean position_found = false;
+
+        List<Stop> stops_for_readd = new ArrayList<>();
+        List<Street> streets_for_readd = new ArrayList<>();
+
+        int prev_time = 0;
+
+//        for (Street actual_street:busLine.getStreets()) {
+        for(int i = 0; i < this.busLine.getStreets().size(); i++){
+
+            Street actual_street = this.busLine.getStreets().get(i);
+
+            int stopsInStreet = 0;
+
+            for (Stop stop:actual_street.getStops()) {
+                if(this.busLine.getStops().contains(stop)){
+                    stopsInStreet++;
+                }
+            }
+
+            Coordinate start = actual_street.begin();
+            Coordinate end = actual_street.end();
+
+            double streetRangeX = end.getX() - start.getX();
+            double streetRangeY = end.getY() - start.getY();
+
+            int streetRange = (int) (Math.sqrt((streetRangeX * streetRangeX) + (streetRangeY * streetRangeY)));
+
+            int street_time_in_seconds = (streetRange / this.speed + stopsInStreet * 3) + prev_time;
+
+            System.out.println("street_time_in_seconds = " + street_time_in_seconds);
+
+            if(street_time_in_seconds > position_time){ // we are in street we need, set bus position
+
+                List<Stop> actual_street_stops = new ArrayList<>();
+
+                for(Stop stop: this.busLine.getStops()){
+                    if(actual_street.getStops().contains(stop)){
+                        actual_street_stops.add(stop);
+                    }
+                }
+
+                System.out.println("actual_street_stops: " + actual_street_stops);
+
+                for(int j = 0; j < actual_street_stops.size(); j++){
+                    Stop stop = actual_street_stops.get(j);
+
+                    stops_for_readd.add(stop);
+
+                    double rangeX = stop.getCoordinate().getX() - start.getX();
+                    double rangeY = stop.getCoordinate().getY() - start.getY();
+
+                    int range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
+
+                    int time_in_seconds_in_stop = (range / (this.speed + (j * 3))) + prev_time;
+                    int time_in_seconds_out_stop = time_in_seconds_in_stop + 3;
+
+                    if(time_in_seconds_in_stop > position_time){ // before stop
+                        double k = (double)(position_time - j*3 - prev_time)/(time_in_seconds_in_stop - j*3 - prev_time);
+                        double new_bus_x = rangeX*k;
+                        double new_bus_y = rangeY*k;
+
+                        this.busX = new_bus_x + start.getX();
+                        this.busY = new_bus_y + start.getY();
+                        position_found = true;
+
+                        stops_for_readd.remove(stop);
+                        for(Stop stop_for_readd: stops_for_readd){
+                            this.busLineForUse.getStops().remove(stop_for_readd);
+                            this.busLineForUse.getStops().add(stop_for_readd);
+                        }
+
+                        break;
+                    }else if(time_in_seconds_in_stop <= position_time && time_in_seconds_out_stop >= position_time){ // in stop
+                        this.actual_bus_street = stop.getStreet();
+                        this.busX = stop.getCoordinate().getX();
+                        this.busY = stop.getCoordinate().getY();
+                        position_found = true;
+                        this.time_in_stop_left = 3 - (position_time - time_in_seconds_in_stop);
+                        stop.setTime(Arrays.asList(this.time_for_ring + this.time_in_stop_left), this);
+                        stop.setFlag(-1);
+
+                        for(Stop stop_for_readd: stops_for_readd){
+                            this.busLineForUse.getStops().remove(stop_for_readd);
+                            this.busLineForUse.getStops().add(stop_for_readd);
+                        }
+
+                        break;
+                    }else if(position_time > time_in_seconds_out_stop){
+                        int new_time_to_stop = this.time_for_ring - (position_time-time_in_seconds_out_stop);
+                        stop.setTime(Arrays.asList(new_time_to_stop), this);
+                        stop.setFlag(-1);
+                    }
+
+                }
+
+                if(position_found){
+                    break;
+                }
+
+//                System.out.println("Street range = " + streetRange);
 //
-//        List<Stop> myBusStops = null;
-//        myBusStops.addAll(busLine.getStops());
+//                System.out.println("Street time = " + street_time_in_seconds);
+//
+//                System.out.println("position time = " + position_time);
 
-        List<Street> myBusStreets = new ArrayList<>(busLine.getStreets());
-        List<Stop> myBusStops = new ArrayList<>(busLine.getStops());
+                double k =  (double)(position_time - stopsInStreet*3 - prev_time)/(street_time_in_seconds - stopsInStreet*3 - prev_time);
 
-//        System.out.println(myBusStreets);
+//                System.out.println("stopsInStreet = " + stopsInStreet);
+//
+//                System.out.println("k = " + k);
+
+                double new_bus_x = streetRangeX*k;
+                double new_bus_y = streetRangeY*k;
+
+                this.busX = new_bus_x + start.getX();
+                this.busY = new_bus_y + start.getY();
+
+                for(Stop stop_for_readd: stops_for_readd){
+                    this.busLineForUse.getStops().remove(stop_for_readd);
+                    this.busLineForUse.getStops().add(stop_for_readd);
+                }
+                prev_time = street_time_in_seconds;
+                break;
+            }else{
+                prev_time = street_time_in_seconds;
+                streets_for_readd.add(actual_street);
+
+                for(Stop stop_for_readd: this.busLine.getStops()){
+                    if(actual_street.getStops().contains(stop_for_readd)){
+                        this.busLineForUse.getStops().remove(stop_for_readd);
+                        this.busLineForUse.getStops().add(stop_for_readd);
+                    }
+                }
+
+//                int new_time_to_stop = this.time_for_ring - (position_time-time_in_seconds_out_stop);
+//                stop.setTime(Arrays.asList(new_time_to_stop), this);
+//                stop.setFlag(-1);
+            }
+        }
+
+        for(Street street_for_readd: streets_for_readd){
+            this.busLineForUse.getStreets().remove(street_for_readd);
+            this.busLineForUse.getStreets().add(street_for_readd);
+        }
+
+    }
+
+    public void Move(){
+        List<Street> myBusStreets = new ArrayList<>(this.busLineForUse.getStreets());
+        List<Stop> myBusStops = new ArrayList<>(this.busLineForUse.getStops());
+
+//        System.out.println("myBusStreets :" + myBusStreets);
+//        System.out.println("myBusStops :" + myBusStops);
+
+        if(this.time_in_stop_left != 0){
+            try {
+                Thread.sleep(this.time_in_stop_left*Main.getClockSpeed());
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+            this.time_in_stop_left = 0;
+        }
+
+        boolean restart_flag = false;
 
         for (Street actualStreet : myBusStreets) {
+            if(restart_flag){
+                break;
+            }
             this.actual_bus_street = actualStreet;
+            if(actualStreet.getId().equals(this.busLine.getStreets().get(this.busLine.getStreets().size()-1).getId())){
+                restart_flag = true;
+            }
             List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<>(actualStreet.getStopLocation());
             for (int k = 0; k < actualStreet.getCoordinates().size() - 1; k++) {
 
                 Coordinate first = actualStreet.getCoordinates().get(k);
                 Coordinate second = actualStreet.getCoordinates().get(k + 1);
 
-                if(this.getBusX() == second.getX() && this.busY == second.getY()) {
+                if(this.busX == second.getX() && this.busY == second.getY()) {
                     second = first;
                 }
+
+//                for(Stop actual_bus_in_this_stop: myBusStops){
+//                    if(this.busX == actual_bus_in_this_stop.getCoordinate().getX() && this.busY == actual_bus_in_this_stop.getCoordinate().getY()){
+//                        System.out.println("IM HERE");
+//                        try {
+//                            Thread.sleep(Main.getClockSpeed()*3);
+//                        } catch (InterruptedException interruptedException) {
+//                            interruptedException.printStackTrace();
+//                        }
+//
+//                        myBusStops.remove(actual_bus_in_this_stop);
+//                    }
+//                }
 
                 if(actualStreet.getStops().isEmpty()){
                     calculateAndGo(second);
@@ -192,7 +381,7 @@ public class Bus implements Drawable {
     @Override
     public void setInfo(Pane container) {
         this.gui.setOnMouseClicked(event -> {
-            List<Street> streets = this.busLine.getStreets();
+            List<Street> streets = this.busLineForUse.getStreets();
             this.checked = !this.checked;
             boolean c = this.checked;
             Platform.runLater(new Runnable() {
@@ -215,5 +404,11 @@ public class Bus implements Drawable {
 
     public Line getBusLine(){
         return this.busLine;
+    }
+    public Line getBusLineForUse(){
+        return this.busLineForUse;
+    }
+    public void setBusLineForUse(Line newLine){
+        this.busLineForUse = newLine;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Clock implements Runnable{
 
-    private int speed = 1;
+    private int speed = 1000;
     private int hours = 0;
     private int minutes = 0;
     private int seconds = 0;
@@ -39,22 +39,40 @@ public class Clock implements Runnable{
 
     @Override
     public void run() {
+        String hours_for_print;
+        String minutes_for_print;
+        String seconds_for_print;
         while(true){
             this.seconds++;
             if(this.seconds == 60){
                 this.minutes++;
                 this.seconds = 0;
             }
+            if(this.seconds < 10){
+                seconds_for_print = "0" + Integer.toString(this.seconds);
+            }else{
+                seconds_for_print = Integer.toString(this.seconds);
+            }
             if(this.minutes == 60){
                 this.hours++;
                 this.minutes = 0;
             }
+            if(this.hours < 10){
+                minutes_for_print = "0" + Integer.toString(this.minutes);
+            }else{
+                minutes_for_print = Integer.toString(this.minutes);
+            }
             if(this.hours == 24){
                 this.hours = 0;
             }
-            System.out.println(this.hours+":"+this.minutes+":"+this.seconds);
+            if(this.hours < 10){
+                hours_for_print = "0" + Integer.toString(this.hours);
+            }else{
+                hours_for_print = Integer.toString(this.hours);
+            }
+            System.out.println(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
             try {
-                Thread.sleep(Main.getClockSpeed());
+                Thread.sleep(this.speed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

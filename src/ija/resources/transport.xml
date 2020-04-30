@@ -17,72 +17,72 @@
             <Stop name="Stop 6"/>
         </Stops>
     </Line>
-    <Line name="999" color="#FF0000" time="183">
-        <Streets>
-            <Street name="street 20"/>
-            <Street name="street 21"/>
-            <Street name="13_1"/>
-            <Street name="street 22"/>
-            <Street name="Street 7"/>
-            <Street name="Street 2"/>
-            <Street name="Street 6"/>
-            <Street name="Street 5"/>
-        </Streets>
-        <Stops>
-            <Stop name="stop 20.1"/>
-            <Stop name="stop 13.3"/>
-            <Stop name="stop 13.2"/>
-            <Stop name="Stop 11"/>
-            <Stop name="Stop 3"/>
-            <Stop name="Stop 8"/>
-            <Stop name="Stop 7"/>
-        </Stops>
-    </Line>
-    <Line name="777" color="#00FF00" time="130">
-        <Streets>
-            <Street name="Street 7"/>
-            <Street name="Street 3"/>
-            <Street name="street 3_1"/>
-            <Street name="Street 8"/>
-        </Streets>
-        <Stops>
-            <Stop name="Stop 11"/>
-            <Stop name="Stop 4"/>
-            <Stop name="Stop 5"/>
-            <Stop name="Stop 12"/>
-            <Stop name="Stop 13"/>
-        </Stops>
-    </Line>
-    <Line name="53" color="#FFFF00" time="222">
-        <Streets>
-            <Street name="13_1"/>
-            <Street name="street 13"/>
-            <Street name="12_1"/>
-            <Street name="12"/>
-            <Street name="street 11"/>
-            <Street name="street 10"/>
-            <Street name="street 19"/>
-            <Street name="street 18"/>
-            <Street name="street 17"/>
-            <Street name="street 16"/>
-            <Street name="street 15_1"/>
-            <Street name="street 15"/>
-            <Street name="street 14"/>
-        </Streets>
-        <Stops>
-            <Stop name="stop 13.3"/>
-            <Stop name="stop 13.2"/>
-            <Stop name="stop 13.1"/>
-            <Stop name="stop 12.2"/>
-            <Stop name="stop 12.1"/>
-            <Stop name="stop 11.1"/>
-            <Stop name="stop 10.2"/>
-            <Stop name="stop 10.1"/>
-            <Stop name="stop 19.1"/>
-            <Stop name="stop 18.1"/>
-            <Stop name="stop 17.2"/>
-            <Stop name="stop 17.1"/>
-            <Stop name="stop 16.1"/>
-        </Stops>
-    </Line>
+<!--    <Line name="999" color="#FF0000" time="183">-->
+<!--        <Streets>-->
+<!--            <Street name="street 20"/>-->
+<!--            <Street name="street 21"/>-->
+<!--            <Street name="13_1"/>-->
+<!--            <Street name="street 22"/>-->
+<!--            <Street name="Street 7"/>-->
+<!--            <Street name="Street 2"/>-->
+<!--            <Street name="Street 6"/>-->
+<!--            <Street name="Street 5"/>-->
+<!--        </Streets>-->
+<!--        <Stops>-->
+<!--            <Stop name="stop 20.1"/>-->
+<!--            <Stop name="stop 13.3"/>-->
+<!--            <Stop name="stop 13.2"/>-->
+<!--            <Stop name="Stop 11"/>-->
+<!--            <Stop name="Stop 3"/>-->
+<!--            <Stop name="Stop 8"/>-->
+<!--            <Stop name="Stop 7"/>-->
+<!--        </Stops>-->
+<!--    </Line>-->
+<!--    <Line name="777" color="#00FF00" time="130">-->
+<!--        <Streets>-->
+<!--            <Street name="Street 7"/>-->
+<!--            <Street name="Street 3"/>-->
+<!--            <Street name="street 3_1"/>-->
+<!--            <Street name="Street 8"/>-->
+<!--        </Streets>-->
+<!--        <Stops>-->
+<!--            <Stop name="Stop 11"/>-->
+<!--            <Stop name="Stop 4"/>-->
+<!--            <Stop name="Stop 5"/>-->
+<!--            <Stop name="Stop 12"/>-->
+<!--            <Stop name="Stop 13"/>-->
+<!--        </Stops>-->
+<!--    </Line>-->
+<!--    <Line name="53" color="#FFFF00" time="222">-->
+<!--        <Streets>-->
+<!--            <Street name="13_1"/>-->
+<!--            <Street name="street 13"/>-->
+<!--            <Street name="12_1"/>-->
+<!--            <Street name="12"/>-->
+<!--            <Street name="street 11"/>-->
+<!--            <Street name="street 10"/>-->
+<!--            <Street name="street 19"/>-->
+<!--            <Street name="street 18"/>-->
+<!--            <Street name="street 17"/>-->
+<!--            <Street name="street 16"/>-->
+<!--            <Street name="street 15_1"/>-->
+<!--            <Street name="street 15"/>-->
+<!--            <Street name="street 14"/>-->
+<!--        </Streets>-->
+<!--        <Stops>-->
+<!--            <Stop name="stop 13.3"/>-->
+<!--            <Stop name="stop 13.2"/>-->
+<!--            <Stop name="stop 13.1"/>-->
+<!--            <Stop name="stop 12.2"/>-->
+<!--            <Stop name="stop 12.1"/>-->
+<!--            <Stop name="stop 11.1"/>-->
+<!--            <Stop name="stop 10.2"/>-->
+<!--            <Stop name="stop 10.1"/>-->
+<!--            <Stop name="stop 19.1"/>-->
+<!--            <Stop name="stop 18.1"/>-->
+<!--            <Stop name="stop 17.2"/>-->
+<!--            <Stop name="stop 17.1"/>-->
+<!--            <Stop name="stop 16.1"/>-->
+<!--        </Stops>-->
+<!--    </Line>-->
 </Transports>

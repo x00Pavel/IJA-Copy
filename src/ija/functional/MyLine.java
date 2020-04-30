@@ -22,6 +22,18 @@ public class MyLine implements Line{
 		this.id = id;
 	}
 
+	public MyLine(Line newLine){
+		this.id = newLine.getId();
+		this.streets = new ArrayList<>(newLine.getStreets());
+		this.stops = new ArrayList<>(newLine.getStops());
+		this.line = newLine.getRoute();
+	}
+
+	@Override
+	public String getId(){
+		return this.id;
+	}
+
 	@Override
 	public boolean addStreet(Street street) {
 		if (this.streets.isEmpty()) {

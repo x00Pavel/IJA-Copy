@@ -31,14 +31,11 @@ public class Updater implements Runnable{
                         Circle c = (Circle)bus.getGUI().get(0);
                         c.setCenterX(bus.getBusX());
                         c.setCenterY(bus.getBusY());
+//                        System.out.println(bus.getBusX());
+//                        System.out.println(bus.getBusY());
 
-//                        Stop stop = bus.getBusLine().getStops().get(0); // 147 seconds full road
-//                        for(Stop stop: bus.getBusLine().getStops()){
-//                            stop.setTime(calculateTime(stop, bus));
-//                        }
-
-                        for(int i = 0; i < bus.getBusLine().getStops().size(); i++){
-                            Stop stop = bus.getBusLine().getStops().get(i);
+                        for(int i = 0; i < bus.getBusLineForUse().getStops().size(); i++){
+                            Stop stop = bus.getBusLineForUse().getStops().get(i);
                             stop.setTime(calculateTime(stop, bus, i), bus);
                         }
                     }
@@ -54,7 +51,7 @@ public class Updater implements Runnable{
 
     public List<Integer> calculateTime(Stop stop, Bus bus, int stopsBefore){
         Street actual_street = bus.getActualBusStreet();
-        List<Street> bus_streets = new ArrayList<>(bus.getBusLine().getStreets());
+        List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
 
         int hours = 0;
@@ -80,8 +77,8 @@ public class Updater implements Runnable{
 
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
 
-                bus_streets.indexOf(actual_street);
-                bus_streets.indexOf(stop_street);
+//                bus_streets.indexOf(actual_street);
+//                bus_streets.indexOf(stop_street);
 
                 for (int i = bus_streets.indexOf(actual_street) + 1; i < bus_streets.indexOf(stop_street); i++) {
                     int street_range = calculateStreetRange(bus_streets.get(i));
@@ -96,7 +93,7 @@ public class Updater implements Runnable{
                 range = range + lastRange;
             }
 
-            time_in_seconds = range / bus.getSpeed() + stopsBefore * 3;
+            time_in_seconds = range / bus.getSpeed() + stopsBefore * 3 + bus.getTimeInStopLeft();
 
             flagInStop = -1;
             stop.setFlag(flagInStop);

@@ -28,7 +28,10 @@ public class Main extends Application {
     public static List<Bus> list_bus;
     public static List<Drawable> items;
 
-    private static int clock_speed = 100; // here we can set a clock speed
+    private static int clock_speed = 50; // here we can set a clock speed
+    private static int hours = 23;
+    private static int minutes = 57;
+    private static int seconds = 13;
 
     @Override
     public void start(Stage primaryStage) {
@@ -55,6 +58,10 @@ public class Main extends Application {
         list_bus = controller.buildLines(fileTransport);
         items.addAll(list_bus);
 
+        for(Bus bus: list_bus){
+            bus.calculatePosition(hours, minutes, seconds);
+        }
+
         controller.setElements(items);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -65,11 +72,11 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2); // change 4->5 for ViewUpdater ON
+        ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus));
+            executorService.submit(new BackEnd(actual_bus,hours,minutes,seconds));
         }
-        executorService.submit(new Clock(clock_speed,0,0,0));
+        executorService.submit(new Clock(clock_speed,hours,minutes,seconds));
         executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {

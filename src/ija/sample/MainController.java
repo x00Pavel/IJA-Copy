@@ -98,16 +98,16 @@ public class MainController{
                 Street new_street = null;
                 try {
                     NodeList stops = street.getElementsByTagName("Stops").item(0).getChildNodes();
-                    System.out.println(stops.getLength());
+//                    System.out.println(stops.getLength());
                     for (int i = 0; i < stops.getLength(); i++) {
                         if (stops.item(i).getNodeType() == Node.ELEMENT_NODE) {
                             Element tmp = (Element) stops.item(i);
                             String stopName = tmp.getAttribute("name");
-                            System.out.println(tmp.getNodeName());
+//                            System.out.println(tmp.getNodeName());
                             NodeList tmp_node = tmp.getChildNodes();
                             for (int j = 0; j < tmp_node.getLength(); j++) {
                                 if (tmp_node.item(j).getNodeType() == Node.ELEMENT_NODE) {
-                                    System.out.println(tmp_node.item(j).getNodeName());
+//                                    System.out.println(tmp_node.item(j).getNodeName());
                                     Element tmp_coord = (Element) tmp_node.item(j);
                                     int x = Integer.parseInt(tmp_coord.getAttribute("x"));
                                     int y = Integer.parseInt(tmp_coord.getAttribute("y"));
