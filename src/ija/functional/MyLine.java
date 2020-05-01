@@ -3,18 +3,18 @@ package ija.functional;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
-import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MyLine implements Line{
-	
-	@SuppressWarnings("unused")
+
 	private String id;
 	
 	private List<Street> streets = new ArrayList<>();
+	private HashMap<String, String> streets_types = new HashMap<>();
 	private List<Stop> stops = new ArrayList<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	
@@ -27,6 +27,16 @@ public class MyLine implements Line{
 		this.streets = new ArrayList<>(newLine.getStreets());
 		this.stops = new ArrayList<>(newLine.getStops());
 		this.line = newLine.getRoute();
+		this.streets_types = newLine.getStreetsTypes();
+	}
+
+	@Override
+	public HashMap<String, String> getStreetsTypes(){
+		return this.streets_types;
+	}
+	@Override
+	public void addStreetType(String street_name, String street_type){
+		this.streets_types.put(street_name,street_type);
 	}
 
 	@Override

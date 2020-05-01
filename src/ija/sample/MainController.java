@@ -1,38 +1,22 @@
 package ija.sample;
 
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
 
 import ija.functional.*;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.Initializable;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.ScrollEvent;
@@ -51,7 +35,7 @@ public class MainController{
     @FXML
     private Pane content;
 
-    public void setClock(){
+    public void setClock(){ // my bad try
         System.out.println("alomalo");
     }
 
@@ -195,13 +179,16 @@ public class MainController{
                     if (streets_names.item(i).getNodeType() == Node.ELEMENT_NODE) {
                         Element tmp_street = (Element) streets_names.item(i);
                         String name = tmp_street.getAttribute("name");
+                        String type = tmp_street.getAttribute("type");
 
                         boolean addStreetFlag = false;
 
                         for (Street need_this_street : list_streets) {
                             if (name.equals(need_this_street.getId())) {
                                 tempLine.addStreet(need_this_street); // add street in Line
+                                tempLine.addStreetType(need_this_street.getId(),type); // add street type
                                 addStreetFlag = true;
+                                break;
                             }
                         }
 

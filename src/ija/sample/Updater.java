@@ -7,7 +7,6 @@ import ija.functional.Stop;
 import ija.functional.Street;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +30,6 @@ public class Updater implements Runnable{
                         Circle c = (Circle)bus.getGUI().get(0);
                         c.setCenterX(bus.getBusX());
                         c.setCenterY(bus.getBusY());
-//                        System.out.println(bus.getBusX());
-//                        System.out.println(bus.getBusY());
 
                         for(int i = 0; i < bus.getBusLineForUse().getStops().size(); i++){
                             Stop stop = bus.getBusLineForUse().getStops().get(i);
@@ -49,14 +46,10 @@ public class Updater implements Runnable{
         }
     }
 
-    public List<Integer> calculateTime(Stop stop, Bus bus, int stopsBefore){
+    public List<Integer> calculateTime(Stop stop, Bus bus, int stopsBefore){ // calculating a time for every bus and every stop
         Street actual_street = bus.getActualBusStreet();
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
-
-        int hours = 0;
-        int minutes = 0;
-        int seconds = 0;
 
         int time_in_seconds = -1;
 
@@ -71,22 +64,32 @@ public class Updater implements Runnable{
 
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
             } else {
-                Coordinate actual_street_end = actual_street.end();
+                Coordinate actual_street_end;
+                if(bus.getBusLineForUse().getStreetsTypes().get(actual_street.getId()).equals("back")){
+                    actual_street_end = actual_street.begin();
+                }else{
+                    actual_street_end = actual_street.end();
+                }
                 double rangeX = actual_street_end.getX() - bus.getBusX();
                 double rangeY = actual_street_end.getY() - bus.getBusY();
 
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
-
-//                bus_streets.indexOf(actual_street);
-//                bus_streets.indexOf(stop_street);
 
                 for (int i = bus_streets.indexOf(actual_street) + 1; i < bus_streets.indexOf(stop_street); i++) {
                     int street_range = calculateStreetRange(bus_streets.get(i));
                     range = range + street_range;
                 }
 
-                double lastRangeX = stop.getCoordinate().getX() - stop_street.begin().getX();
-                double lastRangeY = stop.getCoordinate().getY() - stop_street.begin().getY();
+                double lastRangeX;
+                double lastRangeY;
+
+                if(bus.getBusLineForUse().getStreetsTypes().get(stop_street.getId()).equals("back")){
+                    lastRangeX = stop.getCoordinate().getX() - stop_street.end().getX();
+                    lastRangeY = stop.getCoordinate().getY() - stop_street.end().getY();
+                }else{
+                    lastRangeX = stop.getCoordinate().getX() - stop_street.begin().getX();
+                    lastRangeY = stop.getCoordinate().getY() - stop_street.begin().getY();
+                }
 
                 int lastRange = (int) (Math.sqrt((lastRangeX * lastRangeX) + (lastRangeY * lastRangeY)));
 

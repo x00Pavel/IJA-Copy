@@ -57,7 +57,7 @@ public class Clock implements Runnable{
                 this.hours++;
                 this.minutes = 0;
             }
-            if(this.hours < 10){
+            if(this.minutes < 10){
                 minutes_for_print = "0" + Integer.toString(this.minutes);
             }else{
                 minutes_for_print = Integer.toString(this.minutes);

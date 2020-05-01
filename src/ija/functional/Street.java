@@ -30,6 +30,7 @@ public class Street implements Drawable {
     private Color prev_color;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
+//    private String type = "empty"; // now streets have a type (direction)
 
     public Street(String name) {
         this.street_name = name;
@@ -39,11 +40,30 @@ public class Street implements Drawable {
         this.blocked = false;
     }
 
+//    public Street(Street street){
+//        this.street_name = street.street_name;
+//        this.cords = new ArrayList<>(street.cords);
+//        this.street_stops = street.street_stops;
+//        this.elements = street.elements;
+//        this.blocked = street.blocked;
+//        this.line = street.line;
+//        this.stopLocation = street.stopLocation;
+////        this.prev_color = street.prev_color;
+////        this.street_lines = street.street_lines;
+//    }
+
     public void setLine(Line newLine){
         if(!(this.street_lines.contains(newLine))){
             this.street_lines.add(newLine);
         }
     }
+
+//    public void setType(String type){
+//        this.type = type;
+//    }
+//    public String getType(){
+//        return this.type;
+//    }
 
     public List<Line> getLine(){
         return this.street_lines;
@@ -54,9 +74,17 @@ public class Street implements Drawable {
         return this.getCoordinates().get(lst.size() - 1);
     }
 
+    public void setEnd(Coordinate new_end){
+        this.getCoordinates().add(new_end);
+    }
+
     public Coordinate begin() {
         List<Coordinate> lst = this.getCoordinates();
         return lst.get(0);
+    }
+
+    public void setBegin(Coordinate begin){
+        this.getCoordinates().add(0,begin);
     }
 
     public boolean follows(Street s) {
@@ -282,6 +310,7 @@ public class Street implements Drawable {
     }
 
     public void changeLineColor(Color color) {
+        System.out.println("ALO");
         this.prev_color = (Color) this.line.getStroke();
         this.line.setStroke(color);
     }

@@ -28,10 +28,10 @@ public class Main extends Application {
     public static List<Bus> list_bus;
     public static List<Drawable> items;
 
-    private static int clock_speed = 50; // here we can set a clock speed
-    private static int hours = 23;
-    private static int minutes = 57;
-    private static int seconds = 13;
+    private static int clock_speed = 250; // here we can set a clock speed and start time
+    private static int hours = 0;
+    private static int minutes = 2;
+    private static int seconds = 21;
 
     @Override
     public void start(Stage primaryStage) {
@@ -58,7 +58,7 @@ public class Main extends Application {
         list_bus = controller.buildLines(fileTransport);
         items.addAll(list_bus);
 
-        for(Bus bus: list_bus){
+        for(Bus bus: list_bus){ // for every bus calculate a start position
             bus.calculatePosition(hours, minutes, seconds);
         }
 

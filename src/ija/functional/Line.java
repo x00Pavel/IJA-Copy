@@ -1,5 +1,6 @@
 package ija.functional;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface Line extends Drawable {
@@ -13,6 +14,10 @@ public interface Line extends Drawable {
 		Line line = new MyLine(newLine);
 		return line;
 	}
+
+	public HashMap<String, String> getStreetsTypes();
+
+	public void addStreetType(String street_name, String street_type);
 
 	public String getId();
 
