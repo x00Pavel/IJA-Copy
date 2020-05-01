@@ -1,11 +1,5 @@
 package ija.sample;
 
-import ija.Main;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Clock implements Runnable{
 
     private int speed = 1000;

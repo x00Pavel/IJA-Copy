@@ -211,7 +211,8 @@ public class MainController{
 
                         for (Stop need_this_stop : list_stops) {
                             if (name.equals(need_this_stop.getId())) {
-                                tempLine.addStop(new Stop(need_this_stop)); // add stop in Line
+                                tempLine.addStop(need_this_stop);
+//                                tempLine.addStop(new Stop(need_this_stop)); // add stop in Line
                                 addStopFlag = true;
                                 break;
                             }
@@ -226,6 +227,10 @@ public class MainController{
                     }
                 }
 
+                for(Stop stop:tempLine.getStops()){
+                    tempLine.addStopsTimes(stop.getId(),0);
+                    tempLine.addStopsFlags(stop.getId(), 0);
+                }
 
                 Bus tempBus = new Bus(lineName, tempLine, busColor, time_for_ring); // create new bus, name is same as line name
                 tempBus.setInfo(content);

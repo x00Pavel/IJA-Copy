@@ -28,10 +28,10 @@ public class Main extends Application {
     public static List<Bus> list_bus;
     public static List<Drawable> items;
 
-    private static int clock_speed = 250; // here we can set a clock speed and start time
+    private static int clock_speed = 1000; // here we can set a clock speed and start time
     private static int hours = 0;
     private static int minutes = 2;
-    private static int seconds = 21;
+    private static int seconds = 27;
 
     @Override
     public void start(Stage primaryStage) {

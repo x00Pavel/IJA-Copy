@@ -33,7 +33,8 @@ public class Updater implements Runnable{
 
                         for(int i = 0; i < bus.getBusLineForUse().getStops().size(); i++){
                             Stop stop = bus.getBusLineForUse().getStops().get(i);
-                            stop.setTime(calculateTime(stop, bus, i), bus);
+//                            stop.setTime(calculateTime(stop, bus, i), bus);
+                            bus.getBusLineForUse().addStopsTimes(stop.getId(), calculateTime(stop, bus, i));
                         }
                     }
                 }
@@ -46,7 +47,7 @@ public class Updater implements Runnable{
         }
     }
 
-    public List<Integer> calculateTime(Stop stop, Bus bus, int stopsBefore){ // calculating a time for every bus and every stop
+    public Integer calculateTime(Stop stop, Bus bus, int stopsBefore){ // calculating a time for every bus and every stop
         Street actual_street = bus.getActualBusStreet();
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
@@ -55,7 +56,7 @@ public class Updater implements Runnable{
 
         int range = 0;
 
-        int flagInStop = stop.getFlag();
+        int flagInStop = bus.getBusLineForUse().getStopsFlags().get(stop.getId());
 
         if(flagInStop == 0) {
             if (actual_street.equals(stop_street)) {
@@ -99,21 +100,22 @@ public class Updater implements Runnable{
             time_in_seconds = range / bus.getSpeed() + stopsBefore * 3 + bus.getTimeInStopLeft();
 
             flagInStop = -1;
-            stop.setFlag(flagInStop);
+            bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
+//            stop.setFlag(flagInStop);
 
         }else if(flagInStop == 1){
-            time_in_seconds = bus.getTimeForRing();
+            time_in_seconds = bus.getTimeForRing()+1; // mb need +1
             flagInStop = -1;
-            stop.setFlag(flagInStop);
+            bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
         }else if(flagInStop == -1){
-            time_in_seconds = stop.getTime() - 1;
+            time_in_seconds = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
             if(time_in_seconds == 0){
                 flagInStop = 1;
-                stop.setFlag(flagInStop);
+                bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
             }
         }
 
-        return Arrays.asList(time_in_seconds);
+        return time_in_seconds;
     }
 
     public Integer calculateStreetRange(Street first){

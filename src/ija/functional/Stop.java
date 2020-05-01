@@ -16,10 +16,10 @@ public class Stop implements Drawable {
     private Coordinate stop_cord = null;
     private Street stop_street = null;
     private Circle elements_gui;
-    private int hours = 0;
-    private int minutes = 0;
-    private int seconds = 0;
-    private int wasInStop = 0;
+//    private int hours = 0;
+//    private int minutes = 0;
+//    private int seconds = 0;
+//    private int wasInStop = 0;
 
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
@@ -31,16 +31,16 @@ public class Stop implements Drawable {
         } catch (Exception ignored) { }
     }
 
-    public Stop(Stop stop){
-        this.stop_id = stop.getId();
-        this.stop_cord = stop.getCoordinate();
-        this.stop_street = stop.getStreet();
-        this.elements_gui = (Circle)stop.getGUI().get(0);
-        this.seconds = stop.getTime();
-        this.hours = this.seconds/3600;
-        this.minutes = this.seconds/60;
-        this.wasInStop = stop.getFlag();
-    }
+//    public Stop(Stop stop){
+//        this.stop_id = stop.getId();
+//        this.stop_cord = stop.getCoordinate();
+//        this.stop_street = stop.getStreet();
+//        this.elements_gui = (Circle)stop.getGUI().get(0);
+//        this.seconds = stop.getTime();
+//        this.hours = this.seconds/3600;
+//        this.minutes = this.seconds/60;
+//        this.wasInStop = stop.getFlag();
+//    }
 
     public static Stop defaultStop(String id, Coordinate c){
         return new Stop(id, c);
@@ -108,32 +108,32 @@ public class Stop implements Drawable {
         return this.stop_street;
     }
 
-    public Integer getTime(){
-//        return Arrays.asList(this.hours,this.minutes,this.seconds);
-        return this.seconds;
-    }
+//    public Integer getTime(){
+////        return Arrays.asList(this.hours,this.minutes,this.seconds);
+//        return this.seconds;
+//    }
 
-    public int getFlag(){
-        return this.wasInStop;
-    }
+//    public int getFlag(){
+//        return this.wasInStop;
+//    }
 
-    public void setFlag(Integer newFlag){
-        this.wasInStop = newFlag;
-    }
+//    public void setFlag(Integer newFlag){
+//        this.wasInStop = newFlag;
+//    }
 
-    public void setTime(List<Integer> newTime, Bus bus){
-        this.seconds = newTime.get(0);
-        this.hours = this.seconds/3600;
-        this.minutes = this.seconds/60;
-        String dopLine = "";
-        if(this.seconds == 0){
-            dopLine = "<---------------------------bus is here!";
-            System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
-        }else{
-            dopLine = "";
-        }
-//        System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
-    }
+//    public void setTime(List<Integer> newTime, Bus bus){
+//        this.seconds = newTime.get(0);
+//        this.hours = this.seconds/3600;
+//        this.minutes = this.seconds/60;
+//        String dopLine = "";
+//        if(this.seconds == 0){
+//            dopLine = "<---------------------------bus is here!";
+//            System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
+//        }else{
+//            dopLine = "";
+//        }
+////        System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
+//    }
 
     @Override
     public List<Shape> getGUI() {
@@ -142,7 +142,7 @@ public class Stop implements Drawable {
 
     @Override
     public void setInfo(Pane container) {
-        Label label = new Label(this.getId()+" "+this.hours+":"+this.minutes+":"+this.seconds);
+        Label label = new Label(this.getId());
         label.setVisible(false);
         label.setStyle("-fx-background-color:YELLOW");
         label.setLabelFor(this.elements_gui);

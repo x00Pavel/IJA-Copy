@@ -16,6 +16,8 @@ public class MyLine implements Line{
 	private List<Street> streets = new ArrayList<>();
 	private HashMap<String, String> streets_types = new HashMap<>();
 	private List<Stop> stops = new ArrayList<>();
+	private HashMap<String, Integer> stops_times = new HashMap<>(); // name_of_stop:time_to_stop_left
+	private HashMap<String, Integer> stops_flags = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	
 	public MyLine(String id) {
@@ -28,15 +30,49 @@ public class MyLine implements Line{
 		this.stops = new ArrayList<>(newLine.getStops());
 		this.line = newLine.getRoute();
 		this.streets_types = newLine.getStreetsTypes();
+		this.stops_flags = newLine.getStopsFlags();
+		this.stops_times = newLine.getStopsTimes();
 	}
 
 	@Override
 	public HashMap<String, String> getStreetsTypes(){
 		return this.streets_types;
 	}
+
+	@Override
+	public HashMap<String, Integer> getStopsTimes() {
+		return this.stops_times;
+	}
+
+	@Override
+	public HashMap<String, Integer> getStopsFlags() {
+		return this.stops_flags;
+	}
+
 	@Override
 	public void addStreetType(String street_name, String street_type){
-		this.streets_types.put(street_name,street_type);
+		this.streets_types.put(street_name, street_type);
+	}
+
+	@Override
+	public void addStopsTimes(String stop_name, Integer stop_time){
+		this.stops_times.put(stop_name, stop_time);
+		int seconds = stop_time;
+        int hours = stop_time/3600;
+        int minutes = stop_time/60;
+        String dopLine = "";
+        if(seconds == 0){
+            dopLine = "<---------------------------bus is here!";
+            System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine);
+        }else{
+            dopLine = "";
+        }
+//        System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
+	}
+
+	@Override
+	public void addStopsFlags(String stop_name, Integer stop_flag){
+		this.stops_flags.put(stop_name, stop_flag);
 	}
 
 	@Override

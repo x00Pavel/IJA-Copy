@@ -17,7 +17,15 @@ public interface Line extends Drawable {
 
 	public HashMap<String, String> getStreetsTypes();
 
+	public HashMap<String, Integer> getStopsTimes();
+
+	public HashMap<String, Integer> getStopsFlags();
+
 	public void addStreetType(String street_name, String street_type);
+
+	public void addStopsTimes(String stop_name, Integer stop_time);
+
+	public void addStopsFlags(String stop_name, Integer stop_flag);
 
 	public String getId();
 

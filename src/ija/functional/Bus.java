@@ -179,8 +179,10 @@ public class Bus implements Drawable {
                         this.busY = stop.getCoordinate().getY();
                         position_found = true;
                         this.time_in_stop_left = 3 - (position_time - time_in_seconds_in_stop);
-                        stop.setTime(Arrays.asList(this.time_for_ring + this.time_in_stop_left), this);
-                        stop.setFlag(-1);
+                        this.getBusLineForUse().addStopsTimes(stop.getId(),(this.time_for_ring + this.time_in_stop_left));
+//                        stop.setTime(Arrays.asList(this.time_for_ring + this.time_in_stop_left), this);
+                        this.getBusLineForUse().addStopsFlags(stop.getId(), -1);
+//                        stop.setFlag(-1);
 
                         for(Stop stop_for_readd: stops_for_readd){
                             this.busLineForUse.getStops().remove(stop_for_readd);
@@ -190,8 +192,10 @@ public class Bus implements Drawable {
                         break;
                     }else if(position_time > time_in_seconds_out_stop){
                         int new_time_to_stop = this.time_for_ring - (position_time-time_in_seconds_out_stop);
-                        stop.setTime(Arrays.asList(new_time_to_stop), this);
-                        stop.setFlag(-1);
+                        this.getBusLineForUse().addStopsTimes(stop.getId(),new_time_to_stop);
+//                        stop.setTime(Arrays.asList(new_time_to_stop), this);
+                        this.getBusLineForUse().addStopsFlags(stop.getId(), -1);
+//                        stop.setFlag(-1);
                     }
 
                 }
