@@ -1,5 +1,6 @@
 package ija.functional;
 
+import ija.sample.MainController;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
@@ -161,7 +162,7 @@ public class MyLine implements Line{
 	}
 
 	@Override
-	public void setInfo(Pane container) {
+	public void setInfo(MainController controller) {
 
 	}
 }

@@ -1,19 +1,16 @@
 package ija.functional;
 
+import ija.Main;
+import ija.sample.MainController;
+
 import javafx.application.Platform;
 
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ContextMenu;
-
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
-
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -28,7 +25,8 @@ public class Street implements Drawable {
     private final List<Shape> elements;
     private Boolean blocked;
     private List<Color> color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
-//    private Color prev_color;
+    private boolean clicked;
+    //    private Color prev_color;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
 //    private String type = "empty"; // now streets have a type (direction)
@@ -239,15 +237,40 @@ public class Street implements Drawable {
 	}
 
     @Override
-    public void setInfo(Pane container) {
+    public void setInfo(MainController controller) {
         ContextMenu contextMenu = new ContextMenu();
         CheckMenuItem block = new CheckMenuItem("Bloked");
         Label label = new Label(this.getId());
+        TreeView<String> info = new TreeView<>();
+        TreeItem<String> root = new TreeItem<>("Street info");
+        AnchorPane containter = controller.getInfoContant();
+
+        info.setPrefWidth(containter.getPrefWidth());
+        info.setPrefHeight(containter.getPrefHeight());
+        info.setRoot(root);
+        info.toBack();
+
+        TreeItem<String> stops = new TreeItem<>("Street stops");
+        if (this.street_stops.size() == 0){
+            stops.setExpanded(true);
+            stops.getChildren().add(new TreeItem<>("No stops"));
+        }
+        else{
+            for (Stop stop: this.street_stops){
+                stops.getChildren().add(new TreeItem<>(stop.getId()));
+            }
+        }
+        root.getChildren().add(stops);
+        root.setExpanded(true);
+
+        containter.getChildren().add(info);
+
         label.setVisible(false);
         label.setLabelFor(this.line);
         label.setStyle("-fx-background-color:POWDERBLUE");
-        container.getChildren().add(label);
         contextMenu.getItems().addAll(block);
+
+        controller.getContent().getChildren().add(label);
 
         block.setSelected(false);
         final Paint[] prev_color = new Paint[1];
@@ -294,6 +317,17 @@ public class Street implements Drawable {
                 }
             });
         });
+        this.line.setOnMouseClicked(event -> {
+            if(this.clicked){
+                this.clicked = false;
+                controller.getInfo().toFront();
+            }
+            else {
+                this.clicked = true;
+                info.toFront();
+            }
+        });
+
         this.line.setOnMouseExited(event -> {
             Street street = this;
             Platform.runLater(new Runnable() {

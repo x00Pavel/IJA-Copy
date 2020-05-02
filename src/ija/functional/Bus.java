@@ -4,6 +4,7 @@ import java.util.*;
 
 import ija.Main;
 import ija.sample.Clock;
+import ija.sample.MainController;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -383,7 +384,7 @@ public class Bus implements Drawable {
     }
 
     @Override
-    public void setInfo(Pane container) {
+    public void setInfo(MainController controller) {
         this.gui.setOnMouseClicked(event -> {
             List<Street> streets = this.busLine.getStreets();
             this.checked = !this.checked;

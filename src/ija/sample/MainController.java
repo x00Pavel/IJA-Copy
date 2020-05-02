@@ -5,13 +5,13 @@ import javax.xml.parsers.DocumentBuilder;
 
 import ija.Main;
 import ija.functional.*;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import jdk.internal.org.objectweb.asm.tree.JumpInsnNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -20,7 +20,6 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -33,9 +32,7 @@ public class MainController{
 
     private List<Stop> list_stops = new ArrayList<>();
     private List<Street> list_streets = new ArrayList<>();
-
-    private List<Bus> allBuses = new ArrayList<>();
-
+    private List<Bus> list_buses = new ArrayList<>();
 
     @FXML
     private Pane content;
@@ -48,6 +45,9 @@ public class MainController{
 
     @FXML
     private TextField scaleField;
+
+    @FXML
+    private AnchorPane infoContant;
 
     public Text getClockObj(){
         return clockField;
@@ -121,7 +121,7 @@ public class MainController{
                     new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, street_stops);
                     elements.add(new_street);
                     for (Stop stop : street_stops){
-                        stop.setInfo(content);
+                        stop.setInfo(this);
                         elements.add(stop);
                     }
 
@@ -130,7 +130,7 @@ public class MainController{
                     new_street = Street.defaultStreet(street.getAttribute("name"), street_cords, null);
                     elements.add(new_street);
                 }
-                new_street.setInfo(content);
+                new_street.setInfo(this);
                 list_streets.add(new_street);
 
             }
@@ -164,7 +164,7 @@ public class MainController{
 
     @FXML
     private void makeSmaller(ActionEvent event){
-        if (Double.parseDouble(scaleField.getText()) > 0){
+        if (Double.parseDouble(scaleField.getText()) > 0.4){
             event.consume();
             double zoom = 0.9;
             content.setScaleX(zoom * content.getScaleX());
@@ -254,8 +254,8 @@ public class MainController{
                 }
 
                 Bus tempBus = new Bus(lineName, tempLine, busColor, time_for_ring); // create new bus, name is same as line name
-                tempBus.setInfo(content);
-                this.allBuses.add(tempBus);
+                tempBus.setInfo(this);
+                this.list_buses.add(tempBus);
 
             }
 
@@ -263,7 +263,7 @@ public class MainController{
             e.printStackTrace();
         }
 
-        return this.allBuses;
+        return this.list_buses;
     }
 
     @FXML
@@ -275,6 +275,7 @@ public class MainController{
             timeSpeedField.setText(String.format("%.1f", tmp));
         }
     }
+
     @FXML
     private  void makeSlower(ActionEvent event){
         if (Main.clock.getSpeed() < 2000){
@@ -283,5 +284,49 @@ public class MainController{
             double tmp = Double.parseDouble(timeSpeedField.getText()) - 0.1;
             timeSpeedField.setText(String.format("%.1f", tmp));
         }
+    }
+
+    public Pane getContent() {
+        return  content;
+    }
+
+    private TreeView<String> info;
+
+    public TreeView<String> getInfo() {
+        return info;
+    }
+
+
+    public void setTreeInfo() {
+        TreeItem<String> root =  new TreeItem<>("INFO");
+        TreeItem<String> streets = new TreeItem<>("Streets");
+        TreeItem<String> stops = new TreeItem<>("Stops");
+        TreeItem<String> buses = new TreeItem<>("Buses");
+
+        for (Street street: list_streets){
+            TreeItem<String> street_item = new TreeItem<>(street.getId());
+            for (Stop stop: street.getStops()){
+                TreeItem<String> tmp = new TreeItem<>(stop.getId());
+                street_item.getChildren().add(tmp);
+                stops.getChildren().add(tmp);
+            }
+            streets.getChildren().add(street_item);
+        }
+
+        for(Bus bus: list_buses){
+            TreeItem<String> tmp = new TreeItem<>(bus.getBusName());
+            buses.getChildren().add(tmp);
+        }
+
+        root.getChildren().addAll(streets, stops, buses);
+        info = new TreeView<>(root);
+        root.setExpanded(true);
+        info.setPrefWidth(infoContant.getPrefWidth());
+        info.setPrefHeight(infoContant.getPrefHeight());
+        infoContant.getChildren().add(info);
+    }
+
+    public AnchorPane getInfoContant() {
+        return infoContant;
     }
 }
