@@ -3,10 +3,15 @@ package ija.sample;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
+import ija.Main;
 import ija.functional.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -35,9 +40,16 @@ public class MainController{
     @FXML
     private Pane content;
 
-    public void setClock(){ // my bad try
-        System.out.println("alomalo");
+    @FXML
+    private Text clockField;
+
+    @FXML
+    private TextField timeSpeedField;
+
+    public Text getClockObj(){
+        return clockField;
     }
+
 
     public void setElements(List<Drawable> elements) {
         this.elements = elements;
@@ -243,5 +255,34 @@ public class MainController{
         }
 
         return this.allBuses;
+    }
+
+    @FXML
+    private void makeFaster(ActionEvent event){
+        if (Main.clock.getSpeed() > 100){
+            int new_speed = Main.clock.getSpeed() - 100;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Main.clock.setSpeed(new_speed);
+                    double tmp = Double.parseDouble(timeSpeedField.getText()) + 0.1;
+                    timeSpeedField.setText(String.format("%.2f", tmp));
+                }
+            });
+        }
+    }
+    @FXML
+    private  void makeSlower(ActionEvent event){
+        if (Main.clock.getSpeed() < 2000){
+            int new_speed = Main.clock.getSpeed() + 100;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Main.clock.setSpeed(new_speed);
+                    double tmp = Double.parseDouble(timeSpeedField.getText()) - 0.1;
+                    timeSpeedField.setText(String.format("%.2f", tmp));
+                }
+            });
+        }
     }
 }

@@ -3,6 +3,7 @@ package ija.functional;
 import java.util.*;
 
 import ija.Main;
+import ija.sample.Clock;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -23,7 +24,7 @@ public class Bus implements Drawable {
     private Street actual_bus_street = null;
     private int time_for_ring = 0; // new we have a time for bus ring
     private int time_in_stop_left = 0; // when we spawn a bus in the stop, we have to w8 some time
-
+    private Clock clock;
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
         this.busName = busName;
@@ -91,8 +92,8 @@ public class Bus implements Drawable {
 //        this.busLineForUse = Line.defaultLine(this.busLine); // create a copy of busline, need another pointers
 //    }
 
-    public void calculatePosition(Integer hours, Integer minutes, Integer seconds){ // dont delete the comments in this method pls
-        int position_time = (hours*3600+minutes*60+seconds) % this.time_for_ring;
+    public void calculatePosition(List<Integer> time){ // dont delete the comments in this method pls
+        int position_time = (time.get(0)*3600+ time.get(1)*60+time.get(2)) % this.time_for_ring;
 
         System.out.println("position time = " + position_time);
 
@@ -261,7 +262,7 @@ public class Bus implements Drawable {
 
         if(this.time_in_stop_left != 0){
             try {
-                Thread.sleep(this.time_in_stop_left*Main.getClockSpeed());
+                Thread.sleep(this.time_in_stop_left* Main.clock.getSpeed());
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
             }
@@ -298,7 +299,7 @@ public class Bus implements Drawable {
                     Stop firstStop = stopLocation.get(stopLocation.indexOf(e)).getKey();
                     calculateAndGo(firstStop.getCoordinate());
                     try {
-                        Thread.sleep(Main.getClockSpeed()*3);
+                        Thread.sleep(Main.clock.getSpeed()*3);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
@@ -315,7 +316,7 @@ public class Bus implements Drawable {
                         Stop nextStop = stopLocation.get(stopLocation.indexOf(nextStopPair)).getKey();
                         calculateAndGo(nextStop.getCoordinate());
                         try {
-                            Thread.sleep(Main.getClockSpeed()*3);
+                            Thread.sleep(Main.clock.getSpeed()*3);
                         } catch (InterruptedException interruptedException) {
                             interruptedException.printStackTrace();
                         }
@@ -365,7 +366,7 @@ public class Bus implements Drawable {
             this.busX = this.busX + stepX;
             this.busY = this.busY + stepY;
             try {
-                Thread.sleep(Main.getClockSpeed());
+                Thread.sleep(Main.clock.getSpeed());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -2,20 +2,18 @@ package ija.sample;
 
 import ija.functional.*;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BackEnd implements Runnable{
 
     private Bus bus_to_run;
-    private int hours = 0;
-    private int minutes = 0;
-    private int seconds = 0;
-    public BackEnd(Bus mybus, Integer hours, Integer minutes, Integer seconds){
+    private Clock clock;
+    public BackEnd(Bus mybus, Clock clock){
         this.bus_to_run = mybus;
-        this.hours = hours;
-        this.minutes = minutes;
-        this.seconds = seconds;
+        this.clock = clock;
+
     }
 
     @Override

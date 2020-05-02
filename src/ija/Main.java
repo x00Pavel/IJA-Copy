@@ -28,10 +28,7 @@ public class Main extends Application {
     public static List<Bus> list_bus;
     public static List<Drawable> items;
 
-    private static int clock_speed = 1000; // here we can set a clock speed and start time
-    private static int hours = 0;
-    private static int minutes = 2;
-    private static int seconds = 27;
+    public static  Clock clock;
 
     @Override
     public void start(Stage primaryStage) {
@@ -50,6 +47,7 @@ public class Main extends Application {
 
         MainController controller = loader.getController();
 
+        clock = new Clock(1000,0,0,0, controller.getClockObj());
         try {
             items = controller.buildMap(fileMap);
         } catch (IOException e) {
@@ -59,7 +57,7 @@ public class Main extends Application {
         items.addAll(list_bus);
 
         for(Bus bus: list_bus){ // for every bus calculate a start position
-            bus.calculatePosition(hours, minutes, seconds);
+            bus.calculatePosition(clock.getTime());
         }
 
         controller.setElements(items);
@@ -74,17 +72,14 @@ public class Main extends Application {
 
         ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus,hours,minutes,seconds));
+            executorService.submit(new BackEnd(actual_bus,clock));
         }
-        executorService.submit(new Clock(clock_speed,hours,minutes,seconds));
+
+        executorService.submit(clock);
         executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);
         });
-    }
-
-    public static int getClockSpeed(){
-        return clock_speed;
     }
 }

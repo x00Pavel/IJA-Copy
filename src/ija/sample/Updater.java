@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Updater implements Runnable{
@@ -39,8 +38,9 @@ public class Updater implements Runnable{
                     }
                 }
             });
+
             try {
-                Thread.sleep(Main.getClockSpeed());
+                Thread.sleep(Main.clock.getSpeed());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

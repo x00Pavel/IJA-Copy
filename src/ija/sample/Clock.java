@@ -1,34 +1,44 @@
 package ija.sample;
 
+import javafx.scene.text.Text;
+
+import java.util.Arrays;
+import java.util.List;
+
 public class Clock implements Runnable{
 
-    private int speed = 1000;
-    private int hours = 0;
-    private int minutes = 0;
-    private int seconds = 0;
+    private int speed;
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private Text clock_text;
 
-
-    public Clock(){
-
-    }
-
-    public Clock(int new_speed, int hours, int minutes, int seconds){
-        this.speed = new_speed;
-        this.hours = hours;
+    public Clock(int new_speed, int hour, int minute, int second, Text clock_){
+        clock_text = clock_;
+        speed = new_speed;
+        hours = hour;
         if(hours < 0 || hours > 24){
             System.out.println("[ERROR] Hours should be in interval 0->24");
             System.exit(-1);
         }
-        this.minutes = minutes;
+        minutes = minute;
         if(minutes < 0 || minutes > 60){
             System.out.println("[ERROR] Minutes should be in interval 0->60");
             System.exit(-1);
         }
-        this.seconds = seconds;
+        seconds = second;
         if(seconds < 0 || seconds > 60){
             System.out.println("[ERROR] Seconds should be in interval 0->60");
             System.exit(-1);
         }
+    }
+
+    public void setSpeed(int s){
+        speed = s;
+    }
+
+    public int getSpeed(){
+        return speed;
     }
 
     @Override
@@ -37,39 +47,44 @@ public class Clock implements Runnable{
         String minutes_for_print;
         String seconds_for_print;
         while(true){
-            this.seconds++;
-            if(this.seconds == 60){
-                this.minutes++;
-                this.seconds = 0;
+            seconds++;
+            if(seconds == 60){
+                minutes++;
+                seconds = 0;
             }
-            if(this.seconds < 10){
-                seconds_for_print = "0" + Integer.toString(this.seconds);
+            if(seconds < 10){
+                seconds_for_print = "0" + Integer.toString(seconds);
             }else{
-                seconds_for_print = Integer.toString(this.seconds);
+                seconds_for_print = Integer.toString(seconds);
             }
-            if(this.minutes == 60){
-                this.hours++;
-                this.minutes = 0;
+            if(minutes == 60){
+                hours++;
+                minutes = 0;
             }
-            if(this.minutes < 10){
-                minutes_for_print = "0" + Integer.toString(this.minutes);
+            if(minutes < 10){
+                minutes_for_print = "0" + Integer.toString(minutes);
             }else{
-                minutes_for_print = Integer.toString(this.minutes);
+                minutes_for_print = Integer.toString(minutes);
             }
-            if(this.hours == 24){
-                this.hours = 0;
+            if(hours == 24){
+                hours = 0;
             }
-            if(this.hours < 10){
-                hours_for_print = "0" + Integer.toString(this.hours);
+            if(hours < 10){
+                hours_for_print = "0" + Integer.toString(hours);
             }else{
-                hours_for_print = Integer.toString(this.hours);
+                hours_for_print = Integer.toString(hours);
             }
+            clock_text.setText(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
             System.out.println(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
             try {
-                Thread.sleep(this.speed);
+                Thread.sleep(getSpeed());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Integer> getTime() {
+        return Arrays.asList(hours, minutes, seconds);
     }
 }
