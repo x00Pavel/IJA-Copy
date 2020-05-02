@@ -27,7 +27,8 @@ public class Street implements Drawable {
     private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
     private final List<Shape> elements;
     private Boolean blocked;
-    private Color prev_color;
+    private List<Color> color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
+//    private Color prev_color;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
 //    private String type = "empty"; // now streets have a type (direction)
@@ -310,11 +311,15 @@ public class Street implements Drawable {
     }
 
     public void changeLineColor(Color color) {
-        System.out.println("ALO");
-        this.prev_color = (Color) this.line.getStroke();
-        this.line.setStroke(color);
+//        System.out.println("ALO");
+//        this.prev_color = (Color) this.line.getStroke();
+        this.color_stack.add(color);
+        this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }
-    public void rollBackLineColor(){
-        this.line.setStroke(this.prev_color);
+    public void rollBackLineColor(Color color){
+
+//        this.line.setStroke(this.prev_color);
+        this.color_stack.remove(color);
+        this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }
 }

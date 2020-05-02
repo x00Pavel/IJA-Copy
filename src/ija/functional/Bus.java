@@ -394,10 +394,9 @@ public class Bus implements Drawable {
                         for (Street street: streets){
                             street.changeLineColor(Bus.this.busColor);
                         }
-                    }
-                    else{
+                    }else{
                         for (Street street: streets){
-                            street.rollBackLineColor();
+                            street.rollBackLineColor(Bus.this.busColor);
                         }
                     }
                 }
