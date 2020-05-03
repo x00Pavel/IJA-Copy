@@ -29,7 +29,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/layout.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("layout.fxml"));
         File fileMap = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("map.xml")).getFile());
         File fileTransport = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("transport.xml")).getFile());
 

@@ -5,11 +5,13 @@ import javax.xml.parsers.DocumentBuilder;
 
 import ija.Main;
 import ija.functional.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import org.w3c.dom.Document;
@@ -160,25 +162,25 @@ public class MainController{
 
     @FXML
     private void makeBigger(ActionEvent event){
-        if (Double.parseDouble(scaleField.getText()) < 2.0){
+        if (Integer.parseInt(scaleField.getText().replace("%","")) < 190){
             event.consume();
-            double zoom =1.1;
+            double zoom = 1.1;
             content.setScaleX(zoom * content.getScaleX());
             content.setScaleY(zoom * content.getScaleY());
             content.layout();
-            scaleField.setText(String.format("%.1f", Double.parseDouble(scaleField.getText()) + 0.1));
+            scaleField.setText(String.valueOf(Integer.parseInt(scaleField.getText().replace("%","")) + 10)+"%");
         }
     }
 
     @FXML
     private void makeSmaller(ActionEvent event){
-        if (Double.parseDouble(scaleField.getText()) > 0.4){
+        if (Integer.parseInt(scaleField.getText().replace("%","")) > 90){
             event.consume();
             double zoom = 0.9;
             content.setScaleX(zoom * content.getScaleX());
             content.setScaleY(zoom * content.getScaleY());
             content.layout();
-            scaleField.setText(String.format("%.1f", Double.parseDouble(scaleField.getText()) - 0.1));
+            scaleField.setText(String.valueOf(Integer.parseInt(scaleField.getText().replace("%","")) - 10)+"%");
         }
     }
 
@@ -276,21 +278,21 @@ public class MainController{
 
     @FXML
     private void makeFaster(ActionEvent event){
-        if (Main.clock.getSpeed() > 100){
-            int new_speed = Main.clock.getSpeed() - 100;
+        if (Main.clock.getSpeed() > 200){
+            int new_speed = Main.clock.getSpeed() - 200;
             Main.clock.setSpeed(new_speed);
-            double tmp = Double.parseDouble(timeSpeedField.getText()) + 0.1;
-            timeSpeedField.setText(String.format("%.1f", tmp));
+            int tmp = Integer.parseInt(timeSpeedField.getText()) + 1;
+            timeSpeedField.setText(String.valueOf(tmp));
         }
     }
 
     @FXML
     private  void makeSlower(ActionEvent event){
-        if (Main.clock.getSpeed() < 2000){
-            int new_speed = Main.clock.getSpeed() + 100;
+        if (Main.clock.getSpeed() < 1800){
+            int new_speed = Main.clock.getSpeed() + 200;
             Main.clock.setSpeed(new_speed);
-            double tmp = Double.parseDouble(timeSpeedField.getText()) - 0.1;
-            timeSpeedField.setText(String.format("%.1f", tmp));
+            int tmp = Integer.parseInt(timeSpeedField.getText()) - 1;
+            timeSpeedField.setText(String.valueOf(tmp));
         }
     }
 

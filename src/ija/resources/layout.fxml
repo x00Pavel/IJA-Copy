@@ -48,7 +48,7 @@
                               <HBox alignment="CENTER" prefHeight="32.0" prefWidth="123.0">
                                  <children>
                                     <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeSlower" prefHeight="26.0" prefWidth="26.0" text="-" />
-                                    <TextField fx:id="timeSpeedField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="1.0" />
+                                    <TextField fx:id="timeSpeedField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="5" />
                                     <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeFaster" prefHeight="26.0" prefWidth="26.0" text="+" />
                                  </children>
                               </HBox>
@@ -56,7 +56,7 @@
                               <HBox alignment="TOP_CENTER">
                                  <children>
                                     <Button fx:id="minus" mnemonicParsing="false" onAction="#makeSmaller" prefHeight="26.0" prefWidth="26.0" text="-" />
-                                    <TextField fx:id="scaleField" alignment="TOP_CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="1.0" />
+                                    <TextField fx:id="scaleField" alignment="TOP_CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="100%" />
                                     <Button fx:id="plus" mnemonicParsing="false" onAction="#makeBigger" prefHeight="26.0" prefWidth="26.0" text="+" />
                                  </children>
                               </HBox>
