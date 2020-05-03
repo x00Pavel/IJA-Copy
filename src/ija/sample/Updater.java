@@ -38,7 +38,6 @@ public class Updater implements Runnable{
                     }
                 }
             });
-
             try {
                 Thread.sleep(Main.clock.getSpeed());
             } catch (InterruptedException e) {
@@ -52,9 +51,13 @@ public class Updater implements Runnable{
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
 
-        int time_in_seconds = -1;
+        int time_in_seconds_with_delay = -1;
+//        int time_in_seconds_wo_delay = -1;
 
         int range = 0;
+
+        int time_wo_delay = 0;
+        int time_with_delay = 0;
 
         int flagInStop = bus.getBusLineForUse().getStopsFlags().get(stop.getId());
 
@@ -64,6 +67,10 @@ public class Updater implements Runnable{
                 double rangeY = stop.getCoordinate().getY() - bus.getBusY();
 
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
+
+//                time_wo_delay = range / bus.getSpeed();
+                time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
+
             } else {
                 Coordinate actual_street_end;
                 if(bus.getBusLineForUse().getStreetsTypes().get(actual_street.getId()).equals("back")){
@@ -76,9 +83,13 @@ public class Updater implements Runnable{
 
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
 
+//                time_wo_delay = range / bus.getSpeed();
+                time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
+
                 for (int i = bus_streets.indexOf(actual_street) + 1; i < bus_streets.indexOf(stop_street); i++) {
-                    int street_range = calculateStreetRange(bus_streets.get(i));
-                    range = range + street_range;
+                    int street_time = calculateStreetTime(bus_streets.get(i), bus.getSpeed());
+//                    time_wo_delay = time_wo_delay + street_time.get(0);
+                    time_with_delay = time_with_delay + street_time;
                 }
 
                 double lastRangeX;
@@ -94,36 +105,47 @@ public class Updater implements Runnable{
 
                 int lastRange = (int) (Math.sqrt((lastRangeX * lastRangeX) + (lastRangeY * lastRangeY)));
 
-                range = range + lastRange;
+                int last_time_with_delay = lastRange / (bus.getSpeed() - stop_street.getDelayLevel());
+//                int last_time_wo_delay = lastRange / bus.getSpeed();
+
+                time_with_delay = time_with_delay + last_time_with_delay;
+//                time_wo_delay = time_wo_delay + last_time_wo_delay;
             }
 
-            time_in_seconds = range / bus.getSpeed() + stopsBefore * 3 + bus.getTimeInStopLeft();
+            time_in_seconds_with_delay = time_with_delay + stopsBefore * 3 + bus.getTimeInStopLeft();
+//            time_in_seconds_wo_delay = time_wo_delay + stopsBefore * 3 + bus.getTimeInStopLeft();
 
             flagInStop = -1;
             bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
 //            stop.setFlag(flagInStop);
 
         }else if(flagInStop == 1){
-            time_in_seconds = bus.getTimeForRing()+1; // mb need +1
+            time_in_seconds_with_delay = bus.getTimeForRing()+1; // mb need +1
+//            time_in_seconds_wo_delay = bus.getTimeForRing()+1;
             flagInStop = -1;
             bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
         }else if(flagInStop == -1){
-            time_in_seconds = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
-            if(time_in_seconds == 0){
+            time_in_seconds_with_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
+//            time_in_seconds_wo_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
+            if(time_in_seconds_with_delay == 0){
                 flagInStop = 1;
                 bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
             }
         }
 
-        return time_in_seconds;
+        return time_in_seconds_with_delay;
     }
 
-    public Integer calculateStreetRange(Street first){
+    public Integer calculateStreetTime(Street first, Integer speed){
         double rangeX = first.end().getX()-first.begin().getX();
         double rangeY = first.end().getY()-first.begin().getY();
 
         int range = (int)(Math.sqrt((rangeX*rangeX)+(rangeY*rangeY)));
 
-        return range;
+        int time_with_delay = range / (speed - first.getDelayLevel());
+//        int time_wo_delay = range / speed;
+//        time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
+
+        return time_with_delay;
     }
 }

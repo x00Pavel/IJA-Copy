@@ -10,6 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.ContextMenu;
+
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
@@ -33,6 +39,7 @@ public class Street implements Drawable {
     private VBox infoPane;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
+    private Integer delay_level = 0; // between 0 (min) and 4 (max)
 //    private String type = "empty"; // now streets have a type (direction)
 
     public Street(String name) {
@@ -42,6 +49,9 @@ public class Street implements Drawable {
         this.elements = new ArrayList<>();
         this.blocked = false;
         this.infoPane = new VBox();
+        if(name.equals("Street 2")){ // remove after level setter will be
+            this.delay_level = 3;
+        }
     }
 
 //    public Street(Street street){
@@ -71,6 +81,10 @@ public class Street implements Drawable {
 
     public List<Line> getLine(){
         return this.street_lines;
+    }
+
+    public Integer getDelayLevel(){
+        return this.delay_level;
     }
 
     public Coordinate end() {
@@ -250,7 +264,7 @@ public class Street implements Drawable {
         Label label = new Label(this.getId());
 
         label.setVisible(false);
-//        label.setLabelFor(this.line);
+        label.setLabelFor(this.line);
         label.setStyle("-fx-background-color:POWDERBLUE");
         contextMenu.getItems().addAll(block);
 

@@ -11,7 +11,7 @@ public interface Drawable {
 // Extend to getID
     List<Shape> getGUI();
 
-    void setInfo(MainController controller);
+    void setInfo(MainController container);
 //    void createInfo();
 //
 //    void setInfoEvent();

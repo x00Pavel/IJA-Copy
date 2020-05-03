@@ -68,7 +68,7 @@ public class Main extends Application {
 
         ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus,clock));
+            executorService.submit(new BackEnd(actual_bus, clock));
         }
 
         executorService.submit(clock);
