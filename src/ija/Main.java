@@ -7,7 +7,6 @@ import ija.sample.BackEnd;
 import ija.sample.Clock;
 import ija.sample.Updater;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -28,15 +27,18 @@ public class Main extends Application {
 
     public static List<Bus> list_bus;
     public static List<Drawable> items;
-    public static MainController controller;
-    public static  Clock clock;
+
+    private static int clock_speed = 500; // here we can set a clock speed and start time
+    private static int hours = 0;
+    private static int minutes = 0;
+    private static int seconds = 0;
 
     @Override
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/layout.fxml"));
+
         File fileMap = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("map.xml")).getFile());
         File fileTransport = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("transport.xml")).getFile());
-
 
         BorderPane root = null;
         try {
@@ -45,9 +47,9 @@ public class Main extends Application {
             e.printStackTrace();
         }
         Scene scene = new Scene(root);
-        controller = loader.getController();
 
-        clock = new Clock(1000,0,0,0, controller.getClockObj());
+        MainController controller = loader.getController();
+
         try {
             items = controller.buildMap(fileMap);
         } catch (IOException e) {
@@ -57,11 +59,10 @@ public class Main extends Application {
         items.addAll(list_bus);
 
         for(Bus bus: list_bus){ // for every bus calculate a start position
-            bus.calculatePosition(clock.getTime());
+            bus.calculatePosition(hours, minutes, seconds);
         }
+
         controller.setElements(items);
-        controller.setTreeInfo();
-        primaryStage.setTitle("Transport app");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -73,14 +74,17 @@ public class Main extends Application {
 
         ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus,clock));
+            executorService.submit(new BackEnd(actual_bus,hours,minutes,seconds));
         }
-
-        executorService.submit(clock);
+        executorService.submit(new Clock(clock_speed,hours,minutes,seconds));
         executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);
         });
+    }
+
+    public static int getClockSpeed(){
+        return clock_speed;
     }
 }

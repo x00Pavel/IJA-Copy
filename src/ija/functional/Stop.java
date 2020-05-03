@@ -1,6 +1,5 @@
 package ija.functional;
 
-import ija.sample.MainController;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -142,12 +141,12 @@ public class Stop implements Drawable {
     }
 
     @Override
-    public void setInfo(MainController controller) {
+    public void setInfo(Pane container) {
         Label label = new Label(this.getId());
         label.setVisible(false);
         label.setStyle("-fx-background-color:YELLOW");
         label.setLabelFor(this.elements_gui);
-        controller.getContent().getChildren().add(label);
+        container.getChildren().add(label);
         this.elements_gui.setOnMouseEntered(event -> {
             label.toFront();
             label.setLayoutX(event.getSceneX() + 5);

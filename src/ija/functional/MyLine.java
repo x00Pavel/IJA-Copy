@@ -1,6 +1,5 @@
 package ija.functional;
 
-import ija.sample.MainController;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
@@ -19,6 +18,7 @@ public class MyLine implements Line{
 	private List<Stop> stops = new ArrayList<>();
 	private HashMap<String, Integer> stops_times = new HashMap<>(); // name_of_stop:time_to_stop_left
 	private HashMap<String, Integer> stops_flags = new HashMap<>();
+//	private HashMap<String, Integer> stops_delay = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	
 	public MyLine(String id) {
@@ -33,6 +33,7 @@ public class MyLine implements Line{
 		this.streets_types = newLine.getStreetsTypes();
 		this.stops_flags = newLine.getStopsFlags();
 		this.stops_times = newLine.getStopsTimes();
+//		this.stops_delay = newLine.getStopsDelays();
 	}
 
 	@Override
@@ -50,6 +51,16 @@ public class MyLine implements Line{
 		return this.stops_flags;
 	}
 
+//	@Override
+//	public HashMap<String, Integer> getStopsDelays() {
+//		return this.stops_delay;
+//	}
+
+//	@Override
+//	public void addStopsDelays(String stop_name, Integer stop_delay){
+//		this.stops_delay.put(stop_name, stop_delay);
+//	}
+
 	@Override
 	public void addStreetType(String street_name, String street_type){
 		this.streets_types.put(street_name, street_type);
@@ -59,8 +70,8 @@ public class MyLine implements Line{
 	public void addStopsTimes(String stop_name, Integer stop_time){
 		this.stops_times.put(stop_name, stop_time);
 		int seconds = stop_time;
-        int hours = stop_time/3600;
-        int minutes = stop_time/60;
+        int hours = seconds/3600;
+        int minutes = seconds/60;
         String dopLine = "";
         if(seconds == 0){
             dopLine = "<---------------------------bus is here!";
@@ -68,7 +79,7 @@ public class MyLine implements Line{
         }else{
             dopLine = "";
         }
-//        System.out.println(bus.getBusName()+"   "+this.stop_id+"   "+this.hours+":"+this.minutes+":"+(this.seconds-this.hours*3600-this.minutes*60)+dopLine);
+//		System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine);
 	}
 
 	@Override
@@ -162,7 +173,7 @@ public class MyLine implements Line{
 	}
 
 	@Override
-	public void setInfo(MainController controller) {
+	public void setInfo(Pane container) {
 
 	}
 }
