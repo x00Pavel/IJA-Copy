@@ -12,15 +12,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="733.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.sample.MainController">
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="733.0" minWidth="970.0" prefHeight="733.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.sample.MainController">
    <center>
-      <AnchorPane prefHeight="733.0" prefWidth="897.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="mapParent" prefHeight="700.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane pannable="true" prefHeight="733.0" prefWidth="787.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane hbarPolicy="ALWAYS" pannable="true" prefHeight="700.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <Group>
                      <children>
-                        <Pane fx:id="content" prefHeight="797.0" prefWidth="1009.0" />
+                        <Pane fx:id="content" prefHeight="715.0" prefWidth="729.0" />
                      </children>
                   </Group>
                </content>
@@ -64,7 +64,7 @@
                         </VBox>
                      </bottom>
                   </BorderPane>
-                  <AnchorPane fx:id="infoContant" prefHeight="611.0" prefWidth="222.0" />
+                  <AnchorPane fx:id="infoContant" prefHeight="611.0" prefWidth="222.0" style="-fx-background-color: grey;" />
                </children>
             </VBox>
          </children></AnchorPane>

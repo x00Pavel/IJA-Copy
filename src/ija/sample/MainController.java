@@ -8,6 +8,7 @@ import ija.functional.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -47,12 +48,18 @@ public class MainController{
     private TextField scaleField;
 
     @FXML
+    private AnchorPane mapParent;
+
+    @FXML
     private AnchorPane infoContant;
 
     public Text getClockObj(){
         return clockField;
     }
 
+    public AnchorPane getMapParent() {
+        return mapParent;
+    }
 
     public void setElements(List<Drawable> elements) {
         this.elements = elements;

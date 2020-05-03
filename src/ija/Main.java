@@ -3,18 +3,14 @@ package  ija;
 import ija.functional.Bus;
 import ija.functional.Drawable;
 
-import ija.sample.BackEnd;
-import ija.sample.Clock;
-import ija.sample.Updater;
+import ija.sample.*;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import ija.sample.MainController;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +32,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/layout.fxml"));
         File fileMap = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("map.xml")).getFile());
         File fileTransport = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("transport.xml")).getFile());
-
 
         BorderPane root = null;
         try {
