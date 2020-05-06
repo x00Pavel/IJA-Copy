@@ -1,7 +1,6 @@
-package ija.functional;
+package src.functional;
 
-import ija.sample.MainController;
-import javafx.scene.layout.Pane;
+import src.sample.MainController;
 import javafx.scene.shape.Shape;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
@@ -52,15 +51,6 @@ public class MyLine implements Line{
 		return this.stops_flags;
 	}
 
-//	@Override
-//	public HashMap<String, Integer> getStopsDelays() {
-//		return this.stops_delay;
-//	}
-
-//	@Override
-//	public void addStopsDelays(String stop_name, Integer stop_delay){
-//		this.stops_delay.put(stop_name, stop_delay);
-//	}
 
 	@Override
 	public void addStreetType(String street_name, String street_type){

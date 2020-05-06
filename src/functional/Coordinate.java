@@ -1,4 +1,4 @@
-package ija.functional;
+package src.functional;
 
 public class Coordinate implements CoordinateInterface {
 	

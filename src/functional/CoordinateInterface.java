@@ -1,5 +1,5 @@
 
-package ija.functional;
+package src.functional;
 
 /**
  * Reprezentuje pozici (souřadnice) v mapě. Souřadnice je dvojice (x,y), počátek mapy je vždy na pozici (0,0). 

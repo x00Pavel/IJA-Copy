@@ -1,14 +1,12 @@
-package ija.functional;
+package src.functional;
 
-import ija.sample.MainController;
+import src.sample.MainController;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import javafx.scene.shape.*;
 import javafx.scene.shape.Shape;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,10 +15,6 @@ public class Stop implements Drawable {
     private Coordinate stop_cord = null;
     private Street stop_street = null;
     private Circle elements_gui;
-//    private int hours = 0;
-//    private int minutes = 0;
-//    private int seconds = 0;
-//    private int wasInStop = 0;
 
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
@@ -31,17 +25,6 @@ public class Stop implements Drawable {
             this.elements_gui = new Circle(cord[0].getX(), cord[0].getY(), 5, Color.ORANGE);
         } catch (Exception ignored) { }
     }
-
-//    public Stop(Stop stop){
-//        this.stop_id = stop.getId();
-//        this.stop_cord = stop.getCoordinate();
-//        this.stop_street = stop.getStreet();
-//        this.elements_gui = (Circle)stop.getGUI().get(0);
-//        this.seconds = stop.getTime();
-//        this.hours = this.seconds/3600;
-//        this.minutes = this.seconds/60;
-//        this.wasInStop = stop.getFlag();
-//    }
 
     public static Stop defaultStop(String id, Coordinate c){
         return new Stop(id, c);
@@ -147,7 +130,8 @@ public class Stop implements Drawable {
         label.setVisible(false);
         label.setStyle("-fx-background-color:YELLOW");
         label.setLabelFor(this.elements_gui);
-        controller.getContent().getChildren().add(label);
+        controller.getMapParent().getChildren().add(label);
+
         this.elements_gui.setOnMouseEntered(event -> {
             label.toFront();
             label.setLayoutX(event.getSceneX() + 5);

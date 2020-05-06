@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="733.0" minWidth="970.0" prefHeight="733.0" prefWidth="970.0" 
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MainController">
+   <center>
+      <AnchorPane fx:id="mapParent" prefHeight="700.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane hbarPolicy="ALWAYS" pannable="true" prefHeight="700.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <Group>
+                     <children>
+                        <Pane fx:id="content" prefHeight="715.0" prefWidth="729.0" />
+                     </children>
+                  </Group>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="733.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="246.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+               <center>
+                  <Text fx:id="clockField" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+               </center>
+               <bottom>
+                  <VBox alignment="TOP_CENTER" prefHeight="95.0" prefWidth="109.0" BorderPane.alignment="TOP_CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time speed" textAlignment="CENTER" wrappingWidth="122.751953125" />
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="123.0">
+                           <children>
+                              <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeSlower" prefHeight="26.0" prefWidth="26.0" text="-" />
+                              <TextField fx:id="timeSpeedField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="5" />
+                              <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeFaster" prefHeight="26.0" prefWidth="26.0" text="+" />
+                           </children>
+                        </HBox>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Scale" textAlignment="CENTER" wrappingWidth="122.9755859375" />
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button fx:id="minus" mnemonicParsing="false" onAction="#makeSmaller" prefHeight="26.0" prefWidth="26.0" text="-" />
+                              <TextField fx:id="scaleField" alignment="TOP_CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="100%" />
+                              <Button fx:id="plus" mnemonicParsing="false" onAction="#makeBigger" prefHeight="26.0" prefWidth="26.0" text="+" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </bottom>
+            </BorderPane>
+            <AnchorPane fx:id="infoContant" layoutY="133.0" prefHeight="600.0" prefWidth="222.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0" />
+         </children></AnchorPane>
+   </right>
+</BorderPane>

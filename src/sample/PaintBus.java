@@ -1,4 +1,4 @@
-package ija.sample;
+package src.sample;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

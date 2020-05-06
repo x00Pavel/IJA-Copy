@@ -1,10 +1,7 @@
-package ija.sample;
+package src.sample;
 
-import ija.Main;
-import ija.functional.Bus;
-import ija.functional.Coordinate;
-import ija.functional.Stop;
-import ija.functional.Street;
+import src.Main;
+import src.functional.*;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 

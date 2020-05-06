@@ -1,4 +1,4 @@
-package ija.functional;
+package src.functional;
 
 import java.util.HashMap;
 import java.util.List;

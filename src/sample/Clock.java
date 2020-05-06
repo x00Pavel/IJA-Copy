@@ -1,4 +1,4 @@
-package ija.sample;
+package src.sample;
 
 import javafx.scene.text.Text;
 

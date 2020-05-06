@@ -1,9 +1,7 @@
-package ija.functional;
+package src.functional;
 
-import ija.sample.MainController;
-import javafx.scene.layout.Pane;
+import src.sample.MainController;
 import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -12,7 +10,5 @@ public interface Drawable {
     List<Shape> getGUI();
 
     void setInfo(MainController container);
-//    void createInfo();
-//
-//    void setInfoEvent();
+
 }

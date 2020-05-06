@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="IJA" basedir=".">
+<!--     set global properties for this build-->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="data" location="data"/>
+    <property name="dest" location="dest"/>
+    
+    <target name="clean">
+        <delete dir="${build}"/>
+        <delete dir="${dest}"/>
+    </target>
+
+    <target name="create-dir" depends="clean">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${dest}"/>
+    </target>
+
+    <target name="compile" depends="create-dir" description="Compile project">
+        <copy file="${src}/layout.fxml" todir="${build}/src" overwrite="true"/>
+        <copy file="${src}/sideMenu.fxml" todir="${build}/src/functional" overwrite="true"/>
+
+        <javac srcdir="${src}" destdir="${build}" debug="true"/>
+
+        <jar destfile="${dest}/ija-app.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="src.Main"/>
+            </manifest>
+            <fileset dir="${data}"/>
+            <fileset dir="${src}" includes="/*.fxml"/>
+        </jar>
+    </target>
+
+    <target name="run" depends="compile" description="Run project">
+        <java jar="${dest}/ija-app.jar" fork="true"/>
+    </target>
+
+</project>

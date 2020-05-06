@@ -1,27 +1,25 @@
-package ija.functional;
+package src.functional;
 
-import ija.Main;
-import ija.sample.MainController;
+import src.Main;
+import src.sample.MainController;
+import src.sample.MenuController;
 
 import javafx.application.Platform;
 
-import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ContextMenu;
 
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,18 +27,19 @@ import java.util.List;
 
 public class Street implements Drawable {
     private final String street_name;
-    private List<Coordinate> cords;
+    private final List<Coordinate> cords;
     private List<Stop> street_stops = null;
     private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
     private final List<Shape> elements;
     private Boolean blocked;
     private List<Color> color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
     private boolean clicked;
-    private VBox infoPane;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
+    private AnchorPane infoPane;
 //    private String type = "empty"; // now streets have a type (direction)
+
 
     public Street(String name) {
         this.street_name = name;
@@ -48,23 +47,8 @@ public class Street implements Drawable {
         this.street_stops = new ArrayList<>();
         this.elements = new ArrayList<>();
         this.blocked = false;
-        this.infoPane = new VBox();
-        if(name.equals("Street 2")){ // remove after level setter will be
-            this.delay_level = 3;
-        }
+        this.delay_level = 0;
     }
-
-//    public Street(Street street){
-//        this.street_name = street.street_name;
-//        this.cords = new ArrayList<>(street.cords);
-//        this.street_stops = street.street_stops;
-//        this.elements = street.elements;
-//        this.blocked = street.blocked;
-//        this.line = street.line;
-//        this.stopLocation = street.stopLocation;
-////        this.prev_color = street.prev_color;
-////        this.street_lines = street.street_lines;
-//    }
 
     public void setLine(Line newLine){
         if(!(this.street_lines.contains(newLine))){
@@ -72,19 +56,16 @@ public class Street implements Drawable {
         }
     }
 
-//    public void setType(String type){
-//        this.type = type;
-//    }
-//    public String getType(){
-//        return this.type;
-//    }
-
     public List<Line> getLine(){
         return this.street_lines;
     }
 
     public Integer getDelayLevel(){
         return this.delay_level;
+    }
+
+    public void setDelay_level(Integer delay_level) {
+        this.delay_level = delay_level;
     }
 
     public Coordinate end() {
@@ -255,9 +236,15 @@ public class Street implements Drawable {
 		return this.elements;
 	}
 
+
+	/*
+	* \brief Set interactiv activity for given street
+	*
+	* \param[in] controller Main controller of scene
+	 */
     @Override
     public void setInfo(MainController controller) {
-//        this.createSideMenu(controller.getInfoContant());
+        this.createSideMenu(controller.getInfoContant());
 
         ContextMenu contextMenu = new ContextMenu();
         CheckMenuItem block = new CheckMenuItem("Bloked");
@@ -270,8 +257,8 @@ public class Street implements Drawable {
 
         controller.getMapParent().getChildren().add(label);
 
-        block.setSelected(false);
         final Paint[] prev_color = new Paint[1];
+        block.setSelected(false);
         block.setOnAction(event -> {
                     this.blocked = block.isSelected();
                     Street street = this;
@@ -338,21 +325,30 @@ public class Street implements Drawable {
         });
     }
 
+    /*
+    * \brief Set side menu bar for street information
+    *
+    * \param[in] parent Container for menu
+     */
     private void createSideMenu(AnchorPane parent) {
+        FXMLLoader sideLoader = new FXMLLoader(getClass().getResource("sideMenu.fxml"));
+        try {
+            this.infoPane = sideLoader.load();
+        } catch (IOException e) {
+            e.getMessage();
+        }
 
-        this.infoPane.setAccessibleHelp("All information about object");
-        this.infoPane.setPrefSize(parent.getPrefWidth(), parent.getPrefHeight());
-        this.infoPane.setStyle("-fx-background-color:yellow");
-
-        TreeView<String> info = new TreeView<>();
+        MenuController controller = sideLoader.getController();
+        // controller.setStreet(this);
+        AnchorPane.setBottomAnchor(this.infoPane, 0.0);
+        AnchorPane.setLeftAnchor(this.infoPane, 0.0);
+        AnchorPane.setRightAnchor(this.infoPane, 0.0);
+        AnchorPane.setTopAnchor(this.infoPane, 0.0);
+        TreeView<String> info = controller.getInfo();
         TreeItem<String> root = new TreeItem<>("Street info");
-        Pane containerForTreeView = new Pane(info);
 
-        this.infoPane.getChildren().add(containerForTreeView);
-        this.infoPane.getChildren().add(new RadioButton("Blocked"));
         info.setPrefWidth(this.infoPane.getPrefWidth());
         info.setRoot(root);
-        containerForTreeView.toBack();
 
         TreeItem<String> stops = new TreeItem<>("Street stops");
         if (this.street_stops.size() == 0){
@@ -366,6 +362,10 @@ public class Street implements Drawable {
         }
         root.getChildren().add(stops);
         root.setExpanded(true);
+
+        TextField streetLoading = controller.getStreetLoading();
+
+        streetLoading.setText(String.valueOf(this.delay_level));
         parent.getChildren().add(this.infoPane);
 
     }
@@ -375,14 +375,10 @@ public class Street implements Drawable {
     }
 
     public void changeLineColor(Color color) {
-//        System.out.println("ALO");
-//        this.prev_color = (Color) this.line.getStroke();
         this.color_stack.add(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }
     public void rollBackLineColor(Color color){
-
-//        this.line.setStroke(this.prev_color);
         this.color_stack.remove(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }

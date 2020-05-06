@@ -1,12 +1,11 @@
-package ija.functional;
+package src.functional;
 
 import java.util.*;
 
-import ija.Main;
-import ija.sample.Clock;
-import ija.sample.MainController;
+import src.Main;
+import src.sample.Clock;
+import src.sample.MainController;
 import javafx.application.Platform;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;

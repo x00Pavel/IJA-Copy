@@ -1,17 +1,15 @@
-package ija.sample;
+package src.sample;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
-import ija.Main;
-import ija.functional.*;
-import javafx.application.Platform;
+import src.Main;
+import src.functional.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import org.w3c.dom.Document;
@@ -21,10 +19,10 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.ScrollEvent;
@@ -38,6 +36,7 @@ public class MainController{
     private List<Street> list_streets = new ArrayList<>();
     private List<Bus> list_buses = new ArrayList<>();
 
+
     @FXML
     private Pane content;
 
@@ -49,6 +48,17 @@ public class MainController{
 
     @FXML
     private TextField scaleField;
+
+    public AbstractMap.SimpleImmutableEntry<Integer, Street> getSteer(String id){
+        for (Street street: list_streets){
+            if (street.getId().equals(id)){
+                return new AbstractMap.SimpleImmutableEntry<>(list_streets.indexOf(street), street);
+            }
+        }
+        throw new NoSuchElementException("Street not found while searching");
+    }
+
+
 
     @FXML
     private AnchorPane mapParent;
@@ -72,7 +82,7 @@ public class MainController{
     }
 
     @FXML
-    public List<Drawable> buildMap(File file) throws IOException {
+    public List<Drawable> buildMap(File file, FXMLLoader menuController) throws IOException {
         // Make grid for testing
         for (int i = 0; i < 1000; i += 10){
             Line line = new Line(i, 0, i, 1000);
@@ -107,16 +117,13 @@ public class MainController{
                 Street new_street = null;
                 try {
                     NodeList stops = street.getElementsByTagName("Stops").item(0).getChildNodes();
-//                    System.out.println(stops.getLength());
                     for (int i = 0; i < stops.getLength(); i++) {
                         if (stops.item(i).getNodeType() == Node.ELEMENT_NODE) {
                             Element tmp = (Element) stops.item(i);
                             String stopName = tmp.getAttribute("name");
-//                            System.out.println(tmp.getNodeName());
                             NodeList tmp_node = tmp.getChildNodes();
                             for (int j = 0; j < tmp_node.getLength(); j++) {
                                 if (tmp_node.item(j).getNodeType() == Node.ELEMENT_NODE) {
-//                                    System.out.println(tmp_node.item(j).getNodeName());
                                     Element tmp_coord = (Element) tmp_node.item(j);
                                     int x = Integer.parseInt(tmp_coord.getAttribute("x"));
                                     int y = Integer.parseInt(tmp_coord.getAttribute("y"));
@@ -168,7 +175,7 @@ public class MainController{
             content.setScaleX(zoom * content.getScaleX());
             content.setScaleY(zoom * content.getScaleY());
             content.layout();
-            scaleField.setText(String.valueOf(Integer.parseInt(scaleField.getText().replace("%","")) + 10)+"%");
+            scaleField.setText((Integer.parseInt(scaleField.getText().replace("%", "")) + 10) +"%");
         }
     }
 
@@ -180,12 +187,12 @@ public class MainController{
             content.setScaleX(zoom * content.getScaleX());
             content.setScaleY(zoom * content.getScaleY());
             content.layout();
-            scaleField.setText(String.valueOf(Integer.parseInt(scaleField.getText().replace("%","")) - 10)+"%");
+            scaleField.setText((Integer.parseInt(scaleField.getText().replace("%", "")) - 10) +"%");
         }
     }
 
     @FXML
-    public List<Bus> buildLines(File file){
+    public List<Bus> buildLines(File file, FXMLLoader menuLoader){
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -201,9 +208,9 @@ public class MainController{
                 Element line = (Element) lines.item(temp);
                 String lineName = line.getAttribute("name");
                 String busColor = line.getAttribute("color");
-                Integer time_for_ring = Integer.parseInt(line.getAttribute("time"));
+                int time_for_ring = Integer.parseInt(line.getAttribute("time"));
 
-                ija.functional.Line tempLine = ija.functional.Line.defaultLine(lineName); // create Line
+                src.functional.Line tempLine = src.functional.Line.defaultLine(lineName); // create Line
 
                 NodeList streets_names = line.getElementsByTagName("Streets").item(0).getChildNodes();
                 for (int i = 0; i < streets_names.getLength(); i++) {
@@ -243,7 +250,6 @@ public class MainController{
                         for (Stop need_this_stop : list_stops) {
                             if (name.equals(need_this_stop.getId())) {
                                 tempLine.addStop(need_this_stop);
-//                                tempLine.addStop(new Stop(need_this_stop)); // add stop in Line
                                 addStopFlag = true;
                                 break;
                             }
@@ -327,10 +333,14 @@ public class MainController{
             TreeItem<String> tmp = new TreeItem<>(bus.getBusName());
             buses.getChildren().add(tmp);
         }
-
+        
         root.getChildren().addAll(streets, stops, buses);
-        info = new TreeView<>(root);
         root.setExpanded(true);
+        info = new TreeView<>(root);
+        AnchorPane.setLeftAnchor(info, 0.0);
+        AnchorPane.setRightAnchor(info, 0.0);
+        AnchorPane.setTopAnchor(info, 0.0);
+        AnchorPane.setBottomAnchor(info, 0.0);
         info.setPrefWidth(infoContant.getPrefWidth());
         info.setPrefHeight(infoContant.getPrefHeight());
         infoContant.getChildren().add(info);

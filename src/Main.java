@@ -1,11 +1,13 @@
-package  ija;
+package src;
 
-import ija.functional.Bus;
-import ija.functional.Drawable;
+import src.functional.Bus;
+import src.functional.Drawable;
 
-import ija.sample.*;
+import src.sample.MainController;
+import src.sample.BackEnd;
+import src.sample.Updater;
+import src.sample.Clock;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -25,13 +27,14 @@ public class Main extends Application {
     public static List<Bus> list_bus;
     public static List<Drawable> items;
     public static MainController controller;
-    public static  Clock clock;
+    public static Clock clock;
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("layout.fxml"));
-        File fileMap = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("map.xml")).getFile());
-        File fileTransport = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("transport.xml")).getFile());
+        System.out.println("FUCK HERE##################################");
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("layout.fxml")));
+        File fileMap = new File(Objects.requireNonNull("data/map.xml"));
+        File fileTransport = new File(Objects.requireNonNull("data/transport.xml"));
 
         BorderPane root = null;
         try {
@@ -44,11 +47,12 @@ public class Main extends Application {
 
         clock = new Clock(1000,0,0,0, controller.getClockObj());
         try {
-            items = controller.buildMap(fileMap);
+            FXMLLoader sideLoader = new FXMLLoader(getClass().getClassLoader().getResource("sideMenu.fxml"));
+            items = controller.buildMap(fileMap, sideLoader);
+            list_bus = controller.buildLines(fileTransport, sideLoader);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        list_bus = controller.buildLines(fileTransport);
         items.addAll(list_bus);
 
         for(Bus bus: list_bus){ // for every bus calculate a start position
@@ -57,6 +61,8 @@ public class Main extends Application {
         controller.setElements(items);
         controller.setTreeInfo();
         primaryStage.setTitle("Transport app");
+        primaryStage.setMinHeight(733);
+        primaryStage.setMinWidth(970);
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -77,5 +83,9 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);
         });
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
