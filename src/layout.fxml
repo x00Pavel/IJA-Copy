@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="733.0" minWidth="970.0" prefHeight="733.0" prefWidth="970.0" 
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MainController">
+<BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="733.0" minWidth="970.0" prefHeight="733.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MainController">
    <center>
       <AnchorPane fx:id="mapParent" prefHeight="700.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
@@ -32,7 +31,7 @@
    <right>
       <AnchorPane prefHeight="733.0" prefWidth="222.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="246.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+            <BorderPane layoutY="8.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="246.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
                <center>
                   <Text fx:id="clockField" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" BorderPane.alignment="CENTER">
                      <font>
@@ -63,7 +62,7 @@
                   </VBox>
                </bottom>
             </BorderPane>
-            <AnchorPane fx:id="infoContant" layoutY="133.0" prefHeight="600.0" prefWidth="222.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0" />
+            <AnchorPane fx:id="infoContant" layoutY="136.0" prefHeight="597.0" prefWidth="222.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="136.0" />
          </children></AnchorPane>
    </right>
 </BorderPane>

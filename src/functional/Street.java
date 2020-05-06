@@ -237,10 +237,10 @@ public class Street implements Drawable {
 	}
 
 
-	/*
-	* \brief Set interactiv activity for given street
+	/**
+	* @brief Set interactiv activity for given street
 	*
-	* \param[in] controller Main controller of scene
+	* @param controller Main controller of scene
 	 */
     @Override
     public void setInfo(MainController controller) {
@@ -347,7 +347,6 @@ public class Street implements Drawable {
         TreeView<String> info = controller.getInfo();
         TreeItem<String> root = new TreeItem<>("Street info");
 
-        info.setPrefWidth(this.infoPane.getPrefWidth());
         info.setRoot(root);
 
         TreeItem<String> stops = new TreeItem<>("Street stops");
