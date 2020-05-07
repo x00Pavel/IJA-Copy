@@ -10,33 +10,49 @@ import javafx.scene.layout.AnchorPane;
 
 public class MenuController {
 
-    private String streetName;
+    private Street street;
 
-    public String getStreetName() {
-        return streetName;
+    @FXML
+    private TextField streetNameField;
+
+    @FXML
+    private AnchorPane sideMenu;
+
+    @FXML
+    private TreeView<String> info;
+
+    @FXML
+    private TextField streetLoading;
+
+    @FXML
+    private Button streetLoadingMinus;
+
+    @FXML
+    private Button streetLoadingPlus;
+
+    @FXML
+    private CheckBox streetBlock;
+
+
+    public Street getStreet() {
+        return street;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
+    public void setStreet(Street street) {
+        this.street = street;
     }
 
-    @FXML
-    AnchorPane sideMenu;
+    public TextField getStreetNameField() {
+        return streetNameField;
+    }
 
-    @FXML
-    TreeView<String> info;
+    public void setStreetNameField(String streetNameField) {
+        this.streetNameField.setText(streetNameField);
+    }
 
-    @FXML
-    TextField streetLoading;
-
-    @FXML
-    Button streetLoadingMinus;
-
-    @FXML
-    Button streetLoadingPlus;
-
-    @FXML
-    CheckBox streetBlock;
+    public void setStreetBlock(Boolean streetBlock) {
+        this.streetBlock.setSelected(streetBlock);
+    }
 
     public CheckBox getStreetBlock() {
         return streetBlock;
@@ -52,6 +68,10 @@ public class MenuController {
 
     public TextField getStreetLoading() {
         return streetLoading;
+    }
+
+    public void setStreetLoading(String streetLoading) {
+        this.streetLoading.setText(streetLoading);
     }
 
     public Button getStreetLoadingMinus() {

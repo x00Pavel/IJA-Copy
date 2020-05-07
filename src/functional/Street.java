@@ -1,6 +1,5 @@
 package src.functional;
 
-import src.Main;
 import src.sample.MainController;
 import src.sample.MenuController;
 
@@ -38,6 +37,7 @@ public class Street implements Drawable {
     protected Polyline line;
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
     private AnchorPane infoPane;
+    private MenuController controller;
 //    private String type = "empty"; // now streets have a type (direction)
 
 
@@ -64,7 +64,7 @@ public class Street implements Drawable {
         return this.delay_level;
     }
 
-    public void setDelay_level(Integer delay_level) {
+    private void setDelayLevel(Integer delay_level) {
         this.delay_level = delay_level;
     }
 
@@ -240,40 +240,27 @@ public class Street implements Drawable {
 	/**
 	* @brief Set interactiv activity for given street
 	*
-	* @param controller Main controller of scene
+	* @param mainController Main controller of scene
 	 */
     @Override
-    public void setInfo(MainController controller) {
-        this.createSideMenu(controller.getInfoContant());
+    public void setInfo(MainController mainController) {
+        this.createSideMenu(mainController.getInfoContant());
 
-        ContextMenu contextMenu = new ContextMenu();
-        CheckMenuItem block = new CheckMenuItem("Bloked");
         Label label = new Label(this.getId());
 
         label.setVisible(false);
         label.setLabelFor(this.line);
         label.setStyle("-fx-background-color:POWDERBLUE");
-        contextMenu.getItems().addAll(block);
 
-        controller.getMapParent().getChildren().add(label);
+        mainController.getMapParent().getChildren().add(label);
 
         final Paint[] prev_color = new Paint[1];
+        ContextMenu contextMenu = new ContextMenu();
+        CheckMenuItem block = new CheckMenuItem("Bloked");
+        contextMenu.getItems().addAll(block);
         block.setSelected(false);
         block.setOnAction(event -> {
-                    this.blocked = block.isSelected();
-                    Street street = this;
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (street.blocked){
-                                prev_color[0] = street.line.getStroke();
-                                street.line.setStroke(Color.RED);
-                            }
-                            else{
-                                street.line.setStroke(prev_color[0]);
-                            }
-                        }
-                    });
+                    this.setBlock(block.isSelected());
                     System.out.println("Street blocked? " + this.blocked);
                 }
         );
@@ -325,10 +312,28 @@ public class Street implements Drawable {
         });
     }
 
-    /*
-    * \brief Set side menu bar for street information
+    private void setBlock(boolean selected) {
+        final Paint[] prev_color = new Paint[1];
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (Street.this.blocked){
+                    prev_color[0] = Street.this.line.getStroke();
+                    Street.this.line.setStroke(Color.RED);
+                    Street.this.controller.setStreetBlock(true);
+                }
+                else{
+                    Street.this.line.setStroke(prev_color[0]);
+                    Street.this.controller.setStreetBlock(false);
+                }
+            }
+        });
+    }
+
+    /**
+    * @brief Set side menu bar for street information
     *
-    * \param[in] parent Container for menu
+    * @param parent Container for menu
      */
     private void createSideMenu(AnchorPane parent) {
         FXMLLoader sideLoader = new FXMLLoader(getClass().getResource("sideMenu.fxml"));
@@ -338,8 +343,29 @@ public class Street implements Drawable {
             e.getMessage();
         }
 
-        MenuController controller = sideLoader.getController();
-        // controller.setStreet(this);
+        controller = sideLoader.getController();
+        controller.setStreet(this);
+        controller.setStreetNameField(this.getId());
+
+        // Set action for load buttons
+        controller.getStreetLoadingMinus().setOnAction(event -> {
+            if (this.getDelayLevel() > 0){
+                this.setDelayLevel(this.getDelayLevel() - 1);
+                controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
+            }
+        });
+
+        controller.getStreetLoadingPlus().setOnAction(event -> {
+            if (this.getDelayLevel() < 5){
+                this.setDelayLevel(this.getDelayLevel() + 1);
+                controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
+            }
+        });
+        controller.getStreetBlock().setOnMouseClicked(event -> {
+            this.setBlock(controller.getStreetBlock().isSelected());
+            controller.setStreetBlock(this.blocked);
+        });
+
         AnchorPane.setBottomAnchor(this.infoPane, 0.0);
         AnchorPane.setLeftAnchor(this.infoPane, 0.0);
         AnchorPane.setRightAnchor(this.infoPane, 0.0);
