@@ -3,7 +3,7 @@ package src.functional;
 import java.util.*;
 
 import src.Main;
-import src.sample.Clock;
+// import src.sample.Clock;
 import src.sample.MainController;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
@@ -23,10 +23,12 @@ public class Bus implements Drawable {
     private int speed = 5;
     private Street actual_bus_street = null;
     private int time_for_ring = 0; // now we have a time for bus ring
-//    private int old_time_for_ring = 0;
+    private int goes_through_stops = 0;
+    private int goes_through_streets_with_stops;
+    // private int old_time_for_ring = 0;
     private int time_in_stop_left = 0; // when we spawn a bus in the stop, we have to w8 some time
-    private Clock clock;
-    private int seconds_to_end = -1;
+    // private Clock clock;
+    // private int seconds_to_end = -1;
 
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
@@ -37,7 +39,7 @@ public class Bus implements Drawable {
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color,1.0));
         this.time_for_ring = time_for_ring;
-//        this.old_time_for_ring = time_for_ring;
+        // this.old_time_for_ring = time_for_ring;
         this.busLineForUse = Line.defaultLine(this.busLine);
 
     }
@@ -76,6 +78,18 @@ public class Bus implements Drawable {
 
     public Integer getTimeForRing(){
         return this.time_for_ring;
+    }
+
+    public void setTimeForRing(Integer new_time_for_ring){
+        this.time_for_ring = new_time_for_ring;
+    }
+
+    public Integer getStopsThroughs(){
+        return this.goes_through_stops;
+    }
+
+    public Integer getStreetsThroughs(){
+        return this.goes_through_streets_with_stops;
     }
 
 //    public Integer getOldTimeForRing(){
@@ -202,10 +216,8 @@ public class Bus implements Drawable {
                         this.busY = stop.getCoordinate().getY();
                         position_found = true;
                         this.time_in_stop_left = 3 - (position_time - time_in_seconds_in_stop_with_delay);
-                        this.getBusLineForUse().addStopsTimes(stop.getId(),this.time_for_ring + this.time_in_stop_left);
-//                        stop.setTime(Arrays.asList(this.time_for_ring + this.time_in_stop_left), this);
-                        this.getBusLineForUse().addStopsFlags(stop.getId(), -1);
-//                        stop.setFlag(-1);
+                        // this.getBusLineForUse().addStopsTimes(stop.getId(),this.time_for_ring + this.time_in_stop_left);
+                        this.getBusLineForUse().addStopsFlags(stop.getId(), 1);
 
                         for(Stop stop_for_readd: stops_for_readd){
                             this.busLineForUse.getStops().remove(stop_for_readd);
@@ -213,13 +225,12 @@ public class Bus implements Drawable {
                         }
 
                         break;
-                    }else if(position_time > time_in_seconds_out_stop_with_delay){
-                        int new_time_to_stop = this.time_for_ring - (position_time-time_in_seconds_out_stop_with_delay);
-//                        int old_time_to_stop = old_time_for_ring - (position_time-time_in_seconds_out_stop_with_delay);
-                        this.getBusLineForUse().addStopsTimes(stop.getId(),new_time_to_stop);
-//                        stop.setTime(Arrays.asList(new_time_to_stop), this);
-                        this.getBusLineForUse().addStopsFlags(stop.getId(), -1);
-//                        stop.setFlag(-1);
+                    }
+                    else if(position_time > time_in_seconds_out_stop_with_delay){
+                        // int new_time_to_stop = this.time_for_ring - (position_time-time_in_seconds_out_stop_with_delay);
+                    //    int old_time_to_stop = old_time_for_ring - (position_time-time_in_seconds_out_stop_with_delay);
+                        // this.getBusLineForUse().addStopsTimes(stop.getId(),new_time_to_stop);
+                        this.getBusLineForUse().addStopsFlags(stop.getId(), 1);
                     }
 
                 }
@@ -286,7 +297,7 @@ public class Bus implements Drawable {
         for(Stop stop: street.getStops()){
             if (this.getBusLineForUse().getStops().contains(stop)){
                 stops_counter++;
-                break;
+                // break;
             }
         }
 
@@ -299,8 +310,8 @@ public class Bus implements Drawable {
         List<Street> myBusStreets = new ArrayList<>(this.busLineForUse.getStreets());
         List<Stop> myBusStops = new ArrayList<>(this.busLineForUse.getStops());
 
-//        System.out.println("myBusStreets :" + myBusStreets);
-//        System.out.println("myBusStops :" + myBusStops);
+       System.out.println("myBusStreets :" + myBusStreets);
+       System.out.println("myBusStops :" + myBusStops);
 
         if(this.time_in_stop_left != 0){
             try {
@@ -311,18 +322,20 @@ public class Bus implements Drawable {
             this.time_in_stop_left = 0;
         }
 
-        boolean restart_flag = false;
+        this.goes_through_streets_with_stops = 0;
+
+        // boolean restart_flag = false;
 
         for (Street actualStreet : myBusStreets) {
-            if(restart_flag){
-                break;
-            }
+            // if(restart_flag){
+                // break;
+            // }
             this.actual_bus_street = actualStreet;
-            Integer actual_street_delay = actualStreet.getDelayLevel();
+            // Integer actual_street_delay = actualStreet.getDelayLevel();
 
-            if(actualStreet.getId().equals(this.busLine.getStreets().get(this.busLine.getStreets().size()-1).getId())){
-                restart_flag = true;
-            }
+            // if(actualStreet.getId().equals(this.busLine.getStreets().get(this.busLine.getStreets().size()-1).getId())){
+            //     restart_flag = true;
+            // }
             List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<>(actualStreet.getStopLocation());
             for (int k = 0; k < actualStreet.getCoordinates().size() - 1; k++) {
 
@@ -334,23 +347,26 @@ public class Bus implements Drawable {
                 }
 
                 if(actualStreet.getStops().isEmpty()){
-                    calculateAndGo(second, actual_street_delay);
+                    calculateAndGo(second, actualStreet);
                     break;
                 }
+                
+                this.goes_through_streets_with_stops++;
 
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);// think about myBusStops.get(0) <
                 if (stopLocation.contains(e)) {
                     Stop firstStop = stopLocation.get(stopLocation.indexOf(e)).getKey();
-                    calculateAndGo(firstStop.getCoordinate(), actual_street_delay);
+                    calculateAndGo(firstStop.getCoordinate(), actualStreet);
                     try {
                         Thread.sleep(Main.clock.getSpeed()*3);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
+                    this.goes_through_stops++;
                     stopLocation.remove(e);
                     myBusStops.remove(0);
                 } else {
-                    calculateAndGo(second, actual_street_delay);
+                    calculateAndGo(second, actualStreet);
                     continue;
                 }
 
@@ -358,32 +374,47 @@ public class Bus implements Drawable {
                     AbstractMap.SimpleImmutableEntry<Stop, Integer> nextStopPair = new AbstractMap.SimpleImmutableEntry<Stop, Integer>(myBusStops.get(0), k);
                     if (stopLocation.contains(nextStopPair)) {
                         Stop nextStop = stopLocation.get(stopLocation.indexOf(nextStopPair)).getKey();
-                        calculateAndGo(nextStop.getCoordinate(), actual_street_delay);
+                        calculateAndGo(nextStop.getCoordinate(), actualStreet);
                         try {
                             Thread.sleep(Main.clock.getSpeed()*3);
                         } catch (InterruptedException interruptedException) {
                             interruptedException.printStackTrace();
                         }
+                        this.goes_through_stops++;
                         stopLocation.remove(nextStopPair);
                         myBusStops.remove(0);
                     } else {
-                        calculateAndGo(second, actual_street_delay);
+                        calculateAndGo(second, actualStreet);
                         break;
                     }
                 }
 
                 if (stopLocation.isEmpty()) {
-                    calculateAndGo(second, actual_street_delay);
+                    calculateAndGo(second, actualStreet);
                 }
+
+                for(Stop stop: this.busLineForUse.getStops()){
+                    if(actualStreet.getStops().contains(stop)){
+                        this.busLineForUse.addStopsFlags(stop.getId(), 0);
+                    }
+                }
+
             }
         }
+        this.goes_through_stops = 0;
+        // for(Stop stop:this.busLineForUse.getStops()){
+        //     this.busLineForUse.addStopsTimes(stop.getId(), 0);
+        //     this.busLineForUse.addStopsFlags(stop.getId(), 0);
+        // }
     }
 
-    public void calculateAndGo(Coordinate end, Integer delay_level){
+    public void calculateAndGo(Coordinate end, Street actual_street){
         double rangeX = end.getX() - this.busX;
         double rangeY = end.getY() - this.busY;
         double stepX;
         double stepY;
+
+        int delay_level = actual_street.getDelayLevel();
 
         int j = 0;
 
@@ -406,7 +437,7 @@ public class Bus implements Drawable {
         }
 
         while(j!=0){
-            this.seconds_to_end = j; // seconds left to end this element of road
+            // this.seconds_to_end = j; // seconds left to end this element of road
             j--;
             this.busX = this.busX + stepX;
             this.busY = this.busY + stepY;
@@ -415,10 +446,20 @@ public class Bus implements Drawable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            int new_delay_leve = actual_street.getDelayLevel();
+            if(new_delay_leve!=delay_level){
+                calculateAndGo(end, actual_street);
+                break;
+            }
         }
 
         this.busX = end.getX();
         this.busY = end.getY();
+        for(Stop stop: this.busLineForUse.getStops()){
+            if(this.busX == stop.getCoordinate().getX() && this.busY == stop.getCoordinate().getY()){
+                this.busLineForUse.addStopsFlags(stop.getId(), 1);
+            }
+        }
     }
 
     // Return circle that represents bus on the map

@@ -11,6 +11,7 @@ import java.util.List;
 public class Updater implements Runnable{
 
     private List<Bus> all_buses;
+    // private boolean alreadyCalculated = false;
 
     public Updater(List<Bus> mybus){
         this.all_buses = mybus;
@@ -32,6 +33,15 @@ public class Updater implements Runnable{
 //                            stop.setTime(calculateTime(stop, bus, i), bus);
                             bus.getBusLineForUse().addStopsTimes(stop.getId(), calculateTime(stop, bus, i));
                         }
+
+                        for(Street street:bus.getBusLineForUse().getStreets()){
+                            if(street.getPrevDelayLevel() != street.getDelayLevel()){
+                                // for(Stop stop:bus.getBusLineForUse().getStops()){
+                                //     bus.getBusLineForUse().addStopsFlags(stop.getId(), 0);
+                                // }
+                                street.setPrevDelayLevel(Integer.valueOf(street.getDelayLevel()));
+                            }
+                        }
                     }
                 }
             });
@@ -48,26 +58,55 @@ public class Updater implements Runnable{
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
 
+        int new_time_for_ring = 0;
+        for(Street street: bus.getBusLineForUse().getStreets()){
+            new_time_for_ring = new_time_for_ring + bus.calculateStreetTime(street);
+        }
+        bus.setTimeForRing(new_time_for_ring);
+
+
+        // for(Stop stop_for_calculate_w8: bus.getBusLineForUse().getStops()){
+        //     if(bus.getBusX() == stop_for_calculate_w8.getCoordinate().getX() && bus.getBusY() == stop_for_calculate_w8.getCoordinate().getY()){
+        //         if(this.alreadyCalculated){
+        //             System.out.println("alomalo");
+        //             int actual_time = bus.getBusLineForUse().getStopsTimes().get(stop.getId());
+        //             return actual_time-1;
+        //         }else{
+        //             this.alreadyCalculated = true;
+        //             break;
+        //         }
+        //     }else{
+        //         this.alreadyCalculated = false;
+        //     }
+        // }
+
+        // int calibration_stops = 0;
+        // if(bus.getStopsThroughs() > stopsBefore){
+        //     calibration_stops = 0;
+        // }else{
+        int calibration_stops = bus.getStopsThroughs();
+        int calibration_streets = bus.getStreetsThroughs();
+        // }
+
         int time_in_seconds_with_delay = -1;
 //        int time_in_seconds_wo_delay = -1;
 
         int range = 0;
 
-        int time_wo_delay = 0;
+        // int time_wo_delay = 0;
         int time_with_delay = 0;
 
         int flagInStop = bus.getBusLineForUse().getStopsFlags().get(stop.getId());
 
-        if(flagInStop == 0) {
-            if (actual_street.equals(stop_street)) {
+        // if(flagInStop == 0) {
+            if (actual_street.equals(stop_street) && flagInStop == 0) {
                 double rangeX = stop.getCoordinate().getX() - bus.getBusX();
                 double rangeY = stop.getCoordinate().getY() - bus.getBusY();
-
+    
                 range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
-
-//                time_wo_delay = range / bus.getSpeed();
+    
+    //                time_wo_delay = range / bus.getSpeed();
                 time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
-
             } else {
                 Coordinate actual_street_end;
                 if(bus.getBusLineForUse().getStreetsTypes().get(actual_street.getId()).equals("back")){
@@ -83,8 +122,21 @@ public class Updater implements Runnable{
 //                time_wo_delay = range / bus.getSpeed();
                 time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
 
-                for (int i = bus_streets.indexOf(actual_street) + 1; i < bus_streets.indexOf(stop_street); i++) {
-                    int street_time = calculateStreetTime(bus_streets.get(i), bus.getSpeed());
+                int start_street_index = bus_streets.indexOf(actual_street);
+                int stop_street_index = bus_streets.indexOf(stop_street);
+
+                if(start_street_index >= stop_street_index){
+                    start_street_index = start_street_index - bus_streets.size();
+                }
+
+                int new_i;
+                for (int i = start_street_index + 1; i < stop_street_index; i++) {
+                    if(i < 0){
+                        new_i = i + bus_streets.size();
+                    }else{
+                        new_i = i;
+                    }
+                    int street_time = calculateStreetTime(bus_streets.get(new_i), bus);
 //                    time_wo_delay = time_wo_delay + street_time.get(0);
                     time_with_delay = time_with_delay + street_time;
                 }
@@ -109,39 +161,53 @@ public class Updater implements Runnable{
 //                time_wo_delay = time_wo_delay + last_time_wo_delay;
             }
 
-            time_in_seconds_with_delay = time_with_delay + stopsBefore * 3 + bus.getTimeInStopLeft();
+            time_in_seconds_with_delay = time_with_delay + stopsBefore * 3 - calibration_stops * 3 + bus.getTimeInStopLeft();
+            if(stopsBefore < calibration_stops){
+                time_in_seconds_with_delay = time_in_seconds_with_delay + calibration_streets*4;
+            }
 //            time_in_seconds_wo_delay = time_wo_delay + stopsBefore * 3 + bus.getTimeInStopLeft();
 
-            flagInStop = -1;
-            bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
+            // flagInStop = -1;
+            // bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
 //            stop.setFlag(flagInStop);
 
-        }else if(flagInStop == 1){
-            time_in_seconds_with_delay = bus.getTimeForRing()+1; // mb need +1
-//            time_in_seconds_wo_delay = bus.getTimeForRing()+1;
-            flagInStop = -1;
-            bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
-        }else if(flagInStop == -1){
-            time_in_seconds_with_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
-//            time_in_seconds_wo_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
-            if(time_in_seconds_with_delay == 0){
-                flagInStop = 1;
-                bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
-            }
-        }
+//         }else if(flagInStop == 1){
+//             time_in_seconds_with_delay = bus.getTimeForRing()+1;// mb need +1
+// //            time_in_seconds_wo_delay = bus.getTimeForRing()+1;
+//             flagInStop = -1;
+//             bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
+//         }else if(flagInStop == -1){
+//             time_in_seconds_with_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
+// //            time_in_seconds_wo_delay = bus.getBusLineForUse().getStopsTimes().get(stop.getId()) - 1;
+//             if(time_in_seconds_with_delay == 0){
+//                 flagInStop = 1;
+//                 bus.getBusLineForUse().addStopsFlags(stop.getId(), flagInStop);
+//             }
+//         }
 
         return time_in_seconds_with_delay;
     }
 
-    public Integer calculateStreetTime(Street first, Integer speed){
+    public Integer calculateStreetTime(Street first, Bus bus){
         double rangeX = first.end().getX()-first.begin().getX();
         double rangeY = first.end().getY()-first.begin().getY();
 
         int range = (int)(Math.sqrt((rangeX*rangeX)+(rangeY*rangeY)));
 
-        int time_with_delay = range / (speed - first.getDelayLevel());
+        int time_with_delay = range / (bus.getSpeed() - first.getDelayLevel());
 //        int time_wo_delay = range / speed;
 //        time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
+        int stops_counter = 0;
+        for(Stop street_stop: first.getStops()){
+            if (bus.getBusLineForUse().getStops().contains(street_stop)){
+                stops_counter++;
+            }
+        }
+        // System.out.println("stops_counter: " + stops_counter);
+
+        time_with_delay = time_with_delay + stops_counter*3;
+
+        // System.out.println("time_with_delay: " + time_with_delay);
 
         return time_with_delay;
     }

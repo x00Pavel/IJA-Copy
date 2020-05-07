@@ -16,9 +16,10 @@ public class MyLine implements Line{
 	private List<Street> streets = new ArrayList<>();
 	private HashMap<String, String> streets_types = new HashMap<>();
 	private List<Stop> stops = new ArrayList<>();
+	private HashMap<String, Integer> original_stops_times;
 	private HashMap<String, Integer> stops_times = new HashMap<>(); // name_of_stop:time_to_stop_left
 	private HashMap<String, Integer> stops_flags = new HashMap<>();
-//	private HashMap<String, Integer> stops_delay = new HashMap<>();
+	// private HashMap<String, Integer> stops_delay = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	
 	public MyLine(String id) {
@@ -34,6 +35,11 @@ public class MyLine implements Line{
 		this.stops_flags = newLine.getStopsFlags();
 		this.stops_times = newLine.getStopsTimes();
 //		this.stops_delay = newLine.getStopsDelays();
+	}
+
+	@Override
+	public void createOriginalStopsTimes(HashMap<String, Integer> original_stops_times){
+		this.original_stops_times = new HashMap<String, Integer>(original_stops_times);
 	}
 
 	@Override
@@ -69,8 +75,10 @@ public class MyLine implements Line{
             System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine);
         }else{
             dopLine = "";
-        }
-//		System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine);
+		}
+		// if(stop_name.equals("Stop 11")){
+			// System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine);
+		// }
 	}
 
 	@Override
