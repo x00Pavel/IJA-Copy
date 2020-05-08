@@ -285,26 +285,7 @@ public class Street implements Drawable {
         mainController.getMapParent().getChildren().add(label);
 
         final Paint[] prev_color = new Paint[1];
-        ContextMenu contextMenu = new ContextMenu();
-        CheckMenuItem block = new CheckMenuItem("Bloked");
-        contextMenu.getItems().addAll(block);
-        block.setSelected(false);
-        block.setOnAction(event -> {
-                    this.setBlock(block.isSelected());
-                    System.out.println("Street blocked? " + this.blocked);
-                }
-        );
-
-        this.line.setOnContextMenuRequested(event -> {
-            Street street = this;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    contextMenu.show(street.line, event.getScreenX(), event.getScreenY());
-                }
-            });
-            System.out.println("Line clicked");
-        });
+       
         this.line.setOnMouseEntered(event -> {
             Street street = this;
             prev_color[0] = street.line.getStroke();
@@ -348,17 +329,16 @@ public class Street implements Drawable {
      * @param block Boolean value, True to bloc street, False to unblock
      */
     private void setBlock(boolean block) {
-        final Paint[] prev_color = new Paint[1];
+        // final Paint[] prev_color = new Paint[1];
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 if (block){
-                    prev_color[0] = Street.this.line.getStroke();
-                    Street.this.line.setStroke(Color.RED);
+                    Street.this.changeLineColor(Color.LIGHTGRAY);
                     Street.this.controller.setStreetBlock(true);
                 }
                 else{
-                    Street.this.line.setStroke(prev_color[0]);
+                    Street.this.rollBackLineColor(Color.LIGHTGRAY);
                     Street.this.controller.setStreetBlock(false);
                 }
             }
@@ -384,14 +364,14 @@ public class Street implements Drawable {
 
         // Set action for load buttons
         controller.getStreetLoadingMinus().setOnAction(event -> {
-            if (this.getDelayLevel() > 0){
+            if (this.getDelayLevel() > 1){
                 this.setDelayLevel(this.getDelayLevel() - 1);
                 controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
             }
         });
 
         controller.getStreetLoadingPlus().setOnAction(event -> {
-            if (this.getDelayLevel() < 5){
+            if (this.getDelayLevel() < 4){
                 this.setDelayLevel(this.getDelayLevel() + 1);
                 controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
             }

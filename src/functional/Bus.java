@@ -314,8 +314,8 @@ public class Bus implements Drawable {
         List<Street> myBusStreets = new ArrayList<>(this.busLineForUse.getStreets());
         List<Stop> myBusStops = new ArrayList<>(this.busLineForUse.getStops());
 
-       System.out.println("myBusStreets :" + myBusStreets);
-       System.out.println("myBusStops :" + myBusStops);
+    //    System.out.println("myBusStreets :" + myBusStreets);
+    //    System.out.println("myBusStops :" + myBusStops);
 
         if(this.time_in_stop_left != 0){
             try {

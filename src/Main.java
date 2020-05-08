@@ -66,11 +66,11 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
 
         ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
