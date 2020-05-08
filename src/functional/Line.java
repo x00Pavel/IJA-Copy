@@ -25,7 +25,7 @@ public interface Line extends Drawable {
 
 	public void addStreetType(String street_name, String street_type);
 
-	public void addStopsTimes(String stop_name, Integer stop_time);
+	public void addStopsTimes(String stop_name, Integer stop_times, Integer delay);
 
 	public void addStopsFlags(String stop_name, Integer stop_flag);
 
@@ -42,6 +42,4 @@ public interface Line extends Drawable {
 	public List<Stop> getStops();
 
 	public List<Street> getStreets();
-
-	public void createOriginalStopsTimes(HashMap<String, Integer> original_stops_times);
 }

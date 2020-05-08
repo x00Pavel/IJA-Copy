@@ -25,7 +25,7 @@ public class Bus implements Drawable {
     private int time_for_ring = 0; // now we have a time for bus ring
     private int goes_through_stops = 0;
     private int goes_through_streets_with_stops;
-    // private int old_time_for_ring = 0;
+    private int old_time_for_ring = 0;
     private int time_in_stop_left = 0; // when we spawn a bus in the stop, we have to w8 some time
     // private Clock clock;
     // private int seconds_to_end = -1;
@@ -43,8 +43,6 @@ public class Bus implements Drawable {
         this.busLineForUse = Line.defaultLine(this.busLine);
 
     }
-
-
 
     public double getBusX(){
         return this.busX;
@@ -78,6 +76,10 @@ public class Bus implements Drawable {
 
     public Integer getTimeForRing(){
         return this.time_for_ring;
+    }
+
+    public Integer getOldTimeForRing(){
+        return this.old_time_for_ring;
     }
 
     public void setTimeForRing(Integer new_time_for_ring){
@@ -115,6 +117,8 @@ public class Bus implements Drawable {
 //    }
 
     public void calculatePosition(List<Integer> time){ // dont delete the comments in this method pls
+
+        this.old_time_for_ring = this.time_for_ring;
 
         int new_time_for_ring = 0;
         for(Street street: this.busLineForUse.getStreets()){

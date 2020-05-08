@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -265,7 +266,8 @@ public class MainController{
                 }
 
                 for(Stop stop:tempLine.getStops()){
-                    tempLine.addStopsTimes(stop.getId(),0);
+                    // tempLine.createOriginalStopsTimes(stop.getId(), 0);
+                    tempLine.addStopsTimes(stop.getId(), 0, 0);
                     tempLine.addStopsFlags(stop.getId(), 0);
                 }
 
