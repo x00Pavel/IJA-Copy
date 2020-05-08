@@ -112,6 +112,14 @@ public class Street implements Drawable {
         return result;
     }
 
+    /**
+     * Create default street
+     *
+     * @param id Name (ID) of new street
+     * @param coordinates List of coordinates
+     * @param stops List of stops on street
+     * @return New instance of Street object
+     */
     public static Street defaultStreet(String id, List<Coordinate> coordinates, List<Stop> stops) {
         Street street = new Street(id);
         int length = coordinates.size();
@@ -182,6 +190,12 @@ public class Street implements Drawable {
         return this.street_stops;
     }
 
+    /**
+     * Add stop to street
+     *
+     * @param stop Stop to be added
+     * @return True if adding in completed succesfully, else false
+     */
     public boolean addStop(Stop stop) {
         Coordinate coord = stop.getCoordinate();
         List<Coordinate> lst = this.getCoordinates();
@@ -215,6 +229,7 @@ public class Street implements Drawable {
         return false;
     }
 
+    @Override
     public String toString() {
         String str = "{\n\t" + this.street_name + " - (" + this.cords.toString() + " " + this.cords.toString() + ")\n";
         String tmp;
@@ -227,6 +242,11 @@ public class Street implements Drawable {
 
     }
 
+    /**
+     * Get list of street coordinates
+     *
+     * @return List of Coordinate objects
+     */
     public List<Coordinate> getCoordinates() {
         return this.cords;
     }
@@ -252,6 +272,7 @@ public class Street implements Drawable {
         label.setLabelFor(this.line);
         label.setStyle("-fx-background-color:POWDERBLUE");
 
+        // Set label for parent element for correct showing on scene
         mainController.getMapParent().getChildren().add(label);
 
         final Paint[] prev_color = new Paint[1];
@@ -312,12 +333,17 @@ public class Street implements Drawable {
         });
     }
 
-    private void setBlock(boolean selected) {
+    /**
+     * Set block property for Street
+     *
+     * @param block Boolean value, True to bloc street, False to unblock
+     */
+    private void setBlock(boolean block) {
         final Paint[] prev_color = new Paint[1];
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                if (Street.this.blocked){
+                if (block){
                     prev_color[0] = Street.this.line.getStroke();
                     Street.this.line.setStroke(Color.RED);
                     Street.this.controller.setStreetBlock(true);
@@ -399,10 +425,12 @@ public class Street implements Drawable {
             return this.stopLocation;
     }
 
+
     public void changeLineColor(Color color) {
         this.color_stack.add(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }
+
     public void rollBackLineColor(Color color){
         this.color_stack.remove(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
