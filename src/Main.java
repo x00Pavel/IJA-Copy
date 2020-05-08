@@ -45,7 +45,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         controller = loader.getController();
 
-        clock = new Clock(1000,0,0,0, controller.getClockObj());
+        clock = new Clock(1000,0,1,21, controller.getClockObj());
         try {
             FXMLLoader sideLoader = new FXMLLoader(getClass().getClassLoader().getResource("sideMenu.fxml"));
             items = controller.buildMap(fileMap, sideLoader);
@@ -74,7 +74,7 @@ public class Main extends Application {
 
         ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
         for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus, clock));
+            executorService.submit(new BackEnd(actual_bus));
         }
 
         executorService.submit(clock);

@@ -35,6 +35,7 @@ public class Street implements Drawable {
     private boolean clicked;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
+    private Integer prev_delay_level = 0;
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
     private AnchorPane infoPane;
     private MenuController controller;
@@ -60,11 +61,19 @@ public class Street implements Drawable {
         return this.street_lines;
     }
 
+    public Integer getPrevDelayLevel(){
+        return this.prev_delay_level;
+    }
+
+    public void setPrevDelayLevel(Integer prev_delay_level) {
+        this.prev_delay_level = prev_delay_level;
+    }
+
     public Integer getDelayLevel(){
         return this.delay_level;
     }
 
-    private void setDelayLevel(Integer delay_level) {
+    public void setDelayLevel(Integer delay_level) {
         this.delay_level = delay_level;
     }
 

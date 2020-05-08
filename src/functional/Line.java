@@ -42,4 +42,6 @@ public interface Line extends Drawable {
 	public List<Stop> getStops();
 
 	public List<Street> getStreets();
+
+	public void createOriginalStopsTimes(HashMap<String, Integer> original_stops_times);
 }
