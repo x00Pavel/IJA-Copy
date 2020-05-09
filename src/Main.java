@@ -1,5 +1,7 @@
 package src;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import src.functional.Bus;
 import src.functional.Drawable;
 
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -31,10 +34,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        System.out.println("FUCK HERE##################################");
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("layout.fxml")));
-        File fileMap = new File(Objects.requireNonNull("data/map.xml"));
-        File fileTransport = new File(Objects.requireNonNull("data/transport.xml"));
+        File fileMap = new File("data/map.xml");
+        File fileTransport = new File("data/transport.xml");
 
         BorderPane root = null;
         try {
@@ -42,10 +44,12 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert root != null;
         Scene scene = new Scene(root);
         controller = loader.getController();
-
-        clock = new Clock(1000,0,1,21, controller.getClockObj());
+        TextField clockField = controller.getClockObj();
+        clock = new Clock(1000, clockField);
+        clock.setTime(0,1,21);
         try {
             FXMLLoader sideLoader = new FXMLLoader(getClass().getClassLoader().getResource("sideMenu.fxml"));
             items = controller.buildMap(fileMap, sideLoader);
@@ -55,9 +59,7 @@ public class Main extends Application {
         }
         items.addAll(list_bus);
 
-        for(Bus bus: list_bus){ // for every bus calculate a start position
-            bus.calculatePosition(clock.getTime());
-        }
+        controller.setClock(clock);
         controller.setElements(items);
         controller.setTreeInfo();
         primaryStage.setTitle("Transport app");
@@ -66,19 +68,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // try {
-        //     Thread.sleep(1000);
-        // } catch (InterruptedException e) {
-        //     e.printStackTrace();
-        // }
-
-        ExecutorService executorService = Executors.newFixedThreadPool(list_bus.size()+2);
-        for (Bus actual_bus:list_bus) {
-            executorService.submit(new BackEnd(actual_bus));
-        }
-
-        executorService.submit(clock);
-        executorService.submit(new Updater(list_bus));
 
         primaryStage.setOnCloseRequest(event -> {
             System.exit(0);

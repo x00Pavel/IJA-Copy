@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="733.0" minWidth="970.0" prefHeight="733.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MainController">
    <center>
       <AnchorPane fx:id="mapParent" prefHeight="700.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane hbarPolicy="ALWAYS" pannable="true" prefHeight="700.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" minHeight="700.0" minWidth="700.0" pannable="true" prefHeight="700.0" prefWidth="700.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <content>
                   <Group>
                      <children>
@@ -29,18 +28,11 @@
       </AnchorPane>
    </center>
    <right>
-      <AnchorPane prefHeight="733.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+      <AnchorPane minHeight="733.0" minWidth="222.0" prefHeight="733.0" prefWidth="222.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane layoutY="8.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="125.0" prefWidth="246.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
-               <center>
-                  <Text fx:id="clockField" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
-               </center>
-               <bottom>
-                  <VBox alignment="TOP_CENTER" prefHeight="95.0" prefWidth="109.0" BorderPane.alignment="TOP_CENTER">
+            <AnchorPane minHeight="170.0" minWidth="222.0" prefHeight="170.0" prefWidth="222.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="50.0" layoutY="74.0" prefHeight="93.0" prefWidth="123.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="74.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time speed" textAlignment="CENTER" wrappingWidth="122.751953125" />
                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="123.0">
@@ -60,9 +52,12 @@
                         </HBox>
                      </children>
                   </VBox>
-               </bottom>
-            </BorderPane>
-            <AnchorPane fx:id="infoContant" layoutY="136.0" prefHeight="597.0" prefWidth="222.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="136.0" />
+                  <Button fx:id="startButton" contentDisplay="CENTER" defaultButton="true" layoutX="49.0" layoutY="42.0" mnemonicParsing="false" onAction="#startRun" prefHeight="26.0" prefWidth="61.0" style="-fx-background-color: LIGHTGREEN;" text="START" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="42.0" />
+                  <TextField fx:id="clockField" alignment="CENTER" layoutX="32.0" layoutY="7.0" prefHeight="32.0" prefWidth="157.0" promptText="Set time " AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="7.0" />
+                  <Button fx:id="stopButton" contentDisplay="CENTER" layoutX="118.0" layoutY="42.0" mnemonicParsing="false" onAction="#stopRun" prefHeight="26.0" prefWidth="61.0" style="-fx-background-color: RED;" text="STOP" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="42.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="infoContant" layoutY="170.0" prefHeight="563.0" prefWidth="222.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="170.0" />
          </children></AnchorPane>
    </right>
 </BorderPane>

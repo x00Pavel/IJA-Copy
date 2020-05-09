@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.ScrollEvent;
@@ -36,19 +39,37 @@ public class MainController{
     private List<Stop> list_stops = new ArrayList<>();
     private List<Street> list_streets = new ArrayList<>();
     private List<Bus> list_buses = new ArrayList<>();
+    private Clock clock;
 
+    private ExecutorService executorService;
+
+    @FXML
+    private Button startButton;
+
+    @FXML
+    private Button stopButton;
 
     @FXML
     private Pane content;
 
     @FXML
-    private Text clockField;
+    private TextField clockField;
 
     @FXML
     private TextField timeSpeedField;
 
     @FXML
     private TextField scaleField;
+
+    @FXML
+    private AnchorPane mapParent;
+
+    @FXML
+    private AnchorPane infoContant;
+
+    public Button getStopButton() {
+        return stopButton;
+    }
 
     public AbstractMap.SimpleImmutableEntry<Integer, Street> getSteer(String id){
         for (Street street: list_streets){
@@ -60,14 +81,11 @@ public class MainController{
     }
 
 
+    public Button getStartButton() {
+        return startButton;
+    }
 
-    @FXML
-    private AnchorPane mapParent;
-
-    @FXML
-    private AnchorPane infoContant;
-
-    public Text getClockObj(){
+    public TextField getClockObj(){
         return clockField;
     }
 
@@ -350,5 +368,48 @@ public class MainController{
 
     public AnchorPane getInfoContant() {
         return infoContant;
+    }
+
+    @FXML
+    private void startRun() {
+            String newTime = clockField.getText();
+            if (newTime.equals("")){
+                clock.setTime(0,0,0);
+            }
+            else {
+                String[] tmpLst= newTime.split(":");
+                clock.setTime(Integer.parseInt(tmpLst[0]), Integer.parseInt(tmpLst[1]), Integer.parseInt(tmpLst[2]));
+                System.out.println(Arrays.toString(tmpLst));
+            }
+
+            executorService = Executors.newFixedThreadPool(list_buses.size()+2);
+            for (Bus actual_bus:list_buses) {
+                actual_bus.calculatePosition(clock.getTime());
+                executorService.submit(new BackEnd(actual_bus));
+            }
+
+            executorService.submit(clock);
+            executorService.submit(new Updater(list_buses));
+            clockField.setEditable(false);
+            startButton.setDisable(true);
+            stopButton.setDisable(false);
+    }
+
+    @FXML
+    private void stopRun() throws InterruptedException {
+//        startButton.setDisable(false);
+//        stopButton.setDisable(true);
+//        if (executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+//            System.out.println("task completed");
+//        } else {
+//            System.out.println("Forcing shutdown...");
+//            executorService.shutdownNow();
+//        }
+//        executorService.shutdownNow();
+
+    }
+
+    public void setClock(Clock clock_) {
+        clock = clock_;
     }
 }

@@ -1,6 +1,7 @@
 package src.sample;
 
-import javafx.scene.text.Text;
+
+import javafx.scene.control.TextField;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,26 +12,11 @@ public class Clock implements Runnable{
     private int hours;
     private int minutes;
     private int seconds;
-    private Text clock_text;
+    private final TextField clock_text;
 
-    public Clock(int new_speed, int hour, int minute, int second, Text clock_){
+    public Clock(int new_speed, TextField clock_){
         clock_text = clock_;
         speed = new_speed;
-        hours = hour;
-        if(hours < 0 || hours > 24){
-            System.out.println("[ERROR] Hours should be in interval 0->24");
-            System.exit(-1);
-        }
-        minutes = minute;
-        if(minutes < 0 || minutes > 60){
-            System.out.println("[ERROR] Minutes should be in interval 0->60");
-            System.exit(-1);
-        }
-        seconds = second;
-        if(seconds < 0 || seconds > 60){
-            System.out.println("[ERROR] Seconds should be in interval 0->60");
-            System.exit(-1);
-        }
     }
 
     public void setSpeed(int s){
@@ -53,7 +39,7 @@ public class Clock implements Runnable{
                 seconds = 0;
             }
             if(seconds < 10){
-                seconds_for_print = "0" + Integer.toString(seconds);
+                seconds_for_print = "0" + seconds;
             }else{
                 seconds_for_print = Integer.toString(seconds);
             }
@@ -62,7 +48,7 @@ public class Clock implements Runnable{
                 minutes = 0;
             }
             if(minutes < 10){
-                minutes_for_print = "0" + Integer.toString(minutes);
+                minutes_for_print = "0" + minutes;
             }else{
                 minutes_for_print = Integer.toString(minutes);
             }
@@ -80,6 +66,8 @@ public class Clock implements Runnable{
             try {
                 Thread.sleep(getSpeed());
             } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//                System.out.println("Clock interupted");
                 e.printStackTrace();
             }
         }
@@ -87,5 +75,23 @@ public class Clock implements Runnable{
 
     public List<Integer> getTime() {
         return Arrays.asList(hours, minutes, seconds);
+    }
+
+    public void setTime( int hour, int minute, int second){
+        hours = hour;
+        if(hours < 0 || hours > 24){
+            System.out.println("[ERROR] Hours should be in interval 0->24");
+            System.exit(-1);
+        }
+        minutes = minute;
+        if(minutes < 0 || minutes > 60){
+            System.out.println("[ERROR] Minutes should be in interval 0->60");
+            System.exit(-1);
+        }
+        seconds = second;
+        if(seconds < 0 || seconds > 60){
+            System.out.println("[ERROR] Seconds should be in interval 0->60");
+            System.exit(-1);
+        }
     }
 }
