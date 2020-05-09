@@ -302,11 +302,11 @@ public class Street implements Drawable {
             });
         });
         this.line.setOnMouseClicked(event -> { // click on street
-            if(this.clicked){
-                this.clicked = false;
-                controller.getInfo().toFront();
-            }else{
-                this.clicked = true;
+            int size = mainController.getInfoContant().getChildren().size();
+            if (mainController.getInfoContant().getChildren().get(size - 1).getId().equals("streetMenu")){
+                mainController.showMainMenu();
+            }
+            else {
                 this.infoPane.toFront();
             }
         });

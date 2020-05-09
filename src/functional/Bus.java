@@ -2,6 +2,10 @@ package src.functional;
 
 import java.util.*;
 
+import javafx.scene.control.TreeItem;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import src.Main;
 // import src.sample.Clock;
 import src.sample.MainController;
@@ -27,8 +31,7 @@ public class Bus implements Drawable {
     private int goes_through_streets_with_stops;
     private int old_time_for_ring = 0;
     private int time_in_stop_left = 0; // when we spawn a bus in the stop, we have to w8 some time
-    // private Clock clock;
-    // private int seconds_to_end = -1;
+    private final TreeItem<String> root;
 
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
@@ -40,6 +43,7 @@ public class Bus implements Drawable {
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
         this.time_for_ring = time_for_ring;
         this.busLineForUse = Line.defaultLine(this.busLine);
+        this.root =  new TreeItem<>();
         this.setBusForStops();
     }
 
@@ -48,14 +52,23 @@ public class Bus implements Drawable {
      * list of busses in stop
      */
     private void setBusForStops() {
+        TreeItem<String> stops = new TreeItem<>("Stops");
+        TreeItem<String> streets = new TreeItem<>("Streets");
         for (Map.Entry<String, Integer> entry: this.busLine.getStopsTimes().entrySet()){
             for (Stop stop : this.busLine.getStops()){
+                stops.getChildren().add(new TreeItem<>(stop.getId()));
                 if (stop.getId().equals(entry.getKey())){
                     stop.addBus(this, entry.getValue());
-                    break;
                 }
             }
         }
+        for (Street street: this.busLine.getStreets()){
+            streets.getChildren().add(new TreeItem<>(street.getId()));
+        }
+
+        this.root.getChildren().add(stops);
+        this.root.getChildren().add(streets);
+        this.root.setExpanded(true);
     }
 
     public double getBusX() {
@@ -118,30 +131,9 @@ public class Bus implements Drawable {
         return this.goes_through_streets_with_stops;
     }
 
-    // public Integer getOldTimeForRing(){
-    // return this.old_time_for_ring;
-    // }
-
     public Color getColor() {
         return this.busColor;
     }
-
-    // public void checkDirection(){
-    // for(Street street_to_check:this.busLine.getStreets()){
-    // if(street_to_check.getType().equals("back")){ // swap end and begin
-    // Coordinate new_end = new Coordinate(street_to_check.begin().getX(),
-    // street_to_check.begin().getY()); // old first
-    // Coordinate new_begin = new Coordinate(street_to_check.end().getX(),
-    // street_to_check.end().getY()); // old last
-    // street_to_check.getCoordinates().remove(street_to_check.end());
-    // street_to_check.setEnd(new_end);
-    // street_to_check.getCoordinates().remove(street_to_check.begin());
-    // street_to_check.setBegin(new_begin);
-    // }
-    // }
-    // this.busLineForUse = Line.defaultLine(this.busLine); // create a copy of
-    // busline, need another pointers
-    // }
 
     public void calculatePosition(List<Integer> time) { // dont delete the comments in this method pls
 
@@ -527,25 +519,20 @@ public class Bus implements Drawable {
     }
 
     @Override
-    public void setInfo(MainController controller) {
+    public void setInfo(MainController mainController) {
         this.gui.setOnMouseClicked(event -> {
-            List<Street> streets = this.busLine.getStreets();
             this.checked = !this.checked;
-            boolean c = this.checked;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (c){
-                        for (Street street: streets){
-                            street.changeLineColor(Bus.this.busColor);
-                        }
-                    }else{
-                        for (Street street: streets){
-                            street.rollBackLineColor(Bus.this.busColor);
-                        }
-                    }
+            int size = mainController.getInfoContant().getChildren().size();
+            if (mainController.getInfoContant().getChildren().get(size - 1).getId().equals("busMenu")){
+                if (mainController.getBusNameField().getText().equals(this.getBusName())){
+                    mainController.showMainMenu(this);
                 }
-            });
+                else{
+                    mainController.showBusMenu(this);
+                }
+            } else{
+                mainController.showBusMenu(this);
+            }
         });
     }
 
@@ -557,5 +544,9 @@ public class Bus implements Drawable {
     }
     public void setBusLineForUse(Line newLine){
         this.busLineForUse = newLine;
+    }
+
+    public TreeItem<String> getRoot() {
+        return  this.root;
     }
 }

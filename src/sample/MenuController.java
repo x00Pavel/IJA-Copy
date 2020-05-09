@@ -19,7 +19,7 @@ public class MenuController {
     private AnchorPane sideMenu;
 
     @FXML
-    private TreeView<String> info;
+    private TreeView<String> streetTreeView;
 
     @FXML
     private TextField streetLoading;
@@ -63,7 +63,7 @@ public class MenuController {
     }
 
     public TreeView<String> getInfo() {
-        return info;
+        return streetTreeView;
     }
 
     public TextField getStreetLoading() {

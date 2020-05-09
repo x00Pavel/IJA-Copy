@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="sideMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MenuController">
+<AnchorPane id="streetMenu" fx:id="sideMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="222.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.sample.MenuController">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="2.0" prefHeight="26.0" prefWidth="199.0" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="2.0">
          <children>
@@ -30,6 +30,6 @@
             <CheckBox fx:id="streetBlock" mnemonicParsing="false" />
          </children>
       </HBox>
-      <TreeView fx:id="info" layoutX="11.0" layoutY="90.0" prefHeight="515.0" prefWidth="200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="90.0" />
+      <TreeView fx:id="streetTreeView" layoutX="11.0" layoutY="90.0" prefHeight="515.0" prefWidth="200.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="90.0" />
    </children>
 </AnchorPane>

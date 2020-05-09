@@ -37,6 +37,17 @@ public class MainController{
     private final List<Street> list_streets = new ArrayList<>();
     private final List<Bus> list_buses = new ArrayList<>();
     private Clock clock;
+    private Bus lineCliked;
+    private Street streetCiked;
+
+    @FXML
+    private AnchorPane busMenu;
+
+    @FXML
+    private TreeView<String> busTreeView;
+
+    @FXML
+    private TextField busNameField;
 
     @FXML
     private AnchorPane mainInfo;
@@ -72,9 +83,19 @@ public class MainController{
     @FXML
     private AnchorPane infoContant;
 
-    public AnchorPane getStopMenu() {
-        return stopMenu;
+    public TreeView<String> getBusTreeView() {
+        return busTreeView;
     }
+
+    public TextField getBusNameField() {
+        return busNameField;
+    }
+
+
+    public AnchorPane getMainInfo() {
+        return mainInfo;
+    }
+
 
     public TextField getStopNameField() {
         return stopNameField;
@@ -89,10 +110,6 @@ public class MainController{
         throw new NoSuchElementException("Street not found while searching");
     }
 
-
-    public Button getStartButton() {
-        return startButton;
-    }
 
     public TextField getClockObj(){
         return clockField;
@@ -315,8 +332,11 @@ public class MainController{
         return this.list_buses;
     }
 
+    /**
+     * Method for speeding up time
+     */
     @FXML
-    private void makeFaster(ActionEvent event){
+    private void makeFaster(){
         if (Main.clock.getSpeed() > 200){
             int new_speed = Main.clock.getSpeed() - 200;
             Main.clock.setSpeed(new_speed);
@@ -325,8 +345,11 @@ public class MainController{
         }
     }
 
+    /**
+     * Method for slowing down time
+     */
     @FXML
-    private  void makeSlower(ActionEvent event){
+    private  void makeSlower(){
         if (Main.clock.getSpeed() < 1800){
             int new_speed = Main.clock.getSpeed() + 200;
             Main.clock.setSpeed(new_speed);
@@ -335,17 +358,8 @@ public class MainController{
         }
     }
 
-    public Pane getContent() {
-        return  content;
-    }
-
     @FXML
     private TreeView<String> info;
-
-    public TreeView<String> getInfo() {
-        return info;
-    }
-
 
     public void setTreeInfo() {
         TreeItem<String> root =  new TreeItem<>("INFO");
@@ -368,16 +382,14 @@ public class MainController{
             buses.getChildren().add(tmp);
         }
         
-        root.getChildren().addAll(streets, stops, buses);
-        root.setExpanded(true);
-        info = new TreeView<>(root);
-        AnchorPane.setLeftAnchor(info, 0.0);
-        AnchorPane.setRightAnchor(info, 0.0);
-        AnchorPane.setTopAnchor(info, 0.0);
-        AnchorPane.setBottomAnchor(info, 0.0);
+        root.getChildren().add(streets);
+        root.getChildren().add(stops);
+        root.getChildren().add(buses);
+
+        info.setRoot(root);
         info.setPrefWidth(mainInfo.getPrefWidth());
         info.setPrefHeight(mainInfo.getPrefHeight());
-        mainInfo.getChildren().add(info);
+    //        mainInfo.getChildren().add(info);
         mainInfo.toFront();
     }
 
@@ -428,6 +440,12 @@ public class MainController{
             time.getChildren().addAll(tmp, nextTmp, nextTmp1, nextTmp2);
             bussesBox.getChildren().add(new HBox(2, text, time));
         }
+        if (lineCliked != null){
+            for (Street street : lineCliked.getBusLine().getStreets()){
+                street.rollBackLineColor(lineCliked.getColor());
+            }
+            lineCliked = null;
+        }
         stopMenu.setVisible(true);
         stopMenu.toFront();
     }
@@ -440,11 +458,51 @@ public class MainController{
         return hours + ":" + minutes + ":" + seconds;
     }
 
-    public void hideStopMenu() {
+    /**
+     * Function for showing main side menu
+     */
+    public void showMainMenu() {
         mainInfo.toFront();
+    }
+
+    /**
+     * Function for showing main side menu after bus menu and roll back color
+     * of each street in bus line.
+     * @param bus Bus for which streets would be colored
+     */
+    public void showMainMenu(Bus bus) {
+        mainInfo.toFront();
+        for (Street street : bus.getBusLine().getStreets()){
+            street.rollBackLineColor(bus.getColor());
+        }
+        lineCliked = null;
     }
 
     public List<Bus> getListBuses() {
         return list_buses;
     }
+
+    /**
+     * Method for showing side menu for bus and painting corresponding bus line.
+     * If any other bus lien is selected, then this selecetion would be canceled
+     * and streets corresponding to this selection would be recolored to previos
+     * color
+     *
+     * @param bus Bus for which side menu would be shown
+     */
+    public void showBusMenu(Bus bus) {
+        for (Street street : bus.getBusLine().getStreets()){
+            street.changeLineColor(bus.getColor());
+        }
+        if (lineCliked != null){
+            for (Street street : lineCliked.getBusLine().getStreets()){
+                street.rollBackLineColor(lineCliked.getColor());
+            }
+        }
+        lineCliked = bus;
+        busNameField.setText(bus.getBusName());
+        getBusTreeView().setRoot(bus.getRoot());
+        busMenu.toFront();
+    }
+
 }

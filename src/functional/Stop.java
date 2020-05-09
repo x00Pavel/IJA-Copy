@@ -1,8 +1,6 @@
 package src.functional;
 
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import src.sample.MainController;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -144,7 +142,7 @@ public class Stop implements Drawable {
             int size = controller.getInfoContant().getChildren().size();
             if (controller.getInfoContant().getChildren().get(size - 1).getId().equals("stopMenu")){
                 if (controller.getStopNameField().getText().equals(this.getId())){
-                    controller.hideStopMenu();
+                    controller.showMainMenu();
                 }else {
                     controller.showStopMenu(this.getId(), this.listBuses);
                 }
