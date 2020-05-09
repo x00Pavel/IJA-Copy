@@ -3,6 +3,8 @@ package src.sample;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import src.Main;
 import src.functional.*;
 import javafx.event.ActionEvent;
@@ -11,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.ScrollEvent;
@@ -36,30 +36,26 @@ public class MainController{
 
     private List<Drawable> elements = new ArrayList<>();
 
-    private List<Stop> list_stops = new ArrayList<>();
-    private List<Street> list_streets = new ArrayList<>();
-    private List<Bus> list_buses = new ArrayList<>();
+    private final List<Stop> list_stops = new ArrayList<>();
+    private final List<Street> list_streets = new ArrayList<>();
+    private final List<Bus> list_buses = new ArrayList<>();
     private Clock clock;
 
-    private ExecutorService executorService;
+    @FXML
+    private AnchorPane mainInfo;
 
-    public List<Stop> getListStops(){
-        return this.list_stops;
-    }
+    @FXML
+    private AnchorPane stopMenu;
 
-    public List<Street> getListStreets(){
-        return this.list_streets;
-    }
+    @FXML
+    private TextField stopNameField;
 
-    public List<Bus> getListBuses(){
-        return this.list_buses;
-    }
+
+    @FXML
+    private VBox bussesBox;
 
     @FXML
     private Button startButton;
-
-    @FXML
-    private Button stopButton;
 
     @FXML
     private Pane content;
@@ -79,8 +75,12 @@ public class MainController{
     @FXML
     private AnchorPane infoContant;
 
-    public Button getStopButton() {
-        return stopButton;
+    public AnchorPane getStopMenu() {
+        return stopMenu;
+    }
+
+    public TextField getStopNameField() {
+        return stopNameField;
     }
 
     public AbstractMap.SimpleImmutableEntry<Integer, Street> getSteer(String id){
@@ -222,9 +222,15 @@ public class MainController{
         }
     }
 
+    /**
+     * Create transport lines from XML file
+     *
+     * @param file XML file with bus lines (streets and stops that corresponds to give line)
+     * @param menuLoader Loader of FXML tempalte for side menu
+     * @return List of Bus object
+     */
     @FXML
     public List<Bus> buildLines(File file, FXMLLoader menuLoader){
-
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -289,8 +295,6 @@ public class MainController{
                         if (!addStopFlag) {
                             System.out.println("Stop with this name does not exist!");
                             return null;
-                        } else {
-                            addStopFlag = false;
                         }
                     }
                 }
@@ -338,6 +342,7 @@ public class MainController{
         return  content;
     }
 
+    @FXML
     private TreeView<String> info;
 
     public TreeView<String> getInfo() {
@@ -373,9 +378,10 @@ public class MainController{
         AnchorPane.setRightAnchor(info, 0.0);
         AnchorPane.setTopAnchor(info, 0.0);
         AnchorPane.setBottomAnchor(info, 0.0);
-        info.setPrefWidth(infoContant.getPrefWidth());
-        info.setPrefHeight(infoContant.getPrefHeight());
-        infoContant.getChildren().add(info);
+        info.setPrefWidth(mainInfo.getPrefWidth());
+        info.setPrefHeight(mainInfo.getPrefHeight());
+        mainInfo.getChildren().add(info);
+        mainInfo.toFront();
     }
 
     public AnchorPane getInfoContant() {
@@ -395,37 +401,38 @@ public class MainController{
             }
 
 
-            executorService = Executors.newFixedThreadPool(list_buses.size()+2);
+        ExecutorService executorService = Executors.newFixedThreadPool(list_buses.size()+2);
             for (Bus actual_bus:list_buses) {
                 actual_bus.calculatePosition(clock.getTime());
                 executorService.submit(new BackEnd(actual_bus));
             }
+
             executorService.submit(clock);
             executorService.submit(new Updater(list_buses));
             clockField.setEditable(false);
             startButton.setDisable(true);
-            stopButton.setDisable(false);
     }
 
-    // public List<Thread> getBusesThread(){
-    //     return Arrays.asList(this.bus_1, this.bus_2, this.bus_3, this.bus_4);
-    // }
-
-    @FXML
-    private void stopRun() throws InterruptedException {
-//        startButton.setDisable(false);
-//        stopButton.setDisable(true);
-//        if (executorService.awaitTermination(10, TimeUnit.SECONDS)) {
-//            System.out.println("task completed");
-//        } else {
-//            System.out.println("Forcing shutdown...");
-//            executorService.shutdownNow();
-//        }
-//        executorService.shutdownNow();
-
-    }
 
     public void setClock(Clock clock_) {
         clock = clock_;
+    }
+
+    public void showStopMenu(String id, List<HBox> listHBox) {
+        stopNameField.setText(id);
+        bussesBox.getChildren().clear();
+        for (HBox box : listHBox){
+            bussesBox.getChildren().add(box);
+        }
+        stopMenu.setVisible(true);
+        stopMenu.toFront();
+    }
+
+    public void hideStopMenu() {
+        mainInfo.toFront();
+    }
+
+    public List<Bus> getListBuses() {
+        return list_buses;
     }
 }

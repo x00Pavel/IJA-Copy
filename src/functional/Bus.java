@@ -39,9 +39,23 @@ public class Bus implements Drawable {
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
         this.time_for_ring = time_for_ring;
-        // this.old_time_for_ring = time_for_ring;
         this.busLineForUse = Line.defaultLine(this.busLine);
+        this.setBusForStops();
+    }
 
+    /**
+     * Function calls method for each stop in current line to add bus to
+     * list of busses in stop
+     */
+    private void setBusForStops() {
+        for (Map.Entry<String, Integer> entry: this.busLine.getStopsTimes().entrySet()){
+            for (Stop stop : this.busLine.getStops()){
+                if (stop.getId().equals(entry.getKey())){
+                    stop.addBus(this, entry.getValue());
+                    break;
+                }
+            }
+        }
     }
 
     public double getBusX() {
