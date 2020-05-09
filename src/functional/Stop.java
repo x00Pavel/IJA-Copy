@@ -146,11 +146,12 @@ public class Stop implements Drawable {
                 if (controller.getStopNameField().getText().equals(this.getId())){
                     controller.hideStopMenu();
                 }else {
-                    controller.showStopMenu(this.getId(), this.listHBox);
+                    controller.showStopMenu(this.getId(), this.listBuses);
                 }
             }
             else {
-                controller.showStopMenu(this.getId(), this.listHBox);
+
+                controller.showStopMenu(this.getId(), this.listBuses);
             }
         });
         this.elements_gui.setOnMouseEntered(event -> {
@@ -175,11 +176,5 @@ public class Stop implements Drawable {
 
     public void addBus(Bus bus, Integer time) {
         this.listBuses.add(bus);
-        HBox box = new HBox(2);
-        Text busName = new Text(bus.getBusName() + "->");
-        VBox vBox = new VBox(1);
-        vBox.getChildren().add(new Text(String.valueOf(time)));
-        box.getChildren().addAll(busName, vBox);
-        this.listHBox.add(box);
     }
 }

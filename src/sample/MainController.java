@@ -3,20 +3,21 @@ package src.sample;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import src.Main;
 import src.functional.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import org.w3c.dom.*;
+import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
+import javafx.fxml.FXML;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javafx.fxml.FXML;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
 
 public class MainController{
 
@@ -418,14 +415,29 @@ public class MainController{
         clock = clock_;
     }
 
-    public void showStopMenu(String id, List<HBox> listHBox) {
+    public void showStopMenu(String id, List<Bus> list) {
         stopNameField.setText(id);
         bussesBox.getChildren().clear();
-        for (HBox box : listHBox){
-            bussesBox.getChildren().add(box);
+        for (Bus bus : list){
+            Text text = new Text(bus.getBusName() + " -> ");
+            VBox time = new VBox(1);
+            Text tmp = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id)));
+            Text nextTmp = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing()));
+            Text nextTmp1 = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing() * 2));
+            Text nextTmp2 = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing() * 3));
+            time.getChildren().addAll(tmp, nextTmp, nextTmp1, nextTmp2);
+            bussesBox.getChildren().add(new HBox(2, text, time));
         }
         stopMenu.setVisible(true);
         stopMenu.toFront();
+    }
+
+    private String secToTime(int i) {
+        int hours = i / 3600;
+        int minutes = (i % 3600) / 60;
+        int seconds = i % 60;
+
+        return hours + ":" + minutes + ":" + seconds;
     }
 
     public void hideStopMenu() {
