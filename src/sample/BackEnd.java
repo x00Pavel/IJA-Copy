@@ -14,7 +14,7 @@ public class BackEnd implements Runnable{
 
     @Override
     public void run() {
-        while(true) {
+        while(!Thread.interrupted()) {
             bus_to_run.Move();
             // bus_to_run.setBusLineForUse(bus_to_run.getBusLine());
         }

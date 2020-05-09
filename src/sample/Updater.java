@@ -67,6 +67,10 @@ public class Updater implements Runnable{
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
         Street stop_street = stop.getStreet();
 
+        if(bus.getSpeed() == 0){
+            return  999;
+        }
+
         // if(!this.alreadyCalculated && !from_start){
         //     this.bus_start_coords.add(Double.valueOf(bus.getBusX()));
         //     this.bus_start_coords.add(Double.valueOf(bus.getBusY()));

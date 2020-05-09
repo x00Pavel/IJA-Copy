@@ -53,7 +53,7 @@
                      </children>
                   </VBox>
                   <Button fx:id="startButton" contentDisplay="CENTER" defaultButton="true" layoutX="49.0" layoutY="42.0" mnemonicParsing="false" onAction="#startRun" prefHeight="26.0" prefWidth="61.0" style="-fx-background-color: LIGHTGREEN;" text="START" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="42.0" />
-                  <TextField fx:id="clockField" alignment="CENTER" layoutX="32.0" layoutY="7.0" prefHeight="32.0" prefWidth="157.0" promptText="Set time " AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="7.0" />
+                  <TextField fx:id="clockField" alignment="CENTER" layoutX="32.0" layoutY="7.0" prefHeight="32.0" prefWidth="157.0" promptText="0:0:0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="7.0" />
                   <Button fx:id="stopButton" contentDisplay="CENTER" layoutX="118.0" layoutY="42.0" mnemonicParsing="false" onAction="#stopRun" prefHeight="26.0" prefWidth="61.0" style="-fx-background-color: RED;" text="STOP" textAlignment="CENTER" underline="true" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="42.0" />
                </children>
             </AnchorPane>

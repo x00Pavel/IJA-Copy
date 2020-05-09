@@ -43,6 +43,18 @@ public class MainController{
 
     private ExecutorService executorService;
 
+    public List<Stop> getListStops(){
+        return this.list_stops;
+    }
+
+    public List<Street> getListStreets(){
+        return this.list_streets;
+    }
+
+    public List<Bus> getListBuses(){
+        return this.list_buses;
+    }
+
     @FXML
     private Button startButton;
 
@@ -382,18 +394,22 @@ public class MainController{
                 System.out.println(Arrays.toString(tmpLst));
             }
 
+
             executorService = Executors.newFixedThreadPool(list_buses.size()+2);
             for (Bus actual_bus:list_buses) {
                 actual_bus.calculatePosition(clock.getTime());
                 executorService.submit(new BackEnd(actual_bus));
             }
-
             executorService.submit(clock);
             executorService.submit(new Updater(list_buses));
             clockField.setEditable(false);
             startButton.setDisable(true);
             stopButton.setDisable(false);
     }
+
+    // public List<Thread> getBusesThread(){
+    //     return Arrays.asList(this.bus_1, this.bus_2, this.bus_3, this.bus_4);
+    // }
 
     @FXML
     private void stopRun() throws InterruptedException {

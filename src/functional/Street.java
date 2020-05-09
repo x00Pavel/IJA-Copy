@@ -2,6 +2,7 @@ package src.functional;
 
 import src.sample.MainController;
 import src.sample.MenuController;
+import src.Main;
 
 import javafx.application.Platform;
 
@@ -300,12 +301,11 @@ public class Street implements Drawable {
                 }
             });
         });
-        this.line.setOnMouseClicked(event -> {
+        this.line.setOnMouseClicked(event -> { // click on street
             if(this.clicked){
                 this.clicked = false;
                 controller.getInfo().toFront();
-            }
-            else {
+            }else{
                 this.clicked = true;
                 this.infoPane.toFront();
             }
@@ -377,8 +377,50 @@ public class Street implements Drawable {
             }
         });
         controller.getStreetBlock().setOnMouseClicked(event -> {
-            this.setBlock(controller.getStreetBlock().isSelected());
-            controller.setStreetBlock(this.blocked);
+            List<Bus> list_buses = Main.controller.getListBuses();
+            boolean bus_on_street = false;
+            for(Bus bus: list_buses){
+                int bus_street_x_begin = bus.getActualBusStreet().begin().getX();
+                int bus_street_y_begin = bus.getActualBusStreet().begin().getY();
+                int bus_street_x_end = bus.getActualBusStreet().end().getX();
+                int bus_street_y_end = bus.getActualBusStreet().end().getY();
+                if(bus.getActualBusStreet().getId().equals(this.getId())){
+                    if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
+                        
+                    }else{
+                        // System.out.println("Actual street: " + bus.getActualBusStreet().getId());
+                        // System.out.println("Bus X: " + Math.round(bus.getBusX()));
+                        // System.out.println("Bus Y: " + Math.round(bus.getBusY()));
+                        // System.out.println("bus_street_x_begin: " + bus_street_x_begin);
+                        // System.out.println("bus_street_y_begin: " + bus_street_y_begin);
+                        // System.out.println("bus_street_x_end: " + bus_street_x_end);
+                        // System.out.println("bus_street_y_end: " + bus_street_y_end);
+                        System.out.println("Can`t block street if bus is here!");
+                        bus_on_street = true;
+                        //need to delete "galochka" from box
+                        break;
+                    }
+
+                // bus_on_street = true;
+                // break;
+                }
+            }
+            
+            if(!bus_on_street){
+                this.setBlock(controller.getStreetBlock().isSelected());
+                controller.setStreetBlock(this.blocked);
+                for(Bus bus: list_buses){
+                    if(bus.getBusLineForUse().getStreets().contains(this)){
+                        // int bus_index = list_buses.indexOf(bus);
+                        // Main.controller.getBusesThread().get(bus_index).interrupt();
+                        if(bus.getSpeed() == 0){
+                            bus.continueBus();
+                        }else{
+                            bus.pauseBus();
+                        }
+                    }
+                }
+            }
         });
 
         AnchorPane.setBottomAnchor(this.infoPane, 0.0);
