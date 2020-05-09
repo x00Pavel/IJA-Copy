@@ -388,21 +388,11 @@ public class Street implements Drawable {
                     if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
                         
                     }else{
-                        // System.out.println("Actual street: " + bus.getActualBusStreet().getId());
-                        // System.out.println("Bus X: " + Math.round(bus.getBusX()));
-                        // System.out.println("Bus Y: " + Math.round(bus.getBusY()));
-                        // System.out.println("bus_street_x_begin: " + bus_street_x_begin);
-                        // System.out.println("bus_street_y_begin: " + bus_street_y_begin);
-                        // System.out.println("bus_street_x_end: " + bus_street_x_end);
-                        // System.out.println("bus_street_y_end: " + bus_street_y_end);
                         System.out.println("Can`t block street if bus is here!");
                         bus_on_street = true;
                         //need to delete "galochka" from box
                         break;
                     }
-
-                // bus_on_street = true;
-                // break;
                 }
             }
             
