@@ -1,11 +1,11 @@
 /**
  * File: ija/src/functional/Street.java
- *
+ * 
  * Author: Pavel Yadlouski (xyadlo00)
  *         Oleksii Korniienko (xkorni02)
- *
+ * 
  * Date: 04.2020
- *
+ * 
  * Description: Implementation of Street object with its functionality
  */
 
@@ -42,7 +42,7 @@ public class Street implements Drawable {
     private final String street_name;
     private final List<Coordinate> cords;
     private List<Stop> street_stops = null;
-    private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>>();
+    private List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> stopLocation = new ArrayList<AbstractMap.SimpleImmutableEntry<Stop, Integer>> ();
     private final List<Shape> elements;
     private Boolean blocked;
     private List<Color> color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
@@ -53,7 +53,8 @@ public class Street implements Drawable {
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
     private AnchorPane infoPane;
     private MenuController controller;
-    // private String type = "empty"; // now streets have a type (direction)
+//    private String type = "empty"; // now streets have a type (direction)
+
 
     public Street(String name) {
         this.street_name = name;
@@ -64,17 +65,17 @@ public class Street implements Drawable {
         this.delay_level = 0;
     }
 
-    public void setLine(Line newLine) {
-        if (!(this.street_lines.contains(newLine))) {
+    public void setLine(Line newLine){
+        if(!(this.street_lines.contains(newLine))){
             this.street_lines.add(newLine);
         }
     }
 
-    public List<Line> getLine() {
+    public List<Line> getLine(){
         return this.street_lines;
     }
 
-    public Integer getPrevDelayLevel() {
+    public Integer getPrevDelayLevel(){
         return this.prev_delay_level;
     }
 
@@ -82,7 +83,7 @@ public class Street implements Drawable {
         this.prev_delay_level = prev_delay_level;
     }
 
-    public Integer getDelayLevel() {
+    public Integer getDelayLevel(){
         return this.delay_level;
     }
 
@@ -95,7 +96,7 @@ public class Street implements Drawable {
         return this.getCoordinates().get(lst.size() - 1);
     }
 
-    public void setEnd(Coordinate new_end) {
+    public void setEnd(Coordinate new_end){
         this.getCoordinates().add(new_end);
     }
 
@@ -104,8 +105,8 @@ public class Street implements Drawable {
         return lst.get(0);
     }
 
-    public void setBegin(Coordinate begin) {
-        this.getCoordinates().add(0, begin);
+    public void setBegin(Coordinate begin){
+        this.getCoordinates().add(0,begin);
     }
 
     public boolean follows(Street s) {
@@ -137,9 +138,9 @@ public class Street implements Drawable {
     /**
      * Create default street
      *
-     * @param id          Name (ID) of new street
+     * @param id Name (ID) of new street
      * @param coordinates List of coordinates
-     * @param stops       List of stops on street
+     * @param stops List of stops on street
      * @return New instance of Street object
      */
     public static Street defaultStreet(String id, List<Coordinate> coordinates, List<Stop> stops) {
@@ -181,16 +182,16 @@ public class Street implements Drawable {
         }
 
         street.line = new Polyline();
-        for (Double point : points) {
+        for (Double point: points){
             street.line.getPoints().add(point);
         }
         street.line.setStrokeWidth(3);
         street.elements.add(street.line);
 
-        if (stops != null) {
-            for (Stop stop : stops) {
+        if (stops != null){
+            for (Stop stop : stops){
                 boolean ok = street.addStop(stop);
-                if (!ok) {
+                if (!ok){
                     System.out.println("Stop is not in the street, exit");
                     System.exit(1);
                 }
@@ -204,7 +205,7 @@ public class Street implements Drawable {
         return this.street_name;
     }
 
-    private void setElements(Shape item) {
+    private void setElements(Shape item){
         this.elements.add(item);
     }
 
@@ -222,28 +223,28 @@ public class Street implements Drawable {
         Coordinate coord = stop.getCoordinate();
         List<Coordinate> lst = this.getCoordinates();
         for (int i = 0; i < lst.size(); i++) {
-            Coordinate first = lst.get(i);
+            Coordinate first =  lst.get(i);
             Coordinate second = lst.get(i + 1);
-            int first_coord_x = (int) (Math.pow(first.diffX(coord), 2));
-            int first_coord_y = (int) (Math.pow(first.diffY(coord), 2));
+            int first_coord_x = (int)(Math.pow(first.diffX(coord), 2));
+            int first_coord_y = (int)(Math.pow(first.diffY(coord), 2));
             int first_coord_z = first_coord_x + first_coord_y;
 
-            int second_coord_x = (int) (Math.pow(second.diffX(coord), 2));
-            int second_coord_y = (int) (Math.pow(second.diffY(coord), 2));
+            int second_coord_x = (int)(Math.pow(second.diffX(coord), 2));
+            int second_coord_y = (int)(Math.pow(second.diffY(coord), 2));
             int second_coord_z = second_coord_x + second_coord_y;
 
-            int second_first_x = (int) (Math.pow(second.diffX(first), 2));
-            int second_first_y = (int) (Math.pow(second.diffY(first), 2));
+            int second_first_x = (int)(Math.pow(second.diffX(first), 2));
+            int second_first_y = (int)(Math.pow(second.diffY(first), 2));
             int second_first_z = second_first_x + second_first_y;
 
-            if ((int) Math.sqrt(second_coord_z) + (int) Math.sqrt(first_coord_z) == (int) Math.sqrt(second_first_z)) {
+            if ((int)Math.sqrt(second_coord_z) + (int)Math.sqrt(first_coord_z) == (int)Math.sqrt(second_first_z)){
                 stop.setStreet(this);
                 this.street_stops.add(stop);
                 AbstractMap.SimpleImmutableEntry<Stop, Integer> e = new AbstractMap.SimpleImmutableEntry<>(stop, i);
                 stopLocation.add(e);
                 return true;
             }
-            if (i + 2 == lst.size()) {
+            if (i + 2 == lst.size()){
                 break;
             }
 
@@ -277,6 +278,7 @@ public class Street implements Drawable {
     public List<Shape> getGUI() {
         return this.elements;
     }
+
 
     /**
      * @brief Set interactiv activity for given street
@@ -552,7 +554,7 @@ public class Street implements Drawable {
                 int bus_street_y_end = bus.getActualBusStreet().end().getY();
                 if(bus.getActualBusStreet().getId().equals(this.getId())){
                     if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
-                        
+
                     }else{
                         // System.out.println("Actual street: " + bus.getActualBusStreet().getId());
                         // System.out.println("Bus X: " + Math.round(bus.getBusX()));
@@ -568,7 +570,7 @@ public class Street implements Drawable {
                     }
                 }
             }
-            
+
             if(!bus_on_street){
                 this.setBlock(controller.getStreetBlock().isSelected());
                 controller.setStreetBlock(this.blocked);
@@ -709,7 +711,7 @@ public class Street implements Drawable {
             }
 
             Street new_street_for_start = bus_line.getStreets().get(new_street_for_start_index);
-            
+
             stop_for_start = findStopForStart(bus_line, new_street_for_start);
         }else{
             for(Stop stop:temp_stops){
@@ -739,7 +741,7 @@ public class Street implements Drawable {
             }
 
             Street new_street_for_end = bus_line.getStreets().get(new_street_for_end_index);
-            
+
             stop_for_end = findStopForEnd(bus_line, new_street_for_end);
         }else{
             stop_for_end = temp_stops.get(0);

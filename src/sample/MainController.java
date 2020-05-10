@@ -1,12 +1,12 @@
 /**
  * File: ija/src/sample/MainController.java
- *
+ * 
  * Author: Pavel Yadlouski (xyadlo00)
  *         Oleksii Korniienko (xkorni02)
- *
+ * 
  * Date: 04.2020
- *
- * Description: Implementation of main controller of application.
+ * 
+ * Description: Implementation of main controller of application. 
  */
 
 package src.sample;
