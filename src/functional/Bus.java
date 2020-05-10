@@ -43,6 +43,8 @@ public class Bus implements Drawable {
     private int goes_through_streets_with_stops;
     private int old_time_for_ring = 0;
     private int time_in_stop_left = 0; // when we spawn a bus in the stop, we have to w8 some time
+    private int restart_flag = 0;
+    private List<Street> streets_for_correction = new ArrayList<>();
     private final TreeItem<String> root;
 
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
@@ -117,6 +119,15 @@ public class Bus implements Drawable {
 
     public void continueBus() {
         this.speed = 5;
+        int new_time_for_ring = 0;
+        for (Street street : this.busLineForUse.getStreets()) {
+            new_time_for_ring = new_time_for_ring + this.calculateStreetTime(street);
+        }
+        this.old_time_for_ring = new_time_for_ring;
+    }
+
+    public void setRestartFlag() {
+        this.restart_flag = 1;
     }
 
     public Integer getTimeInStopLeft() {
@@ -129,6 +140,10 @@ public class Bus implements Drawable {
 
     public Integer getOldTimeForRing() {
         return this.old_time_for_ring;
+    }
+
+    public void setOldTimeForRing(int new_time) {
+        this.old_time_for_ring = new_time;
     }
 
     public void setTimeForRing(Integer new_time_for_ring) {
@@ -356,6 +371,22 @@ public class Bus implements Drawable {
         List<Street> myBusStreets = new ArrayList<>(this.busLineForUse.getStreets());
         List<Stop> myBusStops = new ArrayList<>(this.busLineForUse.getStops());
 
+        if (this.restart_flag == -1) {
+            this.restart_flag = 0;
+            for (Street street_for_delete : this.streets_for_correction) {
+                if (myBusStreets.contains(street_for_delete)) {
+                    myBusStreets.remove(street_for_delete);
+                    if (!street_for_delete.getStops().isEmpty()) {
+                        for (Stop stop_for_delete : street_for_delete.getStops()) {
+                            if (myBusStops.contains(stop_for_delete)) {
+                                myBusStops.remove(stop_for_delete);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // System.out.println("myBusStreets :" + myBusStreets);
         // System.out.println("myBusStops :" + myBusStops);
 
@@ -368,14 +399,24 @@ public class Bus implements Drawable {
             this.time_in_stop_left = 0;
         }
 
+        this.streets_for_correction = new ArrayList<>();
         this.goes_through_streets_with_stops = 0;
 
-        // boolean restart_flag = false;
-
         for (Street actualStreet : myBusStreets) {
-            // if(restart_flag){
-            // break;
-            // }
+            if (this.restart_flag == 1) {
+                while (this.speed == 0) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                this.restart_flag = -1;
+                this.Move();
+                break;
+            }
+
+            this.streets_for_correction.add(actualStreet);
             this.actual_bus_street = actualStreet;
             // Integer actual_street_delay = actualStreet.getDelayLevel();
 

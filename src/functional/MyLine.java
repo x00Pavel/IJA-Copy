@@ -26,16 +26,19 @@ public class MyLine implements Line{
 	private String id;
 	
 	private List<Street> streets = new ArrayList<>();
+	private List<Street> temp_new_streets = new ArrayList<>();
+	private List<Street> streets_was_painted = new ArrayList<>();
 	private HashMap<String, String> streets_types = new HashMap<>();
 	private List<Stop> stops = new ArrayList<>();
+	private List<Stop> temp_new_stops = new ArrayList<>();
 	// private HashMap<String, Integer> original_stops_times = new HashMap<>();
 	private HashMap<String, Integer> stops_times = new HashMap<>(); // name_of_stop:time_to_stop_left
 	private HashMap<String, Integer> stops_flags = new HashMap<>();
 	private int line_delay = 0;
 	// private HashMap<String, Integer> stops_delay = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
+	private Street blocked_street;
 	private int interval;
-
 	public MyLine(String id) {
 		this.id = id;
 	}
@@ -61,6 +64,41 @@ public class MyLine implements Line{
 	// public HashMap<String, Integer> getOriginStopsTimes(){
 	// 	return this.original_stops_times;
 	// }
+
+	@Override
+	public void setNewStreets(List<Street> new_streets){
+		this.streets = new_streets;
+	}
+
+	@Override
+	public void setNewStops(List<Stop> new_stops){
+		this.stops = new_stops;
+	}
+
+	@Override
+	public List<Stop> getTempNewStops(){
+		return this.temp_new_stops;
+	}
+
+	@Override
+	public List<Street> getTempNewStreet(){
+		return this.temp_new_streets;
+	}
+
+	@Override
+	public List<Street> getPaintedStreet(){
+		return this.streets_was_painted;
+	}
+
+	@Override
+	public void setBlockedStreet(Street new_blocked_street){
+		this.blocked_street = new_blocked_street;
+	}
+
+	@Override
+	public Street getBlockedStreet(){
+		return this.blocked_street;
+	}
 
 	@Override
 	public HashMap<String, String> getStreetsTypes(){
@@ -153,7 +191,6 @@ public class MyLine implements Line{
 		if (this.addStreet(stop.getStreet())) {
 			this.stops.add(stop);
 			this.streets.remove(this.streets.lastIndexOf(stop.getStreet()));
-		} else {
 		}
 	}
 
