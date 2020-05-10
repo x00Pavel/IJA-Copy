@@ -1,3 +1,14 @@
+/**
+ * File: ija/src/functional/Street.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Implementation of Street object with its functionality
+ */
+
 package src.functional;
 
 import src.sample.MainController;
@@ -446,12 +457,19 @@ public class Street implements Drawable {
             return this.stopLocation;
     }
 
-
+    /**
+     * Change color of street to given
+     * @param color New color of street
+     */
     public void changeLineColor(Color color) {
         this.color_stack.add(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));
     }
 
+    /**
+     * Change color of street to previous
+     * @param color Color to be removed from color stack 
+     */
     public void rollBackLineColor(Color color){
         this.color_stack.remove(color);
         this.line.setStroke(this.color_stack.get(this.color_stack.size()-1));

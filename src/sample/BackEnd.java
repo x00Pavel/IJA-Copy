@@ -1,3 +1,14 @@
+/**
+ * File: ija/src/sample/backEnd.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: ЛЕША НАПИЩИ ТУТ ОПИСАНИЕ ЭТОГО ФАЙЛА
+ */
+
 package src.sample;
 
 import src.functional.Bus;

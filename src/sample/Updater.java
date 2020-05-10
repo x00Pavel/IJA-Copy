@@ -1,3 +1,15 @@
+/**
+ * File: ija/src/sample/Updater.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: ЛЕША НАПИШИ ТУТ ПРОФ ФАЙЛ
+ */
+
+
 package src.sample;
 
 import src.Main;

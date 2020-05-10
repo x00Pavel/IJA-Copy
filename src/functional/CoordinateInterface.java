@@ -1,3 +1,13 @@
+/**
+ * File: ija/src/functional/CoordinateInterface.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Interface for coordinate
+ */
 
 package src.functional;
 

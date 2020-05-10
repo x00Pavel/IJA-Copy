@@ -1,3 +1,14 @@
+/**
+ * File: ija/src/functional/Coordinate.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Implementation of Coordinate object and its functionality
+ */
+
 package src.functional;
 
 public class Coordinate implements CoordinateInterface {

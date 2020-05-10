@@ -1,3 +1,15 @@
+/**
+ * File: ija/src/functional/Stop.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Implementation of Stop object with its functionality
+ */
+
+
 package src.functional;
 
 import javafx.scene.layout.HBox;

@@ -1,3 +1,16 @@
+/**
+ * File: ija/src/sample/Clock.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Implementation of Clock object with its functionality. 
+ *              Clock object represents inner clock for program
+ */
+
+
 package src.sample;
 
 

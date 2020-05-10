@@ -1,3 +1,15 @@
+/**
+ * File: ija/src/functional/Bus.java
+ * 
+ * Author: Pavel Yadlouski (xyadlo00)
+ *         Oleksii Korniienko (xkorni02)
+ * 
+ * Date: 04.2020
+ * 
+ * Description: Implementation of Bus object with its functionality
+ */
+
+
 package src.functional;
 
 import java.util.*;
