@@ -55,7 +55,21 @@ public interface Line extends Drawable {
 
 	public List<Street> getStreets();
 
-    void setInterval(int interval);
+	public void setInterval(int interval);
 
-	int getInterval();
+	public int getInterval();
+
+	public void setNewStreets(List<Street> new_streets);
+
+	public void setNewStops(List<Stop> new_stops);
+
+	public List<Stop> getTempNewStops();
+
+	public List<Street> getTempNewStreet();
+
+	public List<Street> getPaintedStreet();
+
+	public void setBlockedStreet(Street new_blocked_street);
+
+	public Street getBlockedStreet();
 }

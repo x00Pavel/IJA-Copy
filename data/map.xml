@@ -176,11 +176,11 @@
     </Street>
     <Street name="13_1">
         <Stops>
-            <Stop name="stop 13.2">
-                <Coordinate x="360" y="220"/>
-            </Stop>
             <Stop name="stop 13.3">
                 <Coordinate x="440" y="220"/>
+            </Stop>
+            <Stop name="stop 13.2">
+                <Coordinate x="360" y="220"/>
             </Stop>
         </Stops>
         <Coordinates>

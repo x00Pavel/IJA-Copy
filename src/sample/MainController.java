@@ -1,12 +1,12 @@
 /**
  * File: ija/src/sample/MainController.java
- * 
+ *
  * Author: Pavel Yadlouski (xyadlo00)
  *         Oleksii Korniienko (xkorni02)
- * 
+ *
  * Date: 04.2020
- * 
- * Description: Implementation of main controller of application. 
+ *
+ * Description: Implementation of main controller of application.
  */
 
 package src.sample;
@@ -45,12 +45,35 @@ public class MainController{
 
     private List<Drawable> elements = new ArrayList<>();
 
-    private final List<Stop> list_stops = new ArrayList<>();
-    private final List<Street> list_streets = new ArrayList<>();
-    private final List<Pair<ExecutorService, List<Bus>>> list_lines = new ArrayList<>();
+    private List<Stop> list_stops = new ArrayList<>();
+    private List<Street> list_streets = new ArrayList<>();
+    private List<Pair<ExecutorService, List<Bus>>> list_lines = new ArrayList<>();
     private Clock clock;
     private Bus lineCliked;
     private Street streetCiked;
+    private String mode = "default";
+
+    private ExecutorService executorService;
+
+    public List<Stop> getListStops(){
+        return this.list_stops;
+    }
+
+    public List<Street> getListStreets(){
+        return this.list_streets;
+    }
+
+    public List<Pair<ExecutorService, List<Bus>>> getListBuses(){
+        return this.list_lines;
+    }
+
+    public void changeMode(String new_mode){
+        this.mode = new_mode;
+    }
+
+    public String getMode(){
+        return this.mode;
+    }
 
     @FXML
     private AnchorPane busMenu;

@@ -1,19 +1,19 @@
 /**
  * File: ija/src/sample/Clock.java
- * 
+ *
  * Author: Pavel Yadlouski (xyadlo00)
  *         Oleksii Korniienko (xkorni02)
- * 
+ *
  * Date: 04.2020
- * 
- * Description: Implementation of Clock object with its functionality. 
+ *
+ * Description: Implementation of Clock object with its functionality.
  *              Clock object represents inner clock for program
  */
 
 
 package src.sample;
 
-
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 
 import java.util.Arrays;
@@ -25,6 +25,9 @@ public class Clock implements Runnable{
     private int hours;
     private int minutes;
     private int seconds;
+    private String hours_for_print;
+    private String minutes_for_print;
+    private String seconds_for_print;
     private final TextField clock_text;
 
     public Clock(int new_speed, TextField clock_){
@@ -42,9 +45,6 @@ public class Clock implements Runnable{
 
     @Override
     public void run() {
-        String hours_for_print;
-        String minutes_for_print;
-        String seconds_for_print;
         while(true){
             seconds++;
             if(seconds == 60){
@@ -73,8 +73,16 @@ public class Clock implements Runnable{
             }else{
                 hours_for_print = Integer.toString(hours);
             }
-            clock_text.setText(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
-            System.out.println(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    clock_text.setText(Clock.this.hours_for_print+":"+Clock.this.minutes_for_print+":"+Clock.this.seconds_for_print);
+                }
+            });
+
+            // clock_text.setText(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
+            System.out.println(this.hours_for_print+":"+this.minutes_for_print+":"+this.seconds_for_print);
             // System.out.println("Clock speed: "+this.speed);
             try {
                 Thread.sleep(getSpeed());
