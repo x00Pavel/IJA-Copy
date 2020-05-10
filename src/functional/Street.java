@@ -326,14 +326,16 @@ public class Street implements Drawable {
                     this.infoPane.toFront();
                 }
             } else {
-                List<Bus> list_buses = Main.controller.getListBuses();
+                List<Pair<ExecutorService, List<Bus>>> list_lines = Main.controller.getListLines();
                 List<Bus> buses_need = new ArrayList<>();
-                System.out.println("Mode is EDIT!");
-                for (Bus bus : list_buses) {
-                    if (bus.getSpeed() == 0) {
-                        buses_need.add(bus);
+                for(Pair<ExecutorService, List<Bus>> pair: list_lines){
+                    for (Bus bus : pair.getValue()){
+                        if (bus.getSpeed() == 0) {
+                            buses_need.add(bus);
+                        }
                     }
                 }
+                System.out.println("Mode is EDIT!");
                 Bus bus = buses_need.get(0);
 
                 Line bus_line = bus.getBusLineForUse();
@@ -489,10 +491,13 @@ public class Street implements Drawable {
                     Street.this.controller.setStreetBlock(true);
                     Main.controller.changeMode("edit");
 
+                    List<Pair<ExecutorService, List<Bus>>> list_lines = Main.controller.getListLines();
                     List<Bus> buses_need = new ArrayList<>();
-                    for (Bus bus : Main.controller.getListBuses()) {
-                        if (bus.getBusLineForUse().getStreets().contains(Street.this)) {
-                            buses_need.add(bus);
+                    for(Pair<ExecutorService, List<Bus>> pair: list_lines){
+                        for (Bus bus : pair.getValue()){
+                            if (bus.getSpeed() == 0) {
+                                buses_need.add(bus);
+                            }
                         }
                     }
 
