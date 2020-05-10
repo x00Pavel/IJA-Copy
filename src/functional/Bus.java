@@ -1,12 +1,12 @@
-/**
- * File: ija/src/functional/Bus.java
- * 
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- * 
- * Date: 04.2020
- * 
- * Description: Implementation of Bus object with its functionality
+/*
+  File: ija/src/functional/Bus.java
+
+  Author: Pavel Yadlouski (xyadlo00)
+          Oleksii Korniienko (xkorni02)
+
+  Date: 04.2020
+
+  Description: Implementation of Bus object with its functionality
  */
 
 
@@ -61,7 +61,7 @@ public class Bus implements Drawable {
 
     /**
      * Function calls method for each stop in current line to add bus to
-     * list of busses in stop
+     * list of buses in stop
      */
     private void setBusForStops() {
         TreeItem<String> stops = new TreeItem<>("Stops");

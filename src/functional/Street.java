@@ -11,6 +11,7 @@
 
 package src.functional;
 
+import javafx.util.Pair;
 import src.sample.MainController;
 import src.sample.MenuController;
 import src.Main;
@@ -35,6 +36,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 public class Street implements Drawable {
     private final String street_name;
@@ -388,36 +390,37 @@ public class Street implements Drawable {
             }
         });
         controller.getStreetBlock().setOnMouseClicked(event -> {
-            List<Bus> list_buses = Main.controller.getListBuses();
-            boolean bus_on_street = false;
-            for(Bus bus: list_buses){
-                int bus_street_x_begin = bus.getActualBusStreet().begin().getX();
-                int bus_street_y_begin = bus.getActualBusStreet().begin().getY();
-                int bus_street_x_end = bus.getActualBusStreet().end().getX();
-                int bus_street_y_end = bus.getActualBusStreet().end().getY();
-                if(bus.getActualBusStreet().getId().equals(this.getId())){
-                    if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
-                        
-                    }else{
-                        System.out.println("Can`t block street if bus is here!");
-                        bus_on_street = true;
-                        //need to delete "galochka" from box
-                        break;
+            for(Pair<ExecutorService, List<Bus>> pair: Main.controller.getListLines()) {
+                boolean bus_on_street = false;
+                for(Bus bus: pair.getValue()){
+                    int bus_street_x_begin = bus.getActualBusStreet().begin().getX();
+                    int bus_street_y_begin = bus.getActualBusStreet().begin().getY();
+                    int bus_street_x_end = bus.getActualBusStreet().end().getX();
+                    int bus_street_y_end = bus.getActualBusStreet().end().getY();
+                    if(bus.getActualBusStreet().getId().equals(this.getId())){
+                        if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
+
+                        }else{
+                            System.out.println("Can`t block street if bus is here!");
+                            bus_on_street = true;
+                            //need to delete "galochka" from box
+                            break;
+                        }
                     }
                 }
-            }
-            
-            if(!bus_on_street){
-                this.setBlock(controller.getStreetBlock().isSelected());
-                controller.setStreetBlock(this.blocked);
-                for(Bus bus: list_buses){
-                    if(bus.getBusLineForUse().getStreets().contains(this)){
-                        // int bus_index = list_buses.indexOf(bus);
-                        // Main.controller.getBusesThread().get(bus_index).interrupt();
-                        if(bus.getSpeed() == 0){
-                            bus.continueBus();
-                        }else{
-                            bus.pauseBus();
+
+                if(!bus_on_street){
+                    this.setBlock(controller.getStreetBlock().isSelected());
+                    controller.setStreetBlock(this.blocked);
+                    for(Bus bus: pair.getValue()){
+                        if(bus.getBusLineForUse().getStreets().contains(this)){
+                            // int bus_index = list_buses.indexOf(bus);
+                            // Main.controller.getBusesThread().get(bus_index).interrupt();
+                            if(bus.getSpeed() == 0){
+                                bus.continueBus();
+                            }else{
+                                bus.pauseBus();
+                            }
                         }
                     }
                 }

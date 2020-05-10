@@ -14,6 +14,7 @@ package src.sample;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
+import javafx.util.Pair;
 import src.Main;
 import src.functional.*;
 import javafx.scene.layout.HBox;
@@ -46,7 +47,7 @@ public class MainController{
 
     private final List<Stop> list_stops = new ArrayList<>();
     private final List<Street> list_streets = new ArrayList<>();
-    private final List<Bus> list_buses = new ArrayList<>();
+    private final List<Pair<ExecutorService, List<Bus>>> list_lines = new ArrayList<>();
     private Clock clock;
     private Bus lineCliked;
     private Street streetCiked;
@@ -255,7 +256,7 @@ public class MainController{
      * @return List of Bus object
      */
     @FXML
-    public List<Bus> buildLines(File file, FXMLLoader menuLoader){
+    public List<Pair<ExecutorService, List<Bus>>> buildLines(File file, FXMLLoader menuLoader){
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -329,10 +330,16 @@ public class MainController{
                     tempLine.addStopsTimes(stop.getId(), 0, 0);
                     tempLine.addStopsFlags(stop.getId(), 0);
                 }
+                tempLine.setInterval(Integer.parseInt(line.getAttribute("interval")));
 
-                Bus tempBus = new Bus(lineName, tempLine, busColor, time_for_ring); // create new bus, name is same as line name
-                tempBus.setInfo(this);
-                this.list_buses.add(tempBus);
+                int numberOfBuses = Integer.parseInt(line.getAttribute("count"));
+                List<Bus> buses = new ArrayList<>();
+                for (int i = 0; i < numberOfBuses; i++){
+                    Bus tempBus = new Bus(lineName, tempLine, busColor, time_for_ring); // create new bus, name is same as line name
+                    tempBus.setInfo(this);
+                    buses.add(tempBus);
+                }
+                this.list_lines.add(new Pair<>(Executors.newFixedThreadPool(numberOfBuses + 2), buses));
 
             }
 
@@ -340,7 +347,7 @@ public class MainController{
             e.printStackTrace();
         }
 
-        return this.list_buses;
+        return this.list_lines;
     }
 
     /**
@@ -388,9 +395,11 @@ public class MainController{
             streets.getChildren().add(street_item);
         }
 
-        for(Bus bus: list_buses){
-            TreeItem<String> tmp = new TreeItem<>(bus.getBusName());
-            buses.getChildren().add(tmp);
+        for(Pair<ExecutorService, List<Bus>> pair: list_lines){
+            for (Bus bus : pair.getValue()){
+                TreeItem<String> tmp = new TreeItem<>(bus.getBusName());
+                buses.getChildren().add(tmp);
+            }
         }
         
         root.getChildren().add(streets);
@@ -400,12 +409,7 @@ public class MainController{
         info.setRoot(root);
         info.setPrefWidth(mainInfo.getPrefWidth());
         info.setPrefHeight(mainInfo.getPrefHeight());
-    //        mainInfo.getChildren().add(info);
         mainInfo.toFront();
-    }
-
-    public AnchorPane getInfoContant() {
-        return infoContant;
     }
 
     @FXML
@@ -421,14 +425,17 @@ public class MainController{
             }
 
 
-        ExecutorService executorService = Executors.newFixedThreadPool(list_buses.size()+2);
-            for (Bus actual_bus:list_buses) {
-                actual_bus.calculatePosition(clock.getTime());
-                executorService.submit(new BackEnd(actual_bus));
+            for(Pair<ExecutorService, List<Bus>> pair: list_lines) {
+                for (int i = 0; i < pair.getValue().size(); i++) {
+                    Bus bus = pair.getValue().get(i);
+                    List<Integer> tmp = clock.getTime();
+                    tmp.set(1, tmp.get(1) + i * bus.getBusLine().getInterval()); // Offset bus position in time - delay 5 minute
+                    bus.calculatePosition(tmp);
+                    pair.getKey().submit(new BackEnd(bus));
+                }
+                pair.getKey().submit(clock);
+                pair.getKey().submit(new Updater(pair.getValue()));
             }
-
-            executorService.submit(clock);
-            executorService.submit(new Updater(list_buses));
             clockField.setEditable(false);
             startButton.setDisable(true);
     }
@@ -489,8 +496,12 @@ public class MainController{
         lineCliked = null;
     }
 
-    public List<Bus> getListBuses() {
-        return list_buses;
+    public AnchorPane getInfoContant() {
+        return infoContant;
+    }
+
+    public List<Pair<ExecutorService, List<Bus>>> getListLines() {
+        return list_lines;
     }
 
     /**

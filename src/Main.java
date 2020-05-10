@@ -1,13 +1,23 @@
+/*
+  File: ija/src/Main.java
+
+  Author: Pavel Yadlouski (xyadlo00)
+          Oleksii Korniienko (xkorni02)
+
+  Date: 04.2020
+
+  Description: Main class of application. Sets main scene and run application
+ */
+
+
 package src;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.util.Pair;
 import src.functional.Bus;
 import src.functional.Drawable;
 
 import src.sample.MainController;
-import src.sample.BackEnd;
-import src.sample.Updater;
 import src.sample.Clock;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,16 +28,13 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 
 public class Main extends Application {
 
-    public static List<Bus> list_bus;
+    public static List<Pair<ExecutorService, List<Bus>>> list_lines;
     public static List<Drawable> items;
     public static MainController controller;
     public static Clock clock;
@@ -53,11 +60,13 @@ public class Main extends Application {
         try {
             FXMLLoader sideLoader = new FXMLLoader(getClass().getClassLoader().getResource("sideMenu.fxml"));
             items = controller.buildMap(fileMap, sideLoader);
-            list_bus = controller.buildLines(fileTransport, sideLoader);
+            list_lines = controller.buildLines(fileTransport, sideLoader);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        items.addAll(list_bus);
+        for (Pair<ExecutorService, List<Bus>> pair : list_lines){
+            items.addAll(pair.getValue());
+        }
 
         controller.setClock(clock);
         controller.setElements(items);

@@ -47,11 +47,15 @@ public interface Line extends Drawable {
 
 	public boolean addStreet(Street street);
 	
-	public boolean addStop(Stop stop);
+	public void addStop(Stop stop);
 	
 	public java.util.List<java.util.AbstractMap.SimpleImmutableEntry<Street, Stop>> getRoute();
 
 	public List<Stop> getStops();
 
 	public List<Street> getStreets();
+
+    void setInterval(int interval);
+
+	int getInterval();
 }
