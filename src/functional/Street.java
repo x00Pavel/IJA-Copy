@@ -549,7 +549,7 @@ public class Street implements Drawable {
                 controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
             }
         });
-        controller.getStreetBlock().setOnMouseClicked(event -> {
+        controller.getStreetBlock().setOnMouseClicked(event -> { //---------------------------------------------------------------------------------------------------
             for(Pair<ExecutorService, List<Bus>> pair: Main.controller.getListLines()) {
             boolean bus_on_street = false;
                 for(Bus bus: pair.getValue()){
@@ -568,8 +568,9 @@ public class Street implements Drawable {
                         // System.out.println("bus_street_y_begin: " + bus_street_y_begin);
                         // System.out.println("bus_street_x_end: " + bus_street_x_end);
                         // System.out.println("bus_street_y_end: " + bus_street_y_end);
-                        System.out.println("Can`t block street if bus is here!");
-                        bus_on_street = true;
+                        System.out.println("Bus in blocked street will goes back!");
+                        // bus_on_street = true;
+                        bus.setGoBack();
                         //need to delete "galochka" from box
                         break;
                     }
