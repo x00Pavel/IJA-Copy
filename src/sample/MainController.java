@@ -362,7 +362,7 @@ public class MainController{
                     tempBus.setInfo(this);
                     buses.add(tempBus);
                 }
-                this.list_lines.add(new Pair<>(Executors.newFixedThreadPool(numberOfBuses + 2), buses));
+                this.list_lines.add(new Pair<>(Executors.newFixedThreadPool(numberOfBuses + 1), buses));
 
             }
 
@@ -456,9 +456,9 @@ public class MainController{
                     bus.calculatePosition(tmp);
                     pair.getKey().submit(new BackEnd(bus));
                 }
-                pair.getKey().submit(clock);
                 pair.getKey().submit(new Updater(pair.getValue()));
             }
+            new Thread(clock).start();
             clockField.setEditable(false);
             startButton.setDisable(true);
     }
