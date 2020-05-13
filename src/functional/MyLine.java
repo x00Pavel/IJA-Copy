@@ -1,15 +1,3 @@
-/**
- * File: ija/src/functional/MyLine.java
- *
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- *
- * Date: 04.2020
- *
- * Description: Implementation of MyLine object with its functionality
- */
-
-
 package src.functional;
 
 import src.sample.MainController;
@@ -38,7 +26,7 @@ public class MyLine implements Line{
 	// private HashMap<String, Integer> stops_delay = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	private Street blocked_street;
-	private int interval;
+	
 	public MyLine(String id) {
 		this.id = id;
 	}
@@ -182,15 +170,31 @@ public class MyLine implements Line{
 			}
 
 			return false;
+//			if (this.streets.get(this.streets.size()-1).follows(street)) {
+//				this.streets.add(street);
+//				if (street.getStops().isEmpty()) {
+//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,null);
+//					line.add(e);
+//				} else {
+//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,street.getStops().get(0));
+//					line.add(e);
+//				}
+//				return true;
+//			} else {
+//				return false;
+//			}
 		}
 		
 	}
 
 	@Override
-	public void addStop(Stop stop) {
+	public boolean addStop(Stop stop) {
 		if (this.addStreet(stop.getStreet())) {
 			this.stops.add(stop);
 			this.streets.remove(this.streets.lastIndexOf(stop.getStreet()));
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -217,15 +221,5 @@ public class MyLine implements Line{
 	@Override
 	public void setInfo(MainController container) {
 
-	}
-
-	@Override
-	public int getInterval(){
-		return  this.interval;
-	}
-
-	@Override
-	public void setInterval(int i){
-		this.interval = i;
 	}
 }

@@ -1,14 +1,3 @@
-/**
- * File: ija/src/sample/MainController.java
- * 
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- * 
- * Date: 04.2020
- * 
- * Description: Implementation of controller of street side menu. 
- */
-
 package src.sample;
 
 import src.functional.Street;
@@ -30,7 +19,7 @@ public class MenuController {
     private AnchorPane sideMenu;
 
     @FXML
-    private TreeView<String> streetTreeView;
+    private TreeView<String> info;
 
     @FXML
     private TextField streetLoading;
@@ -74,7 +63,7 @@ public class MenuController {
     }
 
     public TreeView<String> getInfo() {
-        return streetTreeView;
+        return info;
     }
 
     public TextField getStreetLoading() {

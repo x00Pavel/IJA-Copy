@@ -1,15 +1,3 @@
-/**
- * File: ija/src/functional/MyLine.java
- * 
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- * 
- * Date: 04.2020
- * 
- * Description: Implementation of MyLine object with its functionality
- */
-
-
 package src.functional;
 
 import java.util.HashMap;
@@ -47,7 +35,7 @@ public interface Line extends Drawable {
 
 	public boolean addStreet(Street street);
 	
-	public void addStop(Stop stop);
+	public boolean addStop(Stop stop);
 	
 	public java.util.List<java.util.AbstractMap.SimpleImmutableEntry<Street, Stop>> getRoute();
 
@@ -55,21 +43,17 @@ public interface Line extends Drawable {
 
 	public List<Street> getStreets();
 
-	public void setInterval(int interval);
+	public Street getBlockedStreet();
 
-	public int getInterval();
-
-	public void setNewStreets(List<Street> new_streets);
-
-	public void setNewStops(List<Stop> new_stops);
-
-	public List<Stop> getTempNewStops();
+	public void setBlockedStreet(Street new_blocked_street);
 
 	public List<Street> getTempNewStreet();
 
 	public List<Street> getPaintedStreet();
 
-	public void setBlockedStreet(Street new_blocked_street);
+	public List<Stop> getTempNewStops();
 
-	public Street getBlockedStreet();
+	public void setNewStreets(List<Street> new_streets);
+
+	public void setNewStops(List<Stop> new_stops);
 }

@@ -1,16 +1,3 @@
-/**
- * File: ija/src/sample/Clock.java
- *
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- *
- * Date: 04.2020
- *
- * Description: Implementation of Clock object with its functionality.
- *              Clock object represents inner clock for program
- */
-
-
 package src.sample;
 
 import javafx.application.Platform;
@@ -46,32 +33,32 @@ public class Clock implements Runnable{
     @Override
     public void run() {
         while(true){
-            seconds++;
-            if(seconds == 60){
-                minutes++;
-                seconds = 0;
+            this.seconds++;
+            if(this.seconds == 60){
+                this.minutes++;
+                this.seconds = 0;
             }
-            if(seconds < 10){
-                seconds_for_print = "0" + seconds;
+            if(this.seconds < 10){
+                this.seconds_for_print = "0" + this.seconds;
             }else{
-                seconds_for_print = Integer.toString(seconds);
+                this.seconds_for_print = Integer.toString(this.seconds);
             }
-            if(minutes == 60){
-                hours++;
-                minutes = 0;
+            if(this.minutes == 60){
+                this.hours++;
+                this.minutes = 0;
             }
-            if(minutes < 10){
-                minutes_for_print = "0" + minutes;
+            if(this.minutes < 10){
+                this.minutes_for_print = "0" + this.minutes;
             }else{
-                minutes_for_print = Integer.toString(minutes);
+                this.minutes_for_print = Integer.toString(this.minutes);
             }
-            if(hours == 24){
-                hours = 0;
+            if(this.hours == 24){
+                this.hours = 0;
             }
-            if(hours < 10){
-                hours_for_print = "0" + Integer.toString(hours);
+            if(this.hours < 10){
+                this.hours_for_print = "0" + Integer.toString(this.hours);
             }else{
-                hours_for_print = Integer.toString(hours);
+                this. hours_for_print = Integer.toString(this.hours);
             }
 
             Platform.runLater(new Runnable() {
@@ -95,21 +82,21 @@ public class Clock implements Runnable{
     }
 
     public List<Integer> getTime() {
-        return Arrays.asList(hours, minutes, seconds);
+        return Arrays.asList(this.hours, this.minutes, this.seconds);
     }
 
     public void setTime( int hour, int minute, int second){
-        hours = hour;
+        this.hours = hour;
         if(hours < 0 || hours > 24){
             System.out.println("[ERROR] Hours should be in interval 0->24");
             System.exit(-1);
         }
-        minutes = minute;
+        this.minutes = minute;
         if(minutes < 0 || minutes > 60){
             System.out.println("[ERROR] Minutes should be in interval 0->60");
             System.exit(-1);
         }
-        seconds = second;
+        this.seconds = second;
         if(seconds < 0 || seconds > 60){
             System.out.println("[ERROR] Seconds should be in interval 0->60");
             System.exit(-1);

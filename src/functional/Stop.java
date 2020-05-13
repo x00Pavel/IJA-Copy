@@ -1,18 +1,5 @@
-/**
- * File: ija/src/functional/Stop.java
- * 
- * Author: Pavel Yadlouski (xyadlo00)
- *         Oleksii Korniienko (xkorni02)
- * 
- * Date: 04.2020
- * 
- * Description: Implementation of Stop object with its functionality
- */
-
-
 package src.functional;
 
-import javafx.scene.layout.HBox;
 import src.sample.MainController;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -20,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Shape;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,8 +15,6 @@ public class Stop implements Drawable {
     private Coordinate stop_cord = null;
     private Street stop_street = null;
     private Circle elements_gui;
-    private List<Bus> listBuses;
-    private List<HBox> listHBox;
 
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
@@ -40,8 +24,6 @@ public class Stop implements Drawable {
             this.stop_cord = cord[0];
             this.elements_gui = new Circle(cord[0].getX(), cord[0].getY(), 5, Color.ORANGE);
         } catch (Exception ignored) { }
-        this.listBuses = new ArrayList<>();
-        this.listHBox = new ArrayList<>();
     }
 
     public static Stop defaultStop(String id, Coordinate c){
@@ -150,20 +132,6 @@ public class Stop implements Drawable {
         label.setLabelFor(this.elements_gui);
         controller.getMapParent().getChildren().add(label);
 
-        this.elements_gui.setOnMouseClicked(event -> {
-            int size = controller.getInfoContant().getChildren().size();
-            if (controller.getInfoContant().getChildren().get(size - 1).getId().equals("stopMenu")){
-                if (controller.getStopNameField().getText().equals(this.getId())){
-                    controller.showMainMenu();
-                }else {
-                    controller.showStopMenu(this.getId(), this.listBuses);
-                }
-            }
-            else {
-
-                controller.showStopMenu(this.getId(), this.listBuses);
-            }
-        });
         this.elements_gui.setOnMouseEntered(event -> {
             label.toFront();
             label.setLayoutX(event.getSceneX() + 5);
@@ -175,16 +143,5 @@ public class Stop implements Drawable {
             label.setVisible(false);
             this.elements_gui.setStroke(Color.ORANGE);
         });
-    }
-
-    /**
-     * Method for setting information in side menu
-//     * @param infoContant
-     */
-//    private void createSideMenu(AnchorPane infoContant) {
-//    }
-
-    public void addBus(Bus bus, Integer time) {
-        this.listBuses.add(bus);
     }
 }
