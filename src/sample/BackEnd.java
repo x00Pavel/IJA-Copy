@@ -4,19 +4,16 @@ import src.functional.Bus;
 
 public class BackEnd implements Runnable{
 
-    private Bus bus_to_run;
-    // private Clock clock;
-    public BackEnd(Bus mybus){
-        this.bus_to_run = mybus;
-        // this.clock = clock;
+    private final Bus bus_to_run;
 
+    public BackEnd(Bus myBus){
+        this.bus_to_run = myBus;
     }
 
     @Override
     public void run() {
         while(!Thread.interrupted()) {
             bus_to_run.Move();
-            // bus_to_run.setBusLineForUse(bus_to_run.getBusLine());
         }
     }
 }

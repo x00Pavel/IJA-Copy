@@ -1,15 +1,25 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/functional/Bus.java
+    Date: 04.2020
+ */
+
 package src.functional;
 
-import java.util.*;
-
 import src.Main;
-// import src.sample.Clock;
 import src.sample.MainController;
+
+import java.util.*;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
+/**
+ * Class representing Bus object. Implements Drawable interface. Bus is representing as Circle on the map
+ */
 public class Bus implements Drawable {
 
     private String busName;
@@ -46,9 +56,23 @@ public class Bus implements Drawable {
         this.time_for_ring = time_for_ring;
         // this.old_time_for_ring = time_for_ring;
         this.busLineForUse = Line.defaultLine(this.busLine);
-
+        this.setBusForStops();
     }
 
+    /**
+     * Function calls method for each stop in current line to add bus to
+     * list of busses in stop
+     */
+    private void setBusForStops() {
+        for (Map.Entry<String, Integer> entry : this.busLine.getStopsTimes().entrySet()) {
+            for (Stop stop : this.busLine.getStops()) {
+                if (stop.getId().equals(entry.getKey())) {
+                    stop.addBus(this, entry.getValue());
+                    break;
+                }
+            }
+        }
+    }
     public void setGoBack(){
         this.goBack = true;
     }

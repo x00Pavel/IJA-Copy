@@ -1,17 +1,26 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/sample/MainController.java
+    Date: 04.2020
+ */
+
+
 package src.sample;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import src.Main;
 import src.functional.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -19,19 +28,20 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 
+
+/**
+ * Controller of main scene.
+ */
 public class MainController{
 
     private List<Drawable> elements = new ArrayList<>();
@@ -42,33 +52,20 @@ public class MainController{
     private Clock clock;
     private String mode = "default";
 
-    private ExecutorService executorService;
+    @FXML
+    private AnchorPane mainInfo;
 
-    public List<Stop> getListStops(){
-        return this.list_stops;
-    }
+    @FXML
+    private AnchorPane stopMenu;
 
-    public List<Street> getListStreets(){
-        return this.list_streets;
-    }
+    @FXML
+    private TextField stopNameField;
 
-    public List<Bus> getListBuses(){
-        return this.list_buses;
-    }
-
-    public void changeMode(String new_mode){
-        this.mode = new_mode;
-    }
-
-    public String getMode(){
-        return this.mode;
-    }
+    @FXML
+    private VBox bussesBox;
 
     @FXML
     private Button startButton;
-
-    @FXML
-    private Button stopButton;
 
     @FXML
     private Pane content;
@@ -88,32 +85,68 @@ public class MainController{
     @FXML
     private AnchorPane infoContant;
 
-    public Button getStopButton() {
-        return stopButton;
+    public AnchorPane getStopMenu() {
+        return stopMenu;
     }
 
-    public AbstractMap.SimpleImmutableEntry<Integer, Street> getSteer(String id){
-        for (Street street: list_streets){
-            if (street.getId().equals(id)){
-                return new AbstractMap.SimpleImmutableEntry<>(list_streets.indexOf(street), street);
-            }
-        }
-        throw new NoSuchElementException("Street not found while searching");
+    public TextField getStopNameField() {
+        return stopNameField;
     }
 
-
-    public Button getStartButton() {
-        return startButton;
-    }
-
+    /**
+     * Getting text field where clock is shown
+     * @return TextField of clock
+     */
     public TextField getClockObj(){
         return clockField;
     }
 
+    /**
+     * Get parent of map to putting labels on it
+     * @return Parent of map
+     */
     public AnchorPane getMapParent() {
         return mapParent;
     }
 
+    /**
+     * Getting list of all street on map
+     *
+     * @return List of Street object
+     */
+    public List<Street> getListStreets(){
+        return this.list_streets;
+    }
+
+    /**
+     * Getting list of all buses running on map
+     * @return List of Bus object
+     */
+    public List<Bus> getListBuses(){
+        return this.list_buses;
+    }
+
+    /**
+     * Changing mode of application
+     * @param new_mode New mode
+     */
+    public void changeMode(String new_mode){
+        this.mode = new_mode;
+    }
+
+    /**
+     * Get mode of application: default or edit
+     * @return String with mode
+     */
+    public String getMode(){
+        return this.mode;
+    }
+
+    /**
+     * Adding given elements to scene
+     *
+     * @param elements List of graphical elements
+     */
     public void setElements(List<Drawable> elements) {
         this.elements = elements;
         for(Drawable item: elements){
@@ -121,9 +154,14 @@ public class MainController{
         }
     }
 
+    /**
+     * Build streets and stops on map
+     *
+     * @param file XML file with map definition
+     * @return List of graphical elements to be drawn on map
+     */
     @FXML
-    public List<Drawable> buildMap(File file, FXMLLoader menuController) throws IOException {
-        // Make grid for testing
+    public List<Drawable> buildMap(File file) throws IOException {
         for (int i = 0; i < 1000; i += 10){
             Line line = new Line(i, 0, i, 1000);
             line.setStroke(Color.LIGHTGRAY);
@@ -197,6 +235,11 @@ public class MainController{
         return elements;
     }
 
+    /**
+     * Zoom map based on mouse scroll
+     *
+     * @param event Scroll event from mouse
+     */
     @FXML
     private void onScroll(ScrollEvent event){
         // If this would not be set, then zooming would be propagate to parent elements
@@ -207,6 +250,10 @@ public class MainController{
         content.layout();
     }
 
+    /**
+     * Bring closer map on button clicked
+     * @param event Button clicked event
+     */
     @FXML
     private void makeBigger(ActionEvent event){
         if (Integer.parseInt(scaleField.getText().replace("%","")) < 190){
@@ -219,6 +266,10 @@ public class MainController{
         }
     }
 
+    /**
+     * Reduce map on button clicked
+     * @param event Button clicked event
+     */
     @FXML
     private void makeSmaller(ActionEvent event){
         if (Integer.parseInt(scaleField.getText().replace("%","")) > 90){
@@ -231,8 +282,14 @@ public class MainController{
         }
     }
 
+    /**
+     * Creating of bus lines
+     *
+     * @param file XML file with definition of bus lines
+     * @return List of new buses
+     */
     @FXML
-    public List<Bus> buildLines(File file, FXMLLoader menuLoader){
+    public List<Bus> buildLines(File file){
 
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -273,8 +330,6 @@ public class MainController{
                         if (!addStreetFlag) {
                             System.out.println("Street with this name does not exist!");
                             return null;
-                        } else {
-                            addStreetFlag = false;
                         }
                     }
                 }
@@ -298,14 +353,11 @@ public class MainController{
                         if (!addStopFlag) {
                             System.out.println("Stop with this name does not exist!");
                             return null;
-                        } else {
-                            addStopFlag = false;
                         }
                     }
                 }
 
                 for(Stop stop:tempLine.getStops()){
-                    // tempLine.createOriginalStopsTimes(stop.getId(), 0);
                     tempLine.addStopsTimes(stop.getId(), 0, 0);
                     tempLine.addStopsFlags(stop.getId(), 0);
                 }
@@ -323,8 +375,11 @@ public class MainController{
         return this.list_buses;
     }
 
+    /**
+     * Speed up time in application
+     */
     @FXML
-    private void makeFaster(ActionEvent event){
+    private void makeFaster(){
         if (Main.clock.getSpeed() > 200){
             int new_speed = Main.clock.getSpeed() - 200;
             Main.clock.setSpeed(new_speed);
@@ -333,8 +388,11 @@ public class MainController{
         }
     }
 
+    /**
+     * Slow down time in application
+     */
     @FXML
-    private  void makeSlower(ActionEvent event){
+    private  void makeSlower(){
         if (Main.clock.getSpeed() < 1800){
             int new_speed = Main.clock.getSpeed() + 200;
             Main.clock.setSpeed(new_speed);
@@ -343,17 +401,17 @@ public class MainController{
         }
     }
 
+    /**
+     * Getting base of map
+     * @return Pane which represents map
+     */
     public Pane getContent() {
         return  content;
     }
 
-    private TreeView<String> info;
-
-    public TreeView<String> getInfo() {
-        return info;
-    }
-
-
+    /**
+     * Creating of basic side menu about map
+     */
     public void setTreeInfo() {
         TreeItem<String> root =  new TreeItem<>("INFO");
         TreeItem<String> streets = new TreeItem<>("Streets");
@@ -375,22 +433,32 @@ public class MainController{
             buses.getChildren().add(tmp);
         }
         
-        root.getChildren().addAll(streets, stops, buses);
+        root.getChildren().add(buses);
+        root.getChildren().add(streets);
+        root.getChildren().add(stops);
         root.setExpanded(true);
-        info = new TreeView<>(root);
+        TreeView<String> info = new TreeView<>(root);
         AnchorPane.setLeftAnchor(info, 0.0);
         AnchorPane.setRightAnchor(info, 0.0);
         AnchorPane.setTopAnchor(info, 0.0);
         AnchorPane.setBottomAnchor(info, 0.0);
         info.setPrefWidth(infoContant.getPrefWidth());
         info.setPrefHeight(infoContant.getPrefHeight());
-        infoContant.getChildren().add(info);
+        mainInfo.getChildren().add(info);
+        mainInfo.toFront();
     }
 
+    /**
+     * Getting container for side menu
+     * @return AnchorPane where side menu is putted
+     */
     public AnchorPane getInfoContant() {
         return infoContant;
     }
 
+    /**
+     * Start running of bus lines (creating necessary threads), starting clock
+     */
     @FXML
     private void startRun() {
             String newTime = clockField.getText();
@@ -404,7 +472,7 @@ public class MainController{
             }
 
 
-            executorService = Executors.newFixedThreadPool(list_buses.size()+2);
+        ExecutorService executorService = Executors.newFixedThreadPool(list_buses.size() + 2);
             for (Bus actual_bus:list_buses) {
                 actual_bus.calculatePosition(clock.getTime());
                 executorService.submit(new BackEnd(actual_bus));
@@ -413,28 +481,27 @@ public class MainController{
             executorService.submit(new Updater(list_buses));
             clockField.setEditable(false);
             startButton.setDisable(true);
-            stopButton.setDisable(false);
     }
 
-    // public List<Thread> getBusesThread(){
-    //     return Arrays.asList(this.bus_1, this.bus_2, this.bus_3, this.bus_4);
-    // }
-
-    @FXML
-    private void stopRun() throws InterruptedException {
-//        startButton.setDisable(false);
-//        stopButton.setDisable(true);
-//        if (executorService.awaitTermination(10, TimeUnit.SECONDS)) {
-//            System.out.println("task completed");
-//        } else {
-//            System.out.println("Forcing shutdown...");
-//            executorService.shutdownNow();
-//        }
-//        executorService.shutdownNow();
-
-    }
-
+    /**
+     * Setting of clock in clock field
+     * @param clock_ Clock of application
+     */
     public void setClock(Clock clock_) {
         clock = clock_;
+    }
+
+    public void showStopMenu(String id, List<HBox> listHBox) {
+        stopNameField.setText(id);
+        bussesBox.getChildren().clear();
+        for (HBox box : listHBox){
+            bussesBox.getChildren().add(box);
+        }
+        stopMenu.setVisible(true);
+        stopMenu.toFront();
+    }
+
+    public void hideStopMenu() {
+        mainInfo.toFront();
     }
 }

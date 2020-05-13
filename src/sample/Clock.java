@@ -1,3 +1,11 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+
+    File: src/sample/Clock.java
+    Date: 04.2020
+ */
+
+
 package src.sample;
 
 import javafx.application.Platform;
@@ -6,6 +14,9 @@ import javafx.scene.control.TextField;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of Clock in application
+ */
 public class Clock implements Runnable{
 
     private int speed;
@@ -56,7 +67,7 @@ public class Clock implements Runnable{
                 this.hours = 0;
             }
             if(this.hours < 10){
-                this.hours_for_print = "0" + Integer.toString(this.hours);
+                this.hours_for_print = "0" + this.hours;
             }else{
                 this. hours_for_print = Integer.toString(this.hours);
             }
@@ -68,14 +79,10 @@ public class Clock implements Runnable{
                 }
             });
 
-            // clock_text.setText(hours_for_print+":"+minutes_for_print+":"+seconds_for_print);
             System.out.println(this.hours_for_print+":"+this.minutes_for_print+":"+this.seconds_for_print);
-            // System.out.println("Clock speed: "+this.speed);
             try {
                 Thread.sleep(getSpeed());
             } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//                System.out.println("Clock interupted");
                 e.printStackTrace();
             }
         }
@@ -84,6 +91,7 @@ public class Clock implements Runnable{
     public List<Integer> getTime() {
         return Arrays.asList(this.hours, this.minutes, this.seconds);
     }
+
 
     public void setTime( int hour, int minute, int second){
         this.hours = hour;

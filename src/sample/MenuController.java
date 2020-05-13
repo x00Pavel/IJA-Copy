@@ -1,6 +1,15 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/sample/MenuController.java
+    Date: 04.2020
+ */
+
 package src.sample;
 
 import src.functional.Street;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -8,6 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controller of side menu of street.
+ */
 public class MenuController {
 
     private Street street;
