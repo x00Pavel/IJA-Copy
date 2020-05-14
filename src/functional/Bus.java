@@ -8,6 +8,7 @@
 
 package src.functional;
 
+import javafx.scene.control.TreeItem;
 import src.Main;
 import src.sample.MainController;
 
@@ -22,6 +23,7 @@ import javafx.scene.shape.Shape;
  */
 public class Bus implements Drawable {
 
+    private TreeItem<String> root;
     private String busName;
     private MyLine busLine; // example of bus Line, try to dont use it
     private MyLine busLineForUse; // can be changed for our needs, can be used
@@ -54,6 +56,7 @@ public class Bus implements Drawable {
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
         this.time_for_ring = time_for_ring;
         this.busLineForUse = new MyLine(this.busLine);
+        this.root = new TreeItem<>();
         this.setBusForStops();
     }
 
@@ -62,14 +65,24 @@ public class Bus implements Drawable {
      * list of busses in stop
      */
     private void setBusForStops() {
-        for (Map.Entry<String, Integer> entry : this.busLine.getStopsTimes().entrySet()) {
-            for (Stop stop : this.busLine.getStops()) {
-                if (stop.getId().equals(entry.getKey())) {
+        TreeItem<String> stops = new TreeItem<>("Stops");
+        TreeItem<String> streets = new TreeItem<>("Streets");
+        for (Map.Entry<String, Integer> entry: this.busLine.getStopsTimes().entrySet()){
+            for (Stop stop : this.busLine.getStops()){
+                stops.getChildren().add(new TreeItem<>(stop.getId()));
+                if (stop.getId().equals(entry.getKey())){
                     stop.addBus(this, entry.getValue());
                     break;
                 }
             }
         }
+        for (Street street: this.busLine.getStreets()){
+            streets.getChildren().add(new TreeItem<>(street.getId()));
+        }
+
+        this.root.getChildren().add(stops);
+        this.root.getChildren().add(streets);
+        this.root.setExpanded(true);
     }
 
     /**
@@ -749,26 +762,26 @@ public class Bus implements Drawable {
     }
 
     @Override
-    public void setInfo(MainController controller) {
+    public void setInfo(MainController mainController) {
         this.gui.setOnMouseClicked(event -> {
             List<Street> streets = this.busLineForUse.getStreets();
             this.checked = !this.checked;
-            boolean c = this.checked;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (c){
-                        for (Street street: streets){
-                            street.changeLineColor(Bus.this.busColor);
-                        }
-                    }else{
-                        for (Street street: streets){
-                            street.rollBackLineColor(Bus.this.busColor);
-                        }
-                    }
+            int size = mainController.getInfoContant().getChildren().size();
+            if (mainController.getInfoContant().getChildren().get(size - 1).getId().equals("busMenu")){
+                if (mainController.getBusNameField().getText().equals(this.getBusName())){
+                    mainController.showMainMenu(this);
                 }
-            });
+                else{
+                    mainController.showBusMenu(this);
+                }
+            } else{
+                mainController.showBusMenu(this);
+            }
         });
+    }
+
+    public TreeItem<String> getRoot() {
+        return  this.root;
     }
 
     public MyLine getBusLine(){

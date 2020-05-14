@@ -139,17 +139,17 @@ public class Stop implements Drawable {
         controller.getMapParent().getChildren().add(label);
 
         this.elements_gui.setOnMouseClicked(event -> {
-            if (Main.controller.getMode() == "default") {
+            if (Main.controller.getMode().equals("default")) {
                 int size = controller.getInfoContant().getChildren().size();
                 if (controller.getInfoContant().getChildren().get(size - 1).getId().equals("stopMenu")){
                     if (controller.getStopNameField().getText().equals(this.getId())){
-                        controller.hideStopMenu();
+                        controller.showMainMenu();
                     }else {
-                        controller.showStopMenu(this.getId(), this.listHBox);
+                        controller.showStopMenu(this.getId(), this.listBuses);
                     }
                 }
                 else {
-                    controller.showStopMenu(this.getId(), this.listHBox);
+                    controller.showStopMenu(this.getId(), this.listBuses);
                 }
             }else{
                 System.out.println("Mode is EDIT!");
@@ -191,10 +191,6 @@ public class Stop implements Drawable {
         });
     }
 
-    /**
-     * Method for setting information in side menu
-     * @param infoContant
-     */
     public void addBus(Bus bus, Integer time) {
         this.listBuses.add(bus);
         HBox box = new HBox(2);

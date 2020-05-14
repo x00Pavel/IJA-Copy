@@ -14,6 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import src.Main;
 import src.functional.*;
 import javafx.event.ActionEvent;
@@ -51,6 +52,9 @@ public class MainController{
     private List<Bus> list_buses = new ArrayList<>();
     private Clock clock;
     private String mode = "default";
+    private Bus lineClicked;
+    private Street streetClicked;
+
 
     @FXML
     private AnchorPane mainInfo;
@@ -85,12 +89,38 @@ public class MainController{
     @FXML
     private AnchorPane infoContant;
 
+    @FXML
+    private AnchorPane busMenu;
+
+    @FXML
+    private TreeView<String> busTreeView;
+
+    @FXML
+    private TextField busNameField;
+
+    @FXML
+    private TreeView<String> info;
+
     public AnchorPane getStopMenu() {
         return stopMenu;
     }
 
     public TextField getStopNameField() {
         return stopNameField;
+    }
+
+
+    public TreeView<String> getBusTreeView() {
+        return busTreeView;
+    }
+
+    public TextField getBusNameField() {
+        return busNameField;
+    }
+
+
+    public AnchorPane getMainInfo() {
+        return mainInfo;
     }
 
     /**
@@ -432,19 +462,15 @@ public class MainController{
             TreeItem<String> tmp = new TreeItem<>(bus.getBusName());
             buses.getChildren().add(tmp);
         }
-        
-        root.getChildren().add(buses);
+
         root.getChildren().add(streets);
         root.getChildren().add(stops);
-        root.setExpanded(true);
-        TreeView<String> info = new TreeView<>(root);
-        AnchorPane.setLeftAnchor(info, 0.0);
-        AnchorPane.setRightAnchor(info, 0.0);
-        AnchorPane.setTopAnchor(info, 0.0);
-        AnchorPane.setBottomAnchor(info, 0.0);
+        root.getChildren().add(buses);
+
+        info.setRoot(root);
         info.setPrefWidth(infoContant.getPrefWidth());
         info.setPrefHeight(infoContant.getPrefHeight());
-        mainInfo.getChildren().add(info);
+//        mainInfo.getChildren().add(info);
         mainInfo.toFront();
     }
 
@@ -491,17 +517,105 @@ public class MainController{
         clock = clock_;
     }
 
-    public void showStopMenu(String id, List<HBox> listHBox) {
+    /**
+     * Function for showing main side menu
+     */
+    public void showMainMenu() {
+        mainInfo.toFront();
+    }
+
+    /**
+     * Function for showing main side menu after bus menu and roll back color
+     * of each street in bus line.
+     * @param bus Bus for which streets would be colored
+     */
+    public void showMainMenu(Bus bus) {
+        mainInfo.toFront();
+        for (Street street : bus.getBusLine().getStreets()){
+            street.rollBackLineColor(bus.getColor());
+        }
+        lineClicked = null;
+    }
+
+    /**
+     * Convert given given number to time format HH:MM:SS
+     *
+     * @param i Number of seconds
+     * @return String representation of time
+     */
+    private String secToTime(int i) {
+        int hours = i / 3600;
+        int minutes = (i % 3600) / 60;
+        int seconds = i % 60;
+
+        return hours + ":" + minutes + ":" + seconds;
+    }
+
+    /**
+     * Method dynamically creates side menu for given stop.
+     * List of buses need to show time left to bus arriving
+     *
+     * @param id Name of stop side menu would be shown for
+     * @param list List of buses of given stop
+     */
+    public void showStopMenu(String id, List<Bus> list) {
         stopNameField.setText(id);
         bussesBox.getChildren().clear();
-        for (HBox box : listHBox){
-            bussesBox.getChildren().add(box);
+        for (Bus bus : list){
+            Text text = new Text(bus.getBusName() + " -> ");
+            VBox time = new VBox(1);
+            Text tmp = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id)));
+            Text nextTmp = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing()));
+            Text nextTmp1 = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing() * 2));
+            Text nextTmp2 = new Text(secToTime(bus.getBusLine().getStopsTimes().get(id) + bus.getTimeForRing() * 3));
+            time.getChildren().addAll(tmp, nextTmp, nextTmp1, nextTmp2);
+            bussesBox.getChildren().add(new HBox(2, text, time));
+        }
+        if (lineClicked != null){
+            for (Street street : lineClicked.getBusLine().getStreets()){
+                street.rollBackLineColor(lineClicked.getColor());
+            }
+            lineClicked = null;
         }
         stopMenu.setVisible(true);
         stopMenu.toFront();
     }
 
-    public void hideStopMenu() {
-        mainInfo.toFront();
+    /**
+     * Method for showing side menu for bus and painting corresponding bus line.
+     * If any other bus lien is selected, then this selection would be canceled
+     * and streets corresponding to this selection would be recolored to previous
+     * color
+     *
+     * @param bus Bus for which side menu would be shown
+     */
+    public void showBusMenu(Bus bus) {
+        for (Street street : bus.getBusLine().getStreets()){
+            street.changeLineColor(bus.getColor());
+        }
+        deselectObjects();
+        lineClicked = bus;
+        busNameField.setText(bus.getBusName());
+        getBusTreeView().setRoot(bus.getRoot());
+        busMenu.toFront();
+    }
+
+    /**
+     * If any line is selected, then it would be deselected to show another object
+     */
+    public void deselectObjects(){
+        if (lineClicked != null){
+            for (Street street : lineClicked.getBusLine().getStreets()){
+                street.rollBackLineColor(lineClicked.getColor());
+            }
+        }
+    }
+
+    /**
+     * Show given side menu of clicked street
+     * @param infoPane Side menu
+     */
+    public void showStreetMenu(AnchorPane infoPane) {
+        infoPane.toFront();
     }
 }
