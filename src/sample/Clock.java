@@ -1,5 +1,6 @@
 /*
     Author: Pavel Yadlouski (xyadlo00)
+        Oleksii Korniienko (xkorni02)
 
     File: src/sample/Clock.java
     Date: 04.2020
@@ -33,10 +34,20 @@ public class Clock implements Runnable{
         speed = new_speed;
     }
 
+    /**
+     * Set clock speed
+     *
+     * @param s          New clock speed
+     */
     public void setSpeed(int s){
         speed = s;
     }
 
+    /**
+     * Get clock speed
+     *
+     * @return           Clock speed
+     */
     public int getSpeed(){
         return speed;
     }
@@ -88,12 +99,23 @@ public class Clock implements Runnable{
         }
     }
 
+    /**
+     * Return an actual time
+     *
+     * @return          List of hours, minutes and seconds
+     */
     public List<Integer> getTime() {
         return Arrays.asList(this.hours, this.minutes, this.seconds);
     }
 
-
-    public void setTime( int hour, int minute, int second){
+    /**
+     * Set new time
+     *
+     * @param hour      New hours
+     * @param minute    New minutes
+     * @param second    New seconds
+     */
+    public void setTime(int hour, int minute, int second){
         this.hours = hour;
         if(hours < 0 || hours > 24){
             System.out.println("[ERROR] Hours should be in interval 0->24");
