@@ -4,7 +4,6 @@
     File: src/sample/Updater.java
     Date: 04.2020
  */
-
 package src.sample;
 
 import src.Main;
@@ -23,6 +22,7 @@ public class Updater implements Runnable{
 
     private List<Bus> all_buses;
 
+    
     public Updater(List<Bus> mybus){
         this.all_buses = mybus;
     }
@@ -53,7 +53,15 @@ public class Updater implements Runnable{
         }
     }
 
-    public Integer calculateTime(Stop stop, Bus bus, int stopsBefore){ // calculating a time for every bus and every stop
+    /**
+     * Calculate time for every bus and every stop
+     *
+     * @param stop          Instance of actual stop
+     * @param bus           Instance of actual bus
+     * @param stopsBefore   Number of stops before actual
+     * @return              Time in seconds to the stop
+     */
+    public Integer calculateTime(Stop stop, Bus bus, int stopsBefore){
 
         Street actual_street = bus.getActualBusStreet();
         List<Street> bus_streets = new ArrayList<>(bus.getBusLineForUse().getStreets());
@@ -144,6 +152,13 @@ public class Updater implements Runnable{
         return time_in_seconds_with_delay;
     }
 
+    /**
+     * Calculate time to travel the whole street
+     *
+     * @param first         Street for calculate
+     * @param bus           Actual bus
+     * @return              Time in seconds to travel the whole street
+     */
     public Integer calculateStreetTime(Street first, Bus bus){
         double rangeX = first.end().getX()-first.begin().getX();
         double rangeY = first.end().getY()-first.begin().getY();

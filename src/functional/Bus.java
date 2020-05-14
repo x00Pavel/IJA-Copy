@@ -44,8 +44,6 @@ public class Bus implements Drawable {
     private boolean goBack = false;
     private boolean skipAll = false;
     private Street street_for_go_to_end = null;
-    // private Clock clock;
-    // private int seconds_to_end = -1;
 
     public Bus(String busName, Line busLine, String color, int time_for_ring) {
         this.checked = false;
@@ -87,42 +85,77 @@ public class Bus implements Drawable {
         this.root.setExpanded(true);
     }
 
+    /**
+     * Method set a flag, if bus was on street was closed
+     */
     public void setGoBack(){
         this.goBack = true;
     }
 
+    /**
+     * Get a X coordinate of bus
+     * @return X coordinate of bus
+     */
     public double getBusX() {
         return this.busX;
     }
 
+    /**
+     * Get a Y coordinate of bus
+     * @return Y coordante of bus
+     */
     public double getBusY() {
         return this.busY;
     }
 
+    /**
+     * Set a X coordinate of bus
+     */
     public void setBusX(double tempX) {
         this.busX = tempX;
     }
 
+    /**
+     * Set an Y coordinate of bus
+     */
     public void setBusY(double tempY) {
         this.busY = tempY;
     }
 
+    /**
+     * Get a name of bus
+     * @return name of bus
+     */
     public String getBusName() {
         return this.busName;
     }
 
+    /**
+     * Get the street on which the bus is now
+     * @return street on which the bus is now
+     */
     public Street getActualBusStreet() {
         return this.actual_bus_street;
     }
 
+    /**
+     * Get a speed of bus
+     * @return speed of bus
+     */
     public Integer getSpeed() {
         return this.speed;
     }
 
+    /**
+     * Method for stop the bus
+     */
     public void pauseBus() {
         this.speed = 0;
     }
 
+    /**
+     * Method for restore movement
+     */
     public void continueBus() {
         this.speed = 5;
         int new_time_for_ring = 0;
@@ -132,42 +165,77 @@ public class Bus implements Drawable {
         this.old_time_for_ring = new_time_for_ring;
     }
 
+    /**
+     * When we need to restart buses movement
+     */
     public void setRestartFlag() {
         this.restart_flag = 1;
     }
 
+    /**
+     * When we teleported bus on stop it will show, how long it should be here
+     * @return time left to stay on stop
+     */
     public Integer getTimeInStopLeft() {
         return this.time_in_stop_left;
     }
 
+    /**
+     * Get time for full bus ring
+     * @return time for full bus ring
+     */
     public Integer getTimeForRing() {
         return this.time_for_ring;
     }
 
+    /**
+     * Get time for full bus ring w/o street loading
+     * @return time for full bus ring w/o street loading
+     */
     public Integer getOldTimeForRing() {
         return this.old_time_for_ring;
     }
 
+    /**
+     * Set time for full bus ring w/o street loading
+     */
     public void setOldTimeForRing(int new_time) {
         this.old_time_for_ring = new_time;
     }
 
+    /**
+     * Set time for full bus ring
+     */
     public void setTimeForRing(Integer new_time_for_ring) {
         this.time_for_ring = new_time_for_ring;
     }
 
+    /**
+     * Get the number of stops the bus has traveled
+     */
     public Integer getStopsThroughs() {
         return this.goes_through_stops;
     }
 
+    /**
+     * Get the number of streets the bus has traveled
+     */
     public Integer getStreetsThroughs() {
         return this.goes_through_streets_with_stops;
     }
 
+    /**
+     * Get bus color
+     */
     public Color getColor() {
         return this.busColor;
     }
 
+    /**
+     * Calculate start position of bus
+     *
+     * @param time         Time in seconds that the bus "passed"
+     */
     public void calculatePosition(List<Integer> time) { // dont delete the comments in this method pls
 
         this.old_time_for_ring = this.time_for_ring;
@@ -356,18 +424,21 @@ public class Bus implements Drawable {
         }
     }
 
-    public Integer calculateStreetTime(Street street) {
+    /**
+     * Calculate time to travel the whole street
+     *
+     * @param street        Street for calculate
+     * @return              Time in seconds to travel the whole street
+     */
+    public Integer calculateStreetTime(Street street) { //mb need to delete (in Updater is a same method)
         double rangeX = street.end().getX() - street.begin().getX();
         double rangeY = street.end().getY() - street.begin().getY();
 
         int range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
-
         int stops_counter = 0;
-
         for (Stop stop : street.getStops()) {
             if (this.getBusLineForUse().getStops().contains(stop)) {
                 stops_counter++;
-                // break;
             }
         }
 
@@ -376,6 +447,10 @@ public class Bus implements Drawable {
         return time;
     }
 
+    /**
+     * Method for move the bus
+     *
+     */
     public void Move() {
 
         this.busLine = Line.defaultLine(this.busLineForUse);
@@ -569,8 +644,14 @@ public class Bus implements Drawable {
         // }
     }
 
+    /**
+     * Calculate road and move to next point
+     *
+     * @param actual_street         Actual bus street
+     * @param end                   Next point to move
+     * @param start                 Previously point
+     */
     public void calculateAndGo(Coordinate end, Street actual_street, Coordinate start) {
-        // System.out.println("skipALL: " + this.skipAll);
         double rangeX = end.getX() - this.busX;
         double rangeY = end.getY() - this.busY;
         double stepX;
@@ -579,7 +660,6 @@ public class Bus implements Drawable {
         int delay_level = actual_street.getDelayLevel();
 
         int j = 0;
-        // int for_nothing = 0;
         while(this.speed == 0) {
             try {
                 Thread.sleep(100);
@@ -607,7 +687,6 @@ public class Bus implements Drawable {
         }
 
         while(j!=0){
-            // this.seconds_to_end = j; // seconds left to end this element of road
             j--;
             this.busX = this.busX + stepX;
             this.busY = this.busY + stepY;

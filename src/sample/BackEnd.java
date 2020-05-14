@@ -1,3 +1,10 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+        Oleksii Korniienko (xkorni02)
+
+    File: src/sample/BackEnd.java
+    Date: 04.2020
+ */
 package src.sample;
 
 import src.functional.Bus;

@@ -2,7 +2,7 @@
     Author: Pavel Yadlouski (xyadlo00)
             Oleksii Korniienko (xkorni02)
 
-    File: src/sample/MainController.java
+    File: src/functional/Stop.java
     Date: 04.2020
  */
 
@@ -47,6 +47,11 @@ public class Stop implements Drawable {
         this.listHBox = new ArrayList<>();
     }
 
+    /**
+     * Create a new instance of Stop
+	 * 
+	 * @return 				New instance of Stop
+     */
     public static Stop defaultStop(String id, Coordinate c){
         return new Stop(id, c);
 
@@ -71,44 +76,42 @@ public class Stop implements Drawable {
         return res;
     }
 
-    public String toString() {
-        return "stop(" + this.stop_id+")";
+    // public String toString() {
+    //     return "stop(" + this.stop_id+")";
 
-    }
+    // }
 
     /**
-     * Vrátí identifikátor zastávky.
+     * Get a stop name (id)
      *
-     * @return Identifikátor zastávky.
+     * @return              Stop name (id)
      */
     public String getId() {
         return this.stop_id;
     }
 
     /**
-     * Vrátí pozici zastávky.
+     * Get a coordinate of stop
      * 
-     * @return Pozice zastávky. Pokud zastávka existuje, ale dosud nemá umístění,
-     *         vrací null.
+     * @return              Coordinate of stop
      */
     public Coordinate getCoordinate() {
         return this.stop_cord;
     }
 
     /**
-     * Nastaví ulici, na které je zastávka umístěna.
+     * Set a stop`s street
      * 
-     * @param s Ulice, na které je zastávka umístěna.
+     * @param s             Street on which the stop is located
      */
     public void setStreet(Street s) {
         this.stop_street = s;
     }
 
     /**
-     * Vrátí ulici, na které je zastávka umístěna.
+     * Get a stop`s street
      * 
-     * @return Ulice, na které je zastávka umístěna. Pokud zastávka existuje, ale
-     *         dosud nemá umístění, vrací null.
+     * @return              Street on which the stop is located
      */
     public Street getStreet() {
         return this.stop_street;

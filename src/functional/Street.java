@@ -42,7 +42,6 @@ public class Street implements Drawable {
     private boolean clicked;
     private List<Line> street_lines = new ArrayList<>();
     protected Polyline line;
-    private Integer prev_delay_level = 0;
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
     private AnchorPane infoPane;
     private MenuController controller;
@@ -56,61 +55,100 @@ public class Street implements Drawable {
         this.delay_level = 0;
     }
 
+    /**
+     * Set a street`s lines
+     *
+     * @param newLine       New line, that will be added in list of street`s lines
+     */
     public void setLine(Line newLine) {
         if (!(this.street_lines.contains(newLine))) {
             this.street_lines.add(newLine);
         }
     }
 
+    /**
+     * Get a street`s lines
+     *
+     * @return              List of street`s lines
+     */
     public List<Line> getLine() {
         return this.street_lines;
     }
 
-    public Integer getPrevDelayLevel() {
-        return this.prev_delay_level;
-    }
-
-    public void setPrevDelayLevel(Integer prev_delay_level) {
-        this.prev_delay_level = prev_delay_level;
-    }
-
+    /**
+     * Get a street`s loading
+     *
+     * @return              Street`s loading level
+     */
     public Integer getDelayLevel() {
         return this.delay_level;
     }
 
+    /**
+     * Set a street`s loading
+     *
+     * @param delay_level   New street`s loading level
+     */
     public void setDelayLevel(Integer delay_level) {
         this.delay_level = delay_level;
     }
 
+    /**
+     * Return a coordinate of street`s end
+     *
+     * @return              Coordinate of street`s end
+     */
     public Coordinate end() {
         List<Coordinate> lst = this.getCoordinates();
         return this.getCoordinates().get(lst.size() - 1);
     }
 
-    public void setEnd(Coordinate new_end) {
-        this.getCoordinates().add(new_end);
-    }
+    // public void setEnd(Coordinate new_end) {
+    //     this.getCoordinates().add(new_end);
+    // }
 
+    /**
+     * Return a coordinate of street`s begin
+     *
+     * @return              Coordinate of street`s begin
+     */
     public Coordinate begin() {
         List<Coordinate> lst = this.getCoordinates();
         return lst.get(0);
     }
 
-    public void setBegin(Coordinate begin) {
-        this.getCoordinates().add(0, begin);
-    }
+    // public void setBegin(Coordinate begin) {
+    //     this.getCoordinates().add(0, begin);
+    // }
 
+    /**
+     * Check if actual street follows another one
+     *
+     * @param s             Street for check
+     * @return              True if follows, false if not
+     */
     public boolean follows(Street s) {
         return this.begin().equals(s.begin()) || this.begin().equals(s.end()) || this.end().equals(s.begin())
                 || this.end().equals(s.end());
     }
 
+    /**
+     * Add a coordinate for street
+     *
+     * @param c             Coordinate for add
+     */
     private void addCoord(Coordinate c) {
         if (!this.cords.contains(c)) {
             this.cords.add(c);
         }
     }
 
+    /**
+     * Check if street`s angles are rights
+     *
+     * @param num           List of parts of streets
+     * @return              True if angles was right, false if not
+     */
     private boolean is_right_angle(int... num) {
         boolean result = false;
         if (num[0] > num[1] && num[0] > num[2]) {
@@ -194,14 +232,24 @@ public class Street implements Drawable {
         return street;
     }
 
+    /**
+     * Get a street`s name(id)
+     *
+     * @return              Name(id) of street
+     */
     public String getId() {
         return this.street_name;
     }
 
-    private void setElements(Shape item) {
+    private void setElements(Shape item) { // check that ----------------------------------------------------------------------------------------
         this.elements.add(item);
     }
 
+    /**
+     * Get a list of street`s stops
+     *
+     * @return              List of street`s stops
+     */
     public List<Stop> getStops() {
         return this.street_stops;
     }
@@ -331,7 +379,7 @@ public class Street implements Drawable {
                 if(bus_line.getPaintedStreet().contains(this) || bus_line.getStreets().contains(this)){
                     bus_line.getTempNewStreet().add(this);
 
-                    showNextRoads(this, bus_line, bus);
+                    showNextRoads(this, bus_line, bus.getColor());
 
                     Street last_street = null;
     
@@ -431,7 +479,7 @@ public class Street implements Drawable {
                                 temp_blocked_street_index = temp_blocked_street_index + bus_line.getStreets().size();
                             }
                             Street first_street = bus_line.getStreets().get(temp_blocked_street_index-1);
-                            showNextRoads(first_street, bus_line, bus);
+                            showNextRoads(first_street, bus_line, bus.getColor());
                         }else{
                             Main.controller.changeMode("default");
                             bus_line.getTempNewStreet().clear();
@@ -491,7 +539,7 @@ public class Street implements Drawable {
                     }
                     Street street_for_continue = bus_line.getStreets().get(street_for_continue_index);
 
-                    showNextRoads(street_for_continue, buses_need.get(0).getBusLineForUse(), buses_need.get(0));
+                    showNextRoads(street_for_continue, buses_need.get(0).getBusLineForUse(), buses_need.get(0).getColor());
                 }
             }
         });
@@ -544,8 +592,6 @@ public class Street implements Drawable {
                 controller.setStreetBlock(this.blocked);
                 for(Bus bus: list_buses){
                     if(bus.getBusLineForUse().getStreets().contains(this)){
-                        // int bus_index = list_buses.indexOf(bus);
-                        // Main.controller.getBusesThread().get(bus_index).interrupt();
                         if(Main.controller.getMode() == "default"){
                             if(bus.getSpeed() == 0){
                                 bus.continueBus();
@@ -588,11 +634,20 @@ public class Street implements Drawable {
 
     }
 
+    /**
+     * Get a street`s stop`s location
+     *
+     * @return              List of pair stop`s name and the part of the road on which the stop is located
+     */
     public List<AbstractMap.SimpleImmutableEntry<Stop, Integer>> getStopLocation() {
             return this.stopLocation;
     }
 
-
+    /**
+     * Change a color of all streets in this line
+     *
+     * @param color         Color for change
+     */
     public void changeLineColor(Color color) {
         this.color_stack.add(color);
         Platform.runLater(new Runnable() {
@@ -603,6 +658,11 @@ public class Street implements Drawable {
         });
     }
 
+    /**
+     * Change a color of all streets in this line to previously in half-stack
+     *
+     * @param color         Color for change and delete from half-stack
+     */
     public void rollBackLineColor(Color color){
         this.color_stack.remove(color);
         Platform.runLater(new Runnable() {
@@ -613,7 +673,14 @@ public class Street implements Drawable {
         });
     }
 
-    public void showNextRoads(Street street_start, Line bus_line, Bus bus){
+    /**
+     * Paint a streets can be choosed
+     *
+     * @param street_start  Street for begin painting
+     * @param bus_line      Line for painting
+     * @param color         Color for painting
+     */
+    public void showNextRoads(Street street_start, Line bus_line, Color color){
         String street_type;
         List<Street> painted_streets = bus_line.getPaintedStreet();
         street_type = bus_line.getStreetsTypes().get(street_start.getId());
@@ -629,17 +696,14 @@ public class Street implements Drawable {
             end_coord = street_start.end();
         }
 
-        // System.out.println("start_street_name: " + street_start.getId() + "start_coord: " + start_coord);
-
         for (Street street : all_streets) {
-            // System.out.println("start_name: " + street.getId() + " street_begin: " + street.begin() + " street_end: " + street.end());
             if (!bus_line.getStreets().contains(street) && !street.equals(street_start)) {
                 if (end_coord.equals(street.begin())){
-                    street.changeLineColor(bus.getColor());
+                    street.changeLineColor(color);
                     painted_streets.add(street);
                     bus_line.addStreetType(street.getId(), "forward");
                 }else if (end_coord.equals(street.end())){
-                    street.changeLineColor(bus.getColor());
+                    street.changeLineColor(color);
                     painted_streets.add(street);
                     bus_line.addStreetType(street.getId(), "back");
                 }
@@ -647,6 +711,13 @@ public class Street implements Drawable {
         }
     }
 
+    /**
+     * Paint a streets can be choosed
+     *
+     * @param bus_line          Line for find stop
+     * @param street_for_start  Street for begin finding
+     * @return                  Stop for begin (stop was being added as last of firsts)
+     */
     private Stop findStopForStart(Line bus_line, Street street_for_start){
         Stop stop_for_start = null;
 
@@ -677,6 +748,13 @@ public class Street implements Drawable {
         return stop_for_start;
     }
 
+    /**
+     * Paint a streets can be choosed
+     *
+     * @param bus_line          Line for find stop
+     * @param street_for_end    Street for begin finding
+     * @return                  Stop for end (stop was being added as first of last)
+     */
     private Stop findStopForEnd(Line bus_line, Street street_for_end){
         Stop stop_for_end = null;
 

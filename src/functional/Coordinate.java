@@ -1,5 +1,6 @@
 /*
-    Author: Oleksii Korniienko (xkorni02)
+    Author: Pavel Yadlouski (xyadlo00)
+        Oleksii Korniienko (xkorni02)
 
     File: src/functional/Coorinate.java
     Date: 04.2020
@@ -21,6 +22,13 @@ public class Coordinate {
 		this.Y = j;
 	}
 	
+	/**
+	 * Create a new Coordinate instance
+	 * 
+	 * @param i			X coordinate
+	 * @param j			Y coordinate
+	 * @return			New instance of Coordinate
+	 */
 	public static Coordinate create(int i, int j) {
 		Coordinate coordinates = new Coordinate(i, j);
 		if ((i >= 0) && (j >= 0)) {		
@@ -30,18 +38,38 @@ public class Coordinate {
 		}
 	}
 	
+	/**
+	 * Get X coordinate
+	 * 
+	 * @return			X coordinate
+	 */
 	public int getX() {
 		return this.X;
 	}
 	
+	/**
+	 * Get Y coordinate
+	 * 
+	 * @return			Y coordinate
+	 */
 	public int getY() {
 		return this.Y;
 	}
 	
+	/**
+	 * Difference of two X coordinates
+	 * 
+	 * @return			Difference of two X coordinates
+	 */
 	public int diffX(Coordinate c) {
 		return this.getX() - c.getX();
 	}
 
+	/**
+	 * Difference of two Y coordinates
+	 * 
+	 * @return			Difference of two Y coordinates
+	 */
 	public int diffY(Coordinate c) {
 		return this.getY() - c.getY();
 	}
