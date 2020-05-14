@@ -9,13 +9,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ContextMenu;
-
-import javafx.scene.control.Label;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
 
@@ -326,6 +321,8 @@ public class Street implements Drawable {
 
                 Line bus_line = bus.getBusLineForUse();
 
+                this.rollBackLineColor(Color.LIGHTGRAY);
+
                 bus_line.getTempNewStreet().add(this);
                 List<Stop> temp_stops_for_back = new ArrayList<>();
                 for (Stop stop : this.getStops()) {
@@ -439,6 +436,8 @@ public class Street implements Drawable {
 
                     buses_need.remove(0);
                     if(!buses_need.isEmpty()){
+                        bus_line.getTempNewStreet().clear();
+                        bus_line.getTempNewStops().clear();
                         bus = buses_need.get(0);
                         bus_line = bus.getBusLineForUse();
                         int temp_blocked_street_index = bus_line.getStreets().indexOf(bus_line.getBlockedStreet());
@@ -450,9 +449,11 @@ public class Street implements Drawable {
                     }else{
                         Main.controller.changeMode("default");
                         // System.out.println("blocked_street_colors: " + this.color_stack);
-                        for(Street street: Main.controller.getListStreets()){
-                            street.rollBackLineColor(Color.LIGHTGRAY); // mb need to change
-                        }
+                        // for(Street street: Main.controller.getListStreets()){
+                        //     street.rollBackLineColor(Color.LIGHTGRAY); // mb need to change
+                        // }
+                        bus_line.getTempNewStreet().clear();
+                        bus_line.getTempNewStops().clear();
                         // System.out.println("this: " + this.color_stack);
                         // System.out.println("this: " + this.color_stack.size());
                     }
@@ -500,7 +501,10 @@ public class Street implements Drawable {
                     }
 
                     Line bus_line = buses_need.get(0).getBusLineForUse();
+                    System.out.println("Bus Line For Use: " + bus_line.getStreets());
+                    System.out.println(bus_line.getStops());
                     int street_for_continue_index = bus_line.getStreets().indexOf(Street.this)-1;
+                    System.out.println("street_for_continue_index: " + street_for_continue_index);
                     if(street_for_continue_index < 0){
                         street_for_continue_index = street_for_continue_index + bus_line.getStreets().size();
                     }
@@ -547,10 +551,10 @@ public class Street implements Drawable {
             List<Bus> list_buses = Main.controller.getListBuses();
             boolean bus_on_street = false;
             for(Bus bus: list_buses){
-                int bus_street_x_begin = bus.getActualBusStreet().begin().getX();
-                int bus_street_y_begin = bus.getActualBusStreet().begin().getY();
-                int bus_street_x_end = bus.getActualBusStreet().end().getX();
-                int bus_street_y_end = bus.getActualBusStreet().end().getY();
+                // int bus_street_x_begin = bus.getActualBusStreet().begin().getX();
+                // int bus_street_y_begin = bus.getActualBusStreet().begin().getY();
+                // int bus_street_x_end = bus.getActualBusStreet().end().getX();
+                // int bus_street_y_end = bus.getActualBusStreet().end().getY();
                 if(bus.getActualBusStreet().getId().equals(this.getId())){
                     // if((Math.round(bus.getBusX()) == bus_street_x_begin && Math.round(bus.getBusY()) == bus_street_y_begin) || (Math.round(bus.getBusX()) == bus_street_x_end && Math.round(bus.getBusY()) == bus_street_y_end)){
                         
@@ -562,13 +566,12 @@ public class Street implements Drawable {
                     //     // System.out.println("bus_street_y_begin: " + bus_street_y_begin);
                     //     // System.out.println("bus_street_x_end: " + bus_street_x_end);
                     //     // System.out.println("bus_street_y_end: " + bus_street_y_end);
-                    //     System.out.println("Can`t block street if bus is here!");
-                    //     bus_on_street = true;
-                    //     //need to delete "galochka" from box
-                    //     break;
+                        System.out.println("Can`t block street if bus is here!");
+                        bus_on_street = true;
+                        //need to delete "galochka" from box
                     // }
-                    System.out.println("Bus in blocked street will goes back!");
-                    bus.setGoBack();
+                    // System.out.println("Bus in blocked street will goes back!");
+                    // bus.setGoBack();
                     break;
                 }
             }
@@ -667,7 +670,7 @@ public class Street implements Drawable {
 
         for (Street street : all_streets) {
             // System.out.println("start_name: " + street.getId() + " street_begin: " + street.begin() + " street_end: " + street.end());
-            if ((!bus_line.getStreets().contains(street) && !street.equals(street_start)) || (street.equals(bus_line.getBlockedStreet()) && !street.equals(street_start))) {
+            if (!bus_line.getStreets().contains(street) && !street.equals(street_start)) {
                 if (end_coord.equals(street.begin())){
                     street.changeLineColor(bus.getColor());
                     painted_streets.add(street);

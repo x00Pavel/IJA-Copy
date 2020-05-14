@@ -13,7 +13,7 @@ import javafx.scene.shape.Shape;
 public class Bus implements Drawable {
 
     private String busName;
-    private final Line busLine; // example of bus Line, try to dont use it
+    private Line busLine; // example of bus Line, try to dont use it
     private Line busLineForUse; // can be changed for our needs, can be used
     private double busX = 0;
     private double busY = 0;
@@ -356,6 +356,9 @@ public class Bus implements Drawable {
     }
 
     public void Move() {
+
+        this.busLine = Line.defaultLine(this.busLineForUse);
+
         if(this.street_for_go_to_end != null){
             Coordinate end;
             Coordinate start;
