@@ -23,8 +23,8 @@ import javafx.scene.shape.Shape;
 public class Bus implements Drawable {
 
     private String busName;
-    private Line busLine; // example of bus Line, try to dont use it
-    private Line busLineForUse; // can be changed for our needs, can be used
+    private MyLine busLine; // example of bus Line, try to dont use it
+    private MyLine busLineForUse; // can be changed for our needs, can be used
     private double busX = 0;
     private double busY = 0;
     private final Circle gui;
@@ -42,8 +42,9 @@ public class Bus implements Drawable {
     private boolean goBack = false;
     private boolean skipAll = false;
     private Street street_for_go_to_end = null;
+    private int need_to_skip = 999;
 
-    public Bus(String busName, Line busLine, String color, int time_for_ring) {
+    public Bus(String busName, MyLine busLine, String color, int time_for_ring) {
         this.checked = false;
         this.busName = busName;
         this.busLine = busLine;
@@ -52,8 +53,7 @@ public class Bus implements Drawable {
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
         this.time_for_ring = time_for_ring;
-        // this.old_time_for_ring = time_for_ring;
-        this.busLineForUse = Line.defaultLine(this.busLine);
+        this.busLineForUse = new MyLine(this.busLine);
         this.setBusForStops();
     }
 
@@ -218,6 +218,10 @@ public class Bus implements Drawable {
         return this.busColor;
     }
 
+    public Street getStreetForGoToEnd(){
+        return this.street_for_go_to_end;
+    }
+
     /**
      * Calculate start position of bus
      *
@@ -351,9 +355,19 @@ public class Bus implements Drawable {
                         // (position_time-time_in_seconds_out_stop_with_delay);
                         // this.getBusLineForUse().addStopsTimes(stop.getId(),new_time_to_stop);
                         this.getBusLineForUse().addStopsFlags(stop.getId(), 1);
-                        streets_for_readd.add(actual_street);
-                        this.street_for_go_to_end = actual_street;
-                        this.actual_bus_street = actual_street;
+
+                        // if(j == (actual_street_stops.size()-1)){
+                            streets_for_readd.add(actual_street);
+
+                            this.street_for_go_to_end = actual_street;
+                            this.need_to_skip = j;
+                            this.actual_bus_street = actual_street;
+                            for(Stop stop_fix: actual_street_stops){
+                                if(!stops_for_readd.contains(stop_fix)){
+                                    stops_for_readd.add(stop_fix);
+                                }
+                            }
+                        // }
                     }
 
                 }
@@ -440,11 +454,31 @@ public class Bus implements Drawable {
      */
     public void Move() {
 
-        this.busLine = Line.defaultLine(this.busLineForUse);
+        this.busLine = new MyLine(this.busLineForUse);
 
         if(this.street_for_go_to_end != null){
             Coordinate end;
             Coordinate start;
+
+            List<Stop> actual_street_stops = new ArrayList<>();
+            for(Stop stop: this.street_for_go_to_end.getStops()){
+                if(this.busLineForUse.getStops().contains(stop)){
+                    actual_street_stops.add(stop);
+                }
+            }
+
+            for(int i = this.need_to_skip+1; i < actual_street_stops.size(); i ++){
+                Stop stop_to_go = actual_street_stops.get(i);
+                calculateAndGo(stop_to_go.getCoordinate(), this.street_for_go_to_end, this.street_for_go_to_end.begin());
+                try {
+                    Thread.sleep(Main.clock.getSpeed() * 3);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+            }
+
+            this.need_to_skip = 999;
+
             if(this.busLineForUse.getStreetsTypes().get(this.street_for_go_to_end.getId()).equals("back")){
                 start = this.street_for_go_to_end.end();
                 end = this.street_for_go_to_end.begin();
@@ -459,6 +493,7 @@ public class Bus implements Drawable {
         List<Street> myBusStreets = new ArrayList<>(this.busLineForUse.getStreets());
         List<Stop> myBusStops = new ArrayList<>(this.busLineForUse.getStops());
 
+        System.out.println("restart_flag :" + restart_flag);
 
         if (this.restart_flag == -1) {
             // if(actual_street_index <= blocked_street_index){
@@ -478,8 +513,8 @@ public class Bus implements Drawable {
             this.restart_flag = 0;
         }
 
-        // System.out.println("myBusStreets :" + myBusStreets);
-        // System.out.println("myBusStops :" + myBusStops);
+        System.out.println("myBusStreets :" + myBusStreets);
+        System.out.println("myBusStops :" + myBusStops);
 
         if (this.time_in_stop_left != 0) {
             try {
@@ -736,13 +771,13 @@ public class Bus implements Drawable {
         });
     }
 
-    public Line getBusLine(){
+    public MyLine getBusLine(){
         return this.busLine;
     }
-    public Line getBusLineForUse(){
+    public MyLine getBusLineForUse(){
         return this.busLineForUse;
     }
-    public void setBusLineForUse(Line newLine){
+    public void setBusLineForUse(MyLine newLine){
         this.busLineForUse = newLine;
     }
 }

@@ -40,7 +40,7 @@ public class Street implements Drawable {
     private Boolean blocked;
     private List<Color> color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
     private boolean clicked;
-    private List<Line> street_lines = new ArrayList<>();
+    private List<MyLine> street_lines = new ArrayList<>();
     protected Polyline line;
     private Integer delay_level = 0; // between 0 (min) and 4 (max)
     private AnchorPane infoPane;
@@ -60,7 +60,7 @@ public class Street implements Drawable {
      *
      * @param newLine       New line, that will be added in list of street`s lines
      */
-    public void setLine(Line newLine) {
+    public void setLine(MyLine newLine) {
         if (!(this.street_lines.contains(newLine))) {
             this.street_lines.add(newLine);
         }
@@ -71,7 +71,7 @@ public class Street implements Drawable {
      *
      * @return              List of street`s lines
      */
-    public List<Line> getLine() {
+    public List<MyLine> getLine() {
         return this.street_lines;
     }
 
@@ -371,7 +371,7 @@ public class Street implements Drawable {
                 }
                 Bus bus = buses_need.get(0);
 
-                Line bus_line = bus.getBusLineForUse();
+                MyLine bus_line = bus.getBusLineForUse();
 
                 this.rollBackLineColor(Color.LIGHTGRAY);
 
@@ -403,19 +403,23 @@ public class Street implements Drawable {
                         Street street_for_end = last_street;
     
                         Stop stop_for_start = findStopForStart(bus_line, street_for_start);
-                        System.out.println("stop_for_start "+stop_for_start.getId());
+                        // System.out.println("stop_for_start "+stop_for_start.getId());
     
                         int stop_for_start_index = 0;
                         if (stop_for_start != null) {
                             stop_for_start_index = bus_line.getStops().indexOf(stop_for_start);
                         }
+                        System.out.println("stop_for_start_index: " + stop_for_start_index);
     
                         Stop stop_for_end = findStopForEnd(bus_line, street_for_end);
+                        // System.out.println("stop_for_end "+stop_for_end.getId());
     
-                        int stop_for_end_index = -1;
+                        int stop_for_end_index = 999;
                         if (stop_for_end != null) {
                             stop_for_end_index = bus_line.getStops().indexOf(stop_for_end);
                         }
+
+                        System.out.println("stop_for_end_index: " + stop_for_end_index);
     
                         List<Stop> new_stops_for_line = new ArrayList<>();
     
@@ -434,7 +438,7 @@ public class Street implements Drawable {
                             }
                         }
     
-                        System.out.println("new_stops_for_line "+new_stops_for_line);
+                        // System.out.println("new_stops_for_line "+new_stops_for_line);
     
                         bus_line.setNewStops(new_stops_for_line);
                         // create new streets
@@ -448,15 +452,24 @@ public class Street implements Drawable {
                                 new_streets_for_line.add(bus_line.getStreets().get(i));
                             }
                         }
+                        // if(street_for_end_index == 0){
+                        //     new_streets_for_line.add(bus_line.getStreets().get(street_for_start_index));
+                        // }
+                        // else{
+                        //     new_streets_for_line.add(bus_line.getStreets().get(street_for_start_index));
+                        // }
                         for (Street new_street_in_line : bus_line.getTempNewStreet()) {
                             if (!new_streets_for_line.contains(new_street_in_line)) {
                                 new_streets_for_line.add(new_street_in_line);
                             }
                         }
-                        for (int i = street_for_end_index + 1; i < bus_line.getStreets().size(); i++) {
-                            new_streets_for_line.add(bus_line.getStreets().get(i));
-                        }
-    
+                        // if(street_for_end_index != 0){
+                            for (int i = street_for_end_index + 1; i < bus_line.getStreets().size(); i++) {
+                                new_streets_for_line.add(bus_line.getStreets().get(i));
+                            }
+                        // }
+
+                        // System.out.println("new_streets_for_line "+new_streets_for_line);
                         bus_line.setNewStreets(new_streets_for_line);
     
                         for (Stop stop : bus_line.getStops()) {
@@ -466,8 +479,22 @@ public class Street implements Drawable {
                             }
                         }
     
+                        // List<Stop> temp_stops_for_check = new ArrayList<>();
+                        // for(Street street_for_check: bus_line.getStreets()){
+                        //     for(Stop stop_for_check: street_for_check.getStops()){
+                        //         temp_stops_for_check.add(stop_for_check);
+                        //     }
+                        // }
+
+                        // for(Stop stop_for_delete: bus_line.getStops()){
+                        //     if(!temp_stops_for_check.contains(stop_for_delete)){
+                        //         bus_line.getStops().remove(stop_for_delete);
+                        //     }
+                        // }
+
                         System.out.println("Streets: " + bus.getBusLineForUse().getStreets());
                         System.out.println("Streets types: " + bus.getBusLineForUse().getStreetsTypes());
+                        System.out.println("Stops: " + bus.getBusLineForUse().getStops());
     
                         bus.continueBus();
     
@@ -475,6 +502,7 @@ public class Street implements Drawable {
                         if(!buses_need.isEmpty()){
                             bus_line.getTempNewStreet().clear();
                             bus_line.getTempNewStops().clear();
+
                             bus = buses_need.get(0);
                             bus_line = bus.getBusLineForUse();
                             int temp_blocked_street_index = bus_line.getStreets().indexOf(bus_line.getBlockedStreet());
@@ -532,17 +560,22 @@ public class Street implements Drawable {
                         bus.getBusLineForUse().setBlockedStreet(Street.this);
                     }
 
-                    Line bus_line = buses_need.get(0).getBusLineForUse();
-                    System.out.println("Bus Line For Use: " + bus_line.getStreets());
-                    System.out.println(bus_line.getStops());
-                    int street_for_continue_index = bus_line.getStreets().indexOf(Street.this)-1;
-                    System.out.println("street_for_continue_index: " + street_for_continue_index);
-                    if(street_for_continue_index < 0){
-                        street_for_continue_index = street_for_continue_index + bus_line.getStreets().size();
+                    if(!buses_need.isEmpty()){
+                        MyLine bus_line = buses_need.get(0).getBusLineForUse();
+                        System.out.println("Bus Line For Use: " + bus_line.getStreets());
+                        System.out.println(bus_line.getStops());
+                        int street_for_continue_index = bus_line.getStreets().indexOf(Street.this)-1;
+                        System.out.println("street_for_continue_index: " + street_for_continue_index);
+                        if(street_for_continue_index < 0){
+                            street_for_continue_index = street_for_continue_index + bus_line.getStreets().size();
+                        }
+                        Street street_for_continue = bus_line.getStreets().get(street_for_continue_index);
+    
+                        showNextRoads(street_for_continue, buses_need.get(0).getBusLineForUse(), buses_need.get(0).getColor());
+                    }else{
+                        Street.this.controller.setStreetBlock(true);
+                        Main.controller.changeMode("default");
                     }
-                    Street street_for_continue = bus_line.getStreets().get(street_for_continue_index);
-
-                    showNextRoads(street_for_continue, buses_need.get(0).getBusLineForUse(), buses_need.get(0).getColor());
                 }
             }
         });
@@ -567,7 +600,7 @@ public class Street implements Drawable {
 
         // Set action for load buttons
         controller.getStreetLoadingMinus().setOnAction(event -> {
-            if (this.getDelayLevel() > 1){
+            if (this.getDelayLevel() > 0){
                 this.setDelayLevel(this.getDelayLevel() - 1);
                 controller.setStreetLoading(String.valueOf(this.getDelayLevel()));
             }
@@ -683,7 +716,7 @@ public class Street implements Drawable {
      * @param bus_line      Line for painting
      * @param color         Color for painting
      */
-    public void showNextRoads(Street street_start, Line bus_line, Color color){
+    public void showNextRoads(Street street_start, MyLine bus_line, Color color){
         String street_type;
         List<Street> painted_streets = bus_line.getPaintedStreet();
         street_type = bus_line.getStreetsTypes().get(street_start.getId());
@@ -721,7 +754,7 @@ public class Street implements Drawable {
      * @param street_for_start  Street for begin finding
      * @return                  Stop for begin (stop was being added as last of firsts)
      */
-    private Stop findStopForStart(Line bus_line, Street street_for_start){
+    private Stop findStopForStart(MyLine bus_line, Street street_for_start){
         Stop stop_for_start = null;
 
         List<Stop> temp_stops = new ArrayList<>();
@@ -758,7 +791,7 @@ public class Street implements Drawable {
      * @param street_for_end    Street for begin finding
      * @return                  Stop for end (stop was being added as first of last)
      */
-    private Stop findStopForEnd(Line bus_line, Street street_for_end){
+    private Stop findStopForEnd(MyLine bus_line, Street street_for_end){
         Stop stop_for_end = null;
 
         List<Stop> temp_stops = new ArrayList<>();
