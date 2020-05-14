@@ -275,11 +275,11 @@ public class Street implements Drawable {
     /**
      * @brief Set interactiv activity for given street
      *
-     * @param controller Main controller of scene
+     * @param mainController Main controller of scene
      */
     @Override
-    public void setInfo(MainController controller) {
-        this.createSideMenu(controller.getInfoContant());
+    public void setInfo(MainController mainController) {
+        this.createSideMenu(mainController.getInfoContant());
 
         Label label = new Label(this.getId());
 
@@ -288,7 +288,7 @@ public class Street implements Drawable {
         label.setStyle("-fx-background-color:POWDERBLUE");
 
         // Set label for parent element for correct showing on scene
-        controller.getMapParent().getChildren().add(label);
+        mainController.getMapParent().getChildren().add(label);
 
         this.line.setOnMouseEntered(event -> {
             Street street = this;
@@ -304,13 +304,14 @@ public class Street implements Drawable {
             });
         });
         this.line.setOnMouseClicked(event -> { // click on street
-            if (Main.controller.getMode() == "default") {
-                if (this.clicked) {
-                    this.clicked = false;
-                    this.controller.getInfo().toFront();
-                } else {
-                    this.clicked = true;
-                    this.infoPane.toFront();
+            if (Main.controller.getMode().equals("default")) {
+                int size = mainController.getInfoContant().getChildren().size();
+                if (mainController.getInfoContant().getChildren().get(size - 1).getId().equals("streetMenu")){
+                    mainController.showMainMenu();
+                }
+                else {
+                    mainController.deselectObjects();
+                    mainController.showStreetMenu(this.infoPane);
                 }
             } else {
                 List<Bus> list_buses = Main.controller.getListBuses();
@@ -352,17 +353,15 @@ public class Street implements Drawable {
                             blocked_street_index = blocked_street_index + bus_line.getStreets().size();
                         }
                         Street street_for_start = bus_line.getStreets().get(blocked_street_index - 1);
-                        Street street_for_end = last_street;
-    
+
                         Stop stop_for_start = findStopForStart(bus_line, street_for_start);
+                        assert stop_for_start != null;
                         System.out.println("stop_for_start "+stop_for_start.getId());
     
                         int stop_for_start_index = 0;
-                        if (stop_for_start != null) {
-                            stop_for_start_index = bus_line.getStops().indexOf(stop_for_start);
-                        }
-    
-                        Stop stop_for_end = findStopForEnd(bus_line, street_for_end);
+                        stop_for_start_index = bus_line.getStops().indexOf(stop_for_start);
+
+                        Stop stop_for_end = findStopForEnd(bus_line, last_street);
     
                         int stop_for_end_index = -1;
                         if (stop_for_end != null) {
@@ -376,13 +375,11 @@ public class Street implements Drawable {
                                 new_stops_for_line.add(bus_line.getStops().get(i));
                             }
                         }
-                        for (Stop new_stop_in_line : bus_line.getTempNewStops()) {
-                            new_stops_for_line.add(new_stop_in_line);
-                        }
+                        new_stops_for_line.addAll(bus_line.getTempNewStops());
                         for (int i = stop_for_end_index; i < bus_line.getStops().size(); i++) {
                             try{
                                 new_stops_for_line.add(bus_line.getStops().get(i));
-                            }catch(ArrayIndexOutOfBoundsException e){
+                            }catch(ArrayIndexOutOfBoundsException ignored){
                             }
                         }
     
@@ -541,7 +538,7 @@ public class Street implements Drawable {
                     break;
                 }
             }
-            
+
             if(!bus_on_street){
                 this.setBlock(controller.getStreetBlock().isSelected());
                 controller.setStreetBlock(this.blocked);
