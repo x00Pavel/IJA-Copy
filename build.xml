@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--  Author: Pavel Yadlouski (xyadlo00)    -->
+<!--                                        -->
+<!--  File: ./build.xml                     -->
+<!--  Date: 04.2020                         -->
 
 <project name="IJA" basedir=".">
 <!--     set global properties for this build-->
@@ -26,7 +30,7 @@
         </javadoc>
     </target>
 
-    <target name="compile" depends="create-dir" description="Compile project">
+    <target name="compile" depends="create-dir, doc" description="Compile project">
         <copy file="${src}/layout.fxml" todir="${build}/src" overwrite="true"/>
         <copy file="${src}/sideMenu.fxml" todir="${build}/src/functional" overwrite="true"/>
 
@@ -41,7 +45,7 @@
         </jar>
     </target>
 
-    <target name="run" depends="compile" description="Run project">
+    <target name="run" description="Run project">
         <java jar="${dest}/ija-app.jar" fork="true"/>
     </target>
 

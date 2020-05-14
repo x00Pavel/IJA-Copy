@@ -1,6 +1,16 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/functional/MyLine.java
+    Date: 04.2020
+ */
+
+
 package src.functional;
 
 import src.sample.MainController;
+
 import javafx.scene.shape.Shape;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
@@ -9,6 +19,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Implementation of bus line.
+ */
 public class MyLine implements Line{
 
 	private String id;
@@ -19,11 +32,9 @@ public class MyLine implements Line{
 	private HashMap<String, String> streets_types = new HashMap<>();
 	private List<Stop> stops = new ArrayList<>();
 	private List<Stop> temp_new_stops = new ArrayList<>();
-	// private HashMap<String, Integer> original_stops_times = new HashMap<>();
 	private HashMap<String, Integer> stops_times = new HashMap<>(); // name_of_stop:time_to_stop_left
 	private HashMap<String, Integer> stops_flags = new HashMap<>();
 	private int line_delay = 0;
-	// private HashMap<String, Integer> stops_delay = new HashMap<>();
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	private Street blocked_street;
 	
@@ -39,19 +50,7 @@ public class MyLine implements Line{
 		this.streets_types = newLine.getStreetsTypes();
 		this.stops_flags = newLine.getStopsFlags();
 		this.stops_times = newLine.getStopsTimes();
-		// this.original_stops_times = newLine.getOriginStopsTimes();
-//		this.stops_delay = newLine.getStopsDelays();
 	}
-
-	// @Override
-	// public void createOriginalStopsTimes(String stop_name, Integer stop_time){
-	// 	this.original_stops_times.put(stop_name, stop_time);
-	// }
-
-	// @Override
-	// public HashMap<String, Integer> getOriginStopsTimes(){
-	// 	return this.original_stops_times;
-	// }
 
 	@Override
 	public void setNewStreets(List<Street> new_streets){
@@ -123,9 +122,6 @@ public class MyLine implements Line{
         }else{
             dopLine = "";
 		}
-		// if(stop_name.equals("Stop 11")){
-			// System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine + "     delay: " + this.line_delay);
-		// }
 	}
 
 	@Override
@@ -142,7 +138,7 @@ public class MyLine implements Line{
 	public boolean addStreet(Street street) {
 		if (this.streets.isEmpty()) {
 			if (street.getStops().isEmpty()) {
-				return false; // ----------------------------------------------------Think about it
+				return false;
 			} else {
 				this.streets.add(street);
 				if (street.getStops().isEmpty()) {
@@ -170,19 +166,6 @@ public class MyLine implements Line{
 			}
 
 			return false;
-//			if (this.streets.get(this.streets.size()-1).follows(street)) {
-//				this.streets.add(street);
-//				if (street.getStops().isEmpty()) {
-//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,null);
-//					line.add(e);
-//				} else {
-//					SimpleImmutableEntry<Street, Stop> e = new SimpleImmutableEntry<Street, Stop>(street,street.getStops().get(0));
-//					line.add(e);
-//				}
-//				return true;
-//			} else {
-//				return false;
-//			}
 		}
 		
 	}
@@ -219,7 +202,7 @@ public class MyLine implements Line{
 	}
 
 	@Override
-	public void setInfo(MainController container) {
+	public void setInfo(MainController controller) {
 
 	}
 }

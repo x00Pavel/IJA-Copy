@@ -1,3 +1,12 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/functional/Street.java
+    Date: 04.2020
+ */
+
+
 package src.functional;
 
 import src.sample.MainController;
@@ -5,11 +14,10 @@ import src.sample.MenuController;
 import src.Main;
 
 import javafx.application.Platform;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Shape;
@@ -20,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of Street object.
+ */
 public class Street implements Drawable {
     private final String street_name;
     private final List<Coordinate> cords;
@@ -266,11 +277,11 @@ public class Street implements Drawable {
     /**
      * @brief Set interactiv activity for given street
      *
-     * @param mainController Main controller of scene
+     * @param controller Main controller of scene
      */
     @Override
-    public void setInfo(MainController mainController) {
-        this.createSideMenu(mainController.getInfoContant());
+    public void setInfo(MainController controller) {
+        this.createSideMenu(controller.getInfoContant());
 
         Label label = new Label(this.getId());
 
@@ -279,7 +290,7 @@ public class Street implements Drawable {
         label.setStyle("-fx-background-color:POWDERBLUE");
 
         // Set label for parent element for correct showing on scene
-        mainController.getMapParent().getChildren().add(label);
+        controller.getMapParent().getChildren().add(label);
 
         // final Paint[] prev_color = new Paint[1];
 
@@ -303,7 +314,7 @@ public class Street implements Drawable {
             if (Main.controller.getMode() == "default") {
                 if (this.clicked) {
                     this.clicked = false;
-                    controller.getInfo().toFront();
+                    this.controller.getInfo().toFront();
                 } else {
                     this.clicked = true;
                     this.infoPane.toFront();

@@ -1,6 +1,17 @@
+/*
+    Author: Oleksii Korniienko (xkorni02)
+
+    File: src/functional/Coorinate.java
+    Date: 04.2020
+ */
+
+
 package src.functional;
 
-public class Coordinate implements CoordinateInterface {
+/**
+ * Representation of coordinates on street map
+ */
+public class Coordinate {
 	
 	private int X;
 	private int Y;
@@ -19,39 +30,30 @@ public class Coordinate implements CoordinateInterface {
 		}
 	}
 	
-	@Override
 	public int getX() {
 		return this.X;
 	}
 	
-	@Override
 	public int getY() {
 		return this.Y;
 	}
 	
-	@Override
 	public int diffX(Coordinate c) {
 		return this.getX() - c.getX();
 	}
 
-	@Override
 	public int diffY(Coordinate c) {
 		return this.getY() - c.getY();
 	}
 	
 	@Override
 	public boolean equals(Object coord) {
-		if((this.getX() == ((Coordinate) coord).getX()) && (this.getY() == ((Coordinate) coord).getY())) {
-			return true;
-		}else {
-			return false;
-		}
+		return (this.getX() == ((Coordinate) coord).getX()) && (this.getY() == ((Coordinate) coord).getY());
 	}
 
 	@Override 
 	public int hashCode() { 
 		final int prime = 21;
-		int result = prime * this.X * this.Y;
-		return result;
+		return prime * this.X * this.Y;
 	}
 }

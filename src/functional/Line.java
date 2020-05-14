@@ -1,3 +1,11 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/functional/Line.java
+    Date: 04.2020
+ */
+
 package src.functional;
 
 import java.util.HashMap;
@@ -5,55 +13,51 @@ import java.util.List;
 
 public interface Line extends Drawable {
 	
-	public static Line defaultLine(String id) {
-		Line line = new MyLine(id);
-		return line;
+	static Line defaultLine(String id) {
+		return new MyLine(id);
 	}
 
-	public static Line defaultLine(Line newLine){
-		Line line = new MyLine(newLine);
-		return line;
+	static Line defaultLine(Line newLine){
+		return new MyLine(newLine);
 	}
 
-	public HashMap<String, String> getStreetsTypes();
+	HashMap<String, String> getStreetsTypes();
 
-	public HashMap<String, Integer> getStopsTimes();
+	HashMap<String, Integer> getStopsTimes();
 
-	public HashMap<String, Integer> getStopsFlags();
+	HashMap<String, Integer> getStopsFlags();
 
-//	public HashMap<String, Integer> getStopsDelays();
 
-	public void addStreetType(String street_name, String street_type);
+	void addStreetType(String street_name, String street_type);
 
-	public void addStopsTimes(String stop_name, Integer stop_times, Integer delay);
+	void addStopsTimes(String stop_name, Integer stop_times, Integer delay);
 
-	public void addStopsFlags(String stop_name, Integer stop_flag);
+	void addStopsFlags(String stop_name, Integer stop_flag);
 
-//	public void addStopsDelays(String stop_name, Integer stop_delay);
 
-	public String getId();
+	String getId();
 
-	public boolean addStreet(Street street);
+	boolean addStreet(Street street);
 	
-	public boolean addStop(Stop stop);
+	boolean addStop(Stop stop);
 	
-	public java.util.List<java.util.AbstractMap.SimpleImmutableEntry<Street, Stop>> getRoute();
+	java.util.List<java.util.AbstractMap.SimpleImmutableEntry<Street, Stop>> getRoute();
 
-	public List<Stop> getStops();
+	List<Stop> getStops();
 
-	public List<Street> getStreets();
+	List<Street> getStreets();
 
-	public Street getBlockedStreet();
+	Street getBlockedStreet();
 
-	public void setBlockedStreet(Street new_blocked_street);
+	void setBlockedStreet(Street new_blocked_street);
 
-	public List<Street> getTempNewStreet();
+	List<Street> getTempNewStreet();
 
-	public List<Street> getPaintedStreet();
+	List<Street> getPaintedStreet();
 
-	public List<Stop> getTempNewStops();
+	List<Stop> getTempNewStops();
 
-	public void setNewStreets(List<Street> new_streets);
+	void setNewStreets(List<Street> new_streets);
 
-	public void setNewStops(List<Stop> new_stops);
+	void setNewStops(List<Stop> new_stops);
 }

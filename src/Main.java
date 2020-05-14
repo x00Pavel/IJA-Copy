@@ -1,30 +1,33 @@
+/*
+    Author: Pavel Yadlouski (xyadlo00)
+            Oleksii Korniienko (xkorni02)
+
+    File: src/Main.java
+    Date: 04.2020
+ */
+
 package src;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import src.functional.Bus;
 import src.functional.Drawable;
-
 import src.sample.MainController;
-import src.sample.BackEnd;
-import src.sample.Updater;
 import src.sample.Clock;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-
+/**
+ * Main class. Here is loading of necessary files is done
+ */
 public class Main extends Application {
 
     public static List<Bus> list_bus;
@@ -52,8 +55,8 @@ public class Main extends Application {
         clock.setTime(0,1,21);
         try {
             FXMLLoader sideLoader = new FXMLLoader(getClass().getClassLoader().getResource("sideMenu.fxml"));
-            items = controller.buildMap(fileMap, sideLoader);
-            list_bus = controller.buildLines(fileTransport, sideLoader);
+            items = controller.buildMap(fileMap);
+            list_bus = controller.buildLines(fileTransport);
         } catch (IOException e) {
             e.printStackTrace();
         }

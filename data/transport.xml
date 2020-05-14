@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--  Author: Pavel Yadlouski (xyadlo00)    -->
+<!--          Oleksii Korniienko (xkorni02) -->
+
+<!--  File: src/sample/MenuController.java  -->
+<!--  Date: 04.2020                         -->
+<!--  Description: Definition of map        -->
 <Transports>
     <Line name="109" color="#800080" time="147">
         <Streets>
