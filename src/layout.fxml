@@ -20,7 +20,7 @@
                <content>
                   <Group>
                      <children>
-                        <Pane fx:id="content" prefHeight="715.0" prefWidth="729.0" />
+                        <Pane fx:id="content" onMouseClicked="#printCord" prefHeight="715.0" prefWidth="729.0" />
                      </children>
                   </Group>
                </content>

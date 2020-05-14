@@ -12,6 +12,8 @@ package src.sample;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -617,5 +619,20 @@ public class MainController{
      */
     public void showStreetMenu(AnchorPane infoPane) {
         infoPane.toFront();
+    }
+
+    private List<Double> lst = new ArrayList<>();
+    public void printCord(MouseEvent mouseEvent) {
+        System.out.println("Event coord - " + mouseEvent.getX() + ":" + mouseEvent.getY());
+        if (mouseEvent.getButton() == MouseButton.SECONDARY){
+            if (lst.size() + 2 == 4){
+                content.getChildren().add(new Line(lst.get(0), lst.get(1), mouseEvent.getX(), mouseEvent.getY()));
+                lst.clear();
+            }
+            else {
+                lst.add(mouseEvent.getX());
+                lst.add(mouseEvent.getY());
+            }
+        }
     }
 }

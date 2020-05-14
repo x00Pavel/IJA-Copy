@@ -348,6 +348,7 @@ public class Street implements Drawable {
                     label.setLayoutX(event.getSceneX() + 5);
                     label.setLayoutY(event.getSceneY() - 20);
                     label.setVisible(true);
+                    System.out.println( street.getId() + " - " +  event.getX() + ":" + event.getY());
                 }
             });
         });

@@ -266,6 +266,11 @@
         </Coordinates>
     </Street>
     <Street name="street 21">
+        <Stops>
+            <Stop name="stop 21_1">
+                <Coordinate x="376" y="152"/>
+            </Stop>
+        </Stops>
         <Coordinates>
             <Coordinate x="300" y="100"/>
             <Coordinate x="470" y="220"/>
@@ -275,6 +280,128 @@
         <Coordinates>
             <Coordinate x="320" y="220"/>
             <Coordinate x="300" y="200"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 23">
+        <Stops>
+            <Stop name="stop 23_1">
+                <Coordinate x="500" y="220"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="470" y="220"/>
+            <Coordinate y="220" x="520"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 24">
+        <Stops>
+            <Stop name="stop 24_1">
+                <Coordinate x="520" y="250"/>
+            </Stop>
+            <Stop name="stop 24_2">
+                <Coordinate x="520" y="340"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="520" y="220"/>
+            <Coordinate x="520" y="350"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 25">
+        <Stops>
+            <Stop name="stop 25_1">
+                <Coordinate x="408" y="276"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="520" y="350"/>
+            <Coordinate x="370" y="250"/>
+        </Coordinates>
+    </Street>
+
+    <Street name="street 26">
+        <Stops>
+            <Stop name="stop 26_1">
+                <Coordinate x="520" y="150"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="520" y="220" />
+            <Coordinate x="520" y="100" />
+        </Coordinates>
+    </Street>
+
+    <Street name="street 27">
+        <Stops>
+            <Stop name="stop 27_1">
+                <Coordinate x="633" y="220"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="520" y="220" />
+            <Coordinate x="650" y="220" />
+        </Coordinates>
+    </Street>
+    <Street name="street 28">
+        <Stops>
+            <Stop name="stop 28_1">
+                <Coordinate x="674" y="235"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="650" y="220" />
+            <Coordinate x="700" y="250"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 29">
+        <Coordinates>
+            <Coordinate x="700" y="250"/>
+            <Coordinate x="630" y="300"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 30">
+        <Stops>
+            <Stop name="stop 30_1">
+                <Coordinate x="737" y="179"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="700" y="250"/>
+            <Coordinate x="754" y="144"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 31">
+        <Stops>
+            <Stop name="stop 31_2">
+                <Coordinate x="577" y="111"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="754" y="144"/>
+            <Coordinate x="520" y="100" />
+        </Coordinates>
+    </Street>
+    <Street name="street 32">
+        <Stops>
+            <Stop name="stop 32_1">
+                <Coordinate x="422" y="100"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="520" y="100" />
+            <Coordinate x="300" y="100"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 40">
+        <Coordinates>
+            <Coordinate x="520" y="350"/>
+            <Coordinate x="339" y="419"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 41">
+        <Coordinates>
+            <Coordinate x="339" y="419"/>
+            <Coordinate x="220" y="380"/>
         </Coordinates>
     </Street>
 </Map>
