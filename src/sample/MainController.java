@@ -16,6 +16,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import src.Main;
 import src.functional.*;
@@ -339,7 +340,7 @@ public class MainController{
                 String busColor = line.getAttribute("color");
                 int time_for_ring = Integer.parseInt(line.getAttribute("time"));
 
-                src.functional.Line tempLine = src.functional.Line.defaultLine(lineName); // create Line
+                MyLine tempLine = new MyLine(lineName); // create Line
 
                 NodeList streets_names = line.getElementsByTagName("Streets").item(0).getChildNodes();
                 for (int i = 0; i < streets_names.getLength(); i++) {

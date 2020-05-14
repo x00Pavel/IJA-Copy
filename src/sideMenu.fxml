@@ -19,9 +19,9 @@
       <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="54.0" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="54.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Loading:" wrappingWidth="68.0" />
-            <Button fx:id="streetLoadingMinus" mnemonicParsing="false" onAction="#unloadStreet" prefHeight="4.0" prefWidth="23.0" text="-" />
+            <Button fx:id="streetLoadingMinus" mnemonicParsing="false" onAction="#unloadStreet" prefHeight="4.0" prefWidth="26.0" text="-" />
             <TextField fx:id="streetLoading" alignment="TOP_CENTER" editable="false" prefHeight="0.0" prefWidth="51.0" />
-            <Button fx:id="streetLoadingPlus" mnemonicParsing="false" onAction="#loadStreet" prefHeight="6.0" prefWidth="0.0" text="+" />
+            <Button fx:id="streetLoadingPlus" mnemonicParsing="false" onAction="#loadStreet" prefHeight="6.0" prefWidth="26.0" text="+" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="11.0" layoutY="30.0" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="30.0">

@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Implementation of bus line.
  */
-public class MyLine implements Line{
+public class MyLine {
 
 	private String id;
 	
@@ -42,7 +42,7 @@ public class MyLine implements Line{
 		this.id = id;
 	}
 
-	public MyLine(Line newLine){
+	public MyLine(MyLine newLine){
 		this.id = newLine.getId();
 		this.streets = new ArrayList<>(newLine.getStreets());
 		this.stops = new ArrayList<>(newLine.getStops());
@@ -57,7 +57,6 @@ public class MyLine implements Line{
 	 * 
 	 * @param new_streets		New list of streets
      */
-	@Override
 	public void setNewStreets(List<Street> new_streets){
 		this.streets = new_streets;
 	}
@@ -67,7 +66,6 @@ public class MyLine implements Line{
 	 * 
 	 * @param new_stops		New list of stops
      */
-	@Override
 	public void setNewStops(List<Stop> new_stops){
 		this.stops = new_stops;
 	}
@@ -77,7 +75,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				Temporary list of stops
      */
-	@Override
 	public List<Stop> getTempNewStops(){
 		return this.temp_new_stops;
 	}
@@ -87,7 +84,6 @@ public class MyLine implements Line{
 	 * 
 	 * @param new_stop 		Stop for add 
      */
-	@Override
 	public void addTempNewStop(Stop new_stop){
 		this.temp_new_stops.add(new_stop);
 	}
@@ -97,7 +93,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				Temporary list of streets
      */
-	@Override
 	public List<Street> getTempNewStreet(){
 		return this.temp_new_streets;
 	}
@@ -107,7 +102,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				List of painted streets
      */
-	@Override
 	public List<Street> getPaintedStreet(){
 		return this.streets_was_painted;
 	}
@@ -117,7 +111,6 @@ public class MyLine implements Line{
 	 * 
 	 * @param new_blocked_street Street that will be blocked
      */
-	@Override
 	public void setBlockedStreet(Street new_blocked_street){
 		this.blocked_street = new_blocked_street;
 	}
@@ -127,7 +120,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				Blocked street
      */
-	@Override
 	public Street getBlockedStreet(){
 		return this.blocked_street;
 	}
@@ -137,7 +129,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				HashMap of pair of street name and street type
      */
-	@Override
 	public HashMap<String, String> getStreetsTypes(){
 		return this.streets_types;
 	}
@@ -147,7 +138,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				HashMap of pair of stop name and time left to stop
      */
-	@Override
 	public HashMap<String, Integer> getStopsTimes() {
 		return this.stops_times;
 	}
@@ -157,7 +147,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return				HashMap of pair of stop name and flag whether the bus passed this stop or not
      */
-	@Override
 	public HashMap<String, Integer> getStopsFlags() {
 		return this.stops_flags;
 	}
@@ -168,7 +157,6 @@ public class MyLine implements Line{
 	 * @param street_name	Street name
 	 * @param street_type	Street type
      */
-	@Override
 	public void addStreetType(String street_name, String street_type){
 		this.streets_types.put(street_name, street_type);
 	}
@@ -180,7 +168,6 @@ public class MyLine implements Line{
 	 * @param stop_times	Time left to stop
 	 * @param delay			Delay to stop (line delay)
      */
-	@Override
 	public void addStopsTimes(String stop_name, Integer stop_times, Integer delay){
 		this.stops_times.put(stop_name, stop_times);
 		this.line_delay = delay;
@@ -194,6 +181,7 @@ public class MyLine implements Line{
         }else{
             dopLine = "";
 		}
+		// System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine + "     delay: " + this.line_delay);
 	}
 
 	/**
@@ -202,7 +190,6 @@ public class MyLine implements Line{
 	 * @param stop_name		Stop name
 	 * @param stop_flag		Stop flag
      */
-	@Override
 	public void addStopsFlags(String stop_name, Integer stop_flag){
 		this.stops_flags.put(stop_name, stop_flag);
 	}
@@ -212,7 +199,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return 				Stop name
      */
-	@Override
 	public String getId(){
 		return this.id;
 	}
@@ -223,7 +209,6 @@ public class MyLine implements Line{
 	 * @param street 		New street for add
 	 * @return 				True if street was added and false if not
      */
-	@Override
 	public boolean addStreet(Street street) {
 		if (this.streets.isEmpty()) {
 			if (street.getStops().isEmpty()) {
@@ -265,7 +250,6 @@ public class MyLine implements Line{
 	 * @param stop 			New stop for add
 	 * @return 				True if stop was added and false if not
      */
-	@Override
 	public boolean addStop(Stop stop) {
 		if (this.addStreet(stop.getStreet())) {
 			this.stops.add(stop);
@@ -281,7 +265,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return 				Route of line
      */
-	@Override
 	public List<SimpleImmutableEntry<Street, Stop>> getRoute() {
 		return Collections.unmodifiableList(this.line);
 	}
@@ -291,7 +274,6 @@ public class MyLine implements Line{
 	 * 
 	 * @return 				List of line`s stops
      */
-	@Override
 	public List<Stop> getStops(){
 		return this.stops;
 	}
@@ -301,17 +283,14 @@ public class MyLine implements Line{
 	 * 
 	 * @return 				List of line`s streets
      */
-	@Override
 	public List<Street> getStreets(){
 		return this.streets;
 	}
 
-	@Override
 	public List<Shape> getGUI() {
 		return null;
 	}
 
-	@Override
 	public void setInfo(MainController controller) {
 
 	}

@@ -303,8 +303,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="520" y="220"/>
             <Coordinate x="520" y="350"/>
+            <Coordinate x="520" y="220"/>
         </Coordinates>
     </Street>
     <Street name="street 25">
@@ -393,6 +393,11 @@
         </Coordinates>
     </Street>
     <Street name="street 40">
+        <Stops>
+            <Stop name="stop 40_1">
+                <Coordinate x="373" y="406"/>
+            </Stop>
+        </Stops>
         <Coordinates>
             <Coordinate x="520" y="350"/>
             <Coordinate x="339" y="419"/>
@@ -402,6 +407,59 @@
         <Coordinates>
             <Coordinate x="339" y="419"/>
             <Coordinate x="220" y="380"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 42">
+        <Stops>
+            <Stop name="stop 42_1">
+                <Coordinate x="170" y="410"/>
+            </Stop>
+            <Stop name="stop 42_2">
+                <Coordinate x="170" y="490"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="170" y="380"/>
+            <Coordinate x="170" y="500"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 43">
+        <Stops>
+            <Stop name="stop 43_1">
+                <Coordinate x="264" y="527"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="170" y="500"/>
+            <Coordinate x="350" y="550"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 44">
+        <Stops>
+            <Stop name="stop 44_1">
+                <Coordinate x="342" y="476"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="350" y="550"/>
+            <Coordinate x="339" y="419"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 45">
+        <Stops>
+            <Stop name="stop 45_1">
+                <Coordinate x="630" y="350"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="630" y="300"/>
+            <Coordinate x="630" y="400"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 46">
+        <Coordinates>
+            <Coordinate x="630" y="400"/>
+            <Coordinate x="520" y="350"/>
         </Coordinates>
     </Street>
 </Map>
