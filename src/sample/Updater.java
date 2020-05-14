@@ -95,6 +95,13 @@ public class Updater implements Runnable{
             range = (int) (Math.sqrt((rangeX * rangeX) + (rangeY * rangeY)));
 
             time_with_delay = range / (bus.getSpeed() - actual_street.getDelayLevel());
+
+            // if(stop.getId().equals("stop 13.2")){
+            //     System.out.println("time_with_delay: " + time_with_delay);
+            // }
+            if(bus.getStreetForGoToEnd() != null){
+                return time_with_delay;
+            }
         } else {
             Coordinate actual_street_end;
             if(bus.getBusLineForUse().getStreetsTypes().get(actual_street.getId()).equals("back")){

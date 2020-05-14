@@ -30,7 +30,7 @@
         </javadoc>
     </target>
 
-    <target name="compile" depends="create-dir, doc" description="Compile project">
+    <target name="compile" depends="create-dir" description="Compile project">
         <copy file="${src}/layout.fxml" todir="${build}/src" overwrite="true"/>
         <copy file="${src}/sideMenu.fxml" todir="${build}/src/functional" overwrite="true"/>
 
@@ -45,7 +45,7 @@
         </jar>
     </target>
 
-    <target name="run" description="Run project">
+    <target name="run" depends="compile" description="Run project">
         <java jar="${dest}/ija-app.jar" fork="true"/>
     </target>
 

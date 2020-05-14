@@ -76,10 +76,10 @@ public class Stop implements Drawable {
         return res;
     }
 
-    // public String toString() {
-    //     return "stop(" + this.stop_id+")";
+    public String toString() {
+        return "stop(" + this.stop_id+")";
 
-    // }
+    }
 
     /**
      * Get a stop name (id)
@@ -163,7 +163,7 @@ public class Stop implements Drawable {
                 System.out.println("buses_need: " + buses_need);
                 if(!buses_need.isEmpty()){
                     Bus bus = buses_need.get(0);
-                    Line bus_line = bus.getBusLineForUse();
+                    MyLine bus_line = bus.getBusLineForUse();
                     Street last_clicked_street = bus_line.getTempNewStreet().get(bus_line.getTempNewStreet().size()-1);
                     if(last_clicked_street.getStops().contains(this)){
                         bus_line.addTempNewStop(this);
