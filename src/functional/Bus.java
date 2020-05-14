@@ -154,23 +154,6 @@ public class Bus implements Drawable {
         return this.busColor;
     }
 
-    // public void checkDirection(){
-    // for(Street street_to_check:this.busLine.getStreets()){
-    // if(street_to_check.getType().equals("back")){ // swap end and begin
-    // Coordinate new_end = new Coordinate(street_to_check.begin().getX(),
-    // street_to_check.begin().getY()); // old first
-    // Coordinate new_begin = new Coordinate(street_to_check.end().getX(),
-    // street_to_check.end().getY()); // old last
-    // street_to_check.getCoordinates().remove(street_to_check.end());
-    // street_to_check.setEnd(new_end);
-    // street_to_check.getCoordinates().remove(street_to_check.begin());
-    // street_to_check.setBegin(new_begin);
-    // }
-    // }
-    // this.busLineForUse = Line.defaultLine(this.busLine); // create a copy of
-    // busline, need another pointers
-    // }
-
     public void calculatePosition(List<Integer> time) { // dont delete the comments in this method pls
 
         this.old_time_for_ring = this.time_for_ring;
@@ -182,11 +165,11 @@ public class Bus implements Drawable {
 
         this.time_for_ring = new_time_for_ring;
 
-        System.out.println("time for ring = " + this.time_for_ring);
+        // System.out.println("time for ring = " + this.time_for_ring);
 
         int position_time = (time.get(0) * 3600 + time.get(1) * 60 + time.get(2)) % this.time_for_ring;
 
-        System.out.println("position time = " + position_time);
+        // System.out.println("position time = " + position_time);
 
         boolean position_found = false;
 
@@ -227,7 +210,7 @@ public class Bus implements Drawable {
 
             // System.out.println("street_time_in_seconds_wo_delay = " +
             // street_time_in_seconds_wo_delay);
-            System.out.println("street_time_in_seconds_with_delay = " + street_time_in_seconds_with_delay);
+            // System.out.println("street_time_in_seconds_with_delay = " + street_time_in_seconds_with_delay);
 
             if (street_time_in_seconds_with_delay > position_time) { // we are in street we need, set bus position
 
@@ -239,7 +222,7 @@ public class Bus implements Drawable {
                     }
                 }
 
-                System.out.println("actual_street_stops: " + actual_street_stops);
+                // System.out.println("actual_street_stops: " + actual_street_stops);
 
                 for (int j = 0; j < actual_street_stops.size(); j++) {
                     Stop stop = actual_street_stops.get(j);
@@ -419,8 +402,8 @@ public class Bus implements Drawable {
             this.restart_flag = 0;
         }
 
-        System.out.println("myBusStreets :" + myBusStreets);
-        System.out.println("myBusStops :" + myBusStops);
+        // System.out.println("myBusStreets :" + myBusStreets);
+        // System.out.println("myBusStops :" + myBusStops);
 
         if (this.time_in_stop_left != 0) {
             try {
@@ -573,7 +556,7 @@ public class Bus implements Drawable {
     }
 
     public void calculateAndGo(Coordinate end, Street actual_street, Coordinate start) {
-        System.out.println("skipALL: " + this.skipAll);
+        // System.out.println("skipALL: " + this.skipAll);
         double rangeX = end.getX() - this.busX;
         double rangeY = end.getY() - this.busY;
         double stepX;
@@ -637,11 +620,6 @@ public class Bus implements Drawable {
 
         this.busX = end.getX();
         this.busY = end.getY();
-        // System.out.println("Bus X: " + this.getBusX());
-        // System.out.println("Bus Y: " + this.getBusY());
-        // System.out.println("End X: " + end.getX());
-        // System.out.println("End Y: " + end.getY());
-        // System.out.println(this.busName + "I WAS HERE!");
         for(Stop stop: this.busLineForUse.getStops()){
             if(this.busX == stop.getCoordinate().getX() && this.busY == stop.getCoordinate().getY()){
                 this.busLineForUse.addStopsFlags(stop.getId(), 1);

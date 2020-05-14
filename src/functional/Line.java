@@ -60,4 +60,6 @@ public interface Line extends Drawable {
 	void setNewStreets(List<Street> new_streets);
 
 	void setNewStops(List<Stop> new_stops);
+
+	public void addTempNewStop(Stop new_stop);
 }

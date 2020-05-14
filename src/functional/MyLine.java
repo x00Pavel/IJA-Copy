@@ -66,6 +66,10 @@ public class MyLine implements Line{
 	public List<Stop> getTempNewStops(){
 		return this.temp_new_stops;
 	}
+	@Override
+	public void addTempNewStop(Stop new_stop){
+		this.temp_new_stops.add(new_stop);
+	}
 
 	@Override
 	public List<Street> getTempNewStreet(){

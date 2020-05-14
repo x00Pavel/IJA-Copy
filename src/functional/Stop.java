@@ -22,6 +22,7 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import src.Main;
 
 /**
  * Implementation of bus Stop object.
@@ -135,16 +136,42 @@ public class Stop implements Drawable {
         controller.getMapParent().getChildren().add(label);
 
         this.elements_gui.setOnMouseClicked(event -> {
-            int size = controller.getInfoContant().getChildren().size();
-            if (controller.getInfoContant().getChildren().get(size - 1).getId().equals("stopMenu")){
-                if (controller.getStopNameField().getText().equals(this.getId())){
-                    controller.hideStopMenu();
-                }else {
+            if (Main.controller.getMode() == "default") {
+                int size = controller.getInfoContant().getChildren().size();
+                if (controller.getInfoContant().getChildren().get(size - 1).getId().equals("stopMenu")){
+                    if (controller.getStopNameField().getText().equals(this.getId())){
+                        controller.hideStopMenu();
+                    }else {
+                        controller.showStopMenu(this.getId(), this.listHBox);
+                    }
+                }
+                else {
                     controller.showStopMenu(this.getId(), this.listHBox);
                 }
-            }
-            else {
-                controller.showStopMenu(this.getId(), this.listHBox);
+            }else{
+                System.out.println("Mode is EDIT!");
+                System.out.println("stop_name: " + this.getId());
+                List<Bus> buses_need = new ArrayList<>();
+                for(Bus bus: Main.controller.getListBuses()){
+                    if (bus.getSpeed() == 0) {
+                        buses_need.add(bus);
+                    }
+                }
+                System.out.println("buses_need: " + buses_need);
+                if(!buses_need.isEmpty()){
+                    Bus bus = buses_need.get(0);
+                    Line bus_line = bus.getBusLineForUse();
+                    Street last_clicked_street = bus_line.getTempNewStreet().get(bus_line.getTempNewStreet().size()-1);
+                    if(last_clicked_street.getStops().contains(this)){
+                        bus_line.addTempNewStop(this);
+
+                        System.out.println("Stop was added");
+                        System.out.println("bus_name: " + bus.getBusName());
+                        System.out.println("new_stops: " + bus_line.getTempNewStops());
+                    }else{
+                        System.out.println("You can`t choose stop out of actual street!");
+                    }
+                }
             }
         });
 
@@ -163,7 +190,7 @@ public class Stop implements Drawable {
 
     /**
      * Method for setting information in side menu
-     //     * @param infoContant
+     * @param infoContant
      */
     public void addBus(Bus bus, Integer time) {
         this.listBuses.add(bus);
