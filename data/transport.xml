@@ -93,13 +93,13 @@
     </Line>
     <Line name="1010" color="#FFD700" time="250">\
         <Stops>
-            <Stop name="stop 26_1"/>
+            <Stop name="stop 32_1"/>
             <Stop name="stop 44_1"/>
             <Stop name="stop 40_1"/>
             <Stop name="stop 24_1"/>
+            <Stop name="stop 26_1"/>
         </Stops>
         <Streets>
-            <Street name="street 26" type="forward"/>
             <Street name="street 32" type="forward"/>
             <Street name="street 21" type="forward"/>
             <Street name="street 14" type="back"/>
@@ -113,7 +113,8 @@
             <Street name="street 43" type="forward"/>
             <Street name="street 44" type="forward"/>
             <Street name="street 40" type="back"/>
-            <Street name="street 24" type="back"/>
+            <Street name="street 24" type="forward"/>
+            <Street name="street 26" type="forward"/>
         </Streets>
     </Line>
 </Transports>

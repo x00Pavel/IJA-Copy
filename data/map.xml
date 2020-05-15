@@ -303,8 +303,8 @@
             </Stop>
         </Stops>
         <Coordinates>
-            <Coordinate x="520" y="220"/>
             <Coordinate x="520" y="350"/>
+            <Coordinate x="520" y="220"/>
         </Coordinates>
     </Street>
     <Street name="street 25">
