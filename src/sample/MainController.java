@@ -413,8 +413,8 @@ public class MainController{
      */
     @FXML
     private void makeFaster(){
-        if (Main.clock.getSpeed() > 200){
-            int new_speed = Main.clock.getSpeed() - 200;
+        if (Main.clock.getSpeed() > 20){
+            int new_speed = Main.clock.getSpeed() - 20;
             Main.clock.setSpeed(new_speed);
             int tmp = Integer.parseInt(timeSpeedField.getText()) + 1;
             timeSpeedField.setText(String.valueOf(tmp));
@@ -426,8 +426,8 @@ public class MainController{
      */
     @FXML
     private  void makeSlower(){
-        if (Main.clock.getSpeed() < 1800){
-            int new_speed = Main.clock.getSpeed() + 200;
+        if (Main.clock.getSpeed() < 1980){
+            int new_speed = Main.clock.getSpeed() + 20;
             Main.clock.setSpeed(new_speed);
             int tmp = Integer.parseInt(timeSpeedField.getText()) - 1;
             timeSpeedField.setText(String.valueOf(tmp));
