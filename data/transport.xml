@@ -117,4 +117,53 @@
             <Street name="street 26" type="forward"/>
         </Streets>
     </Line>
+    <Line name="0011" color="#98FB98" time="300">
+        <Stops>
+            <Stop name="stop 21_1"/>
+            <Stop name="stop 23_1"/>
+            <Stop name="stop 24_2"/>
+            <Stop name="stop 45_1"/>
+            <Stop name="stop 30_1"/>
+            <Stop name="stop 31_2"/>
+            <Stop name="stop 32_1"/>
+        </Stops>
+        <Streets>
+            <Street name="street 21" type="forward"/>
+            <Street name="street 23" type="forward"/>
+            <Street name="street 24" type="back"/>
+            <Street name="street 46" type="back"/>
+            <Street name="street 45" type="back"/>
+            <Street name="street 29" type="back"/>
+            <Street name="street 30" type="forward"/>
+            <Street name="street 31" type="forward"/>
+            <Street name="street 32" type="forward"/>
+        </Streets>
+    </Line>
+    <Line name="666" color="#FF00FF" time="300">
+        <Stops>
+            <Stop name="stop 105_1"/>
+            <Stop name="stop 18.1"/>
+            <Stop name="stop 17.1"/>
+            <Stop name="stop 16.1"/>
+            <Stop name="stop 25_1"/>
+            <Stop name="stop 107_1"/>
+            <Stop name="stop 100_1"/>
+            <Stop name="stop 101_1"/>
+        </Stops>
+        <Streets>
+            <Street name="street 105" type="forward"/>
+            <Street name="street 41" type="forward"/>
+            <Street name="street 18" type="forward"/>
+            <Street name="street 17" type="forward"/>
+            <Street name="street 16" type="forward"/>
+            <Street name="street 15_1" type="forward"/>
+            <Street name="street 25" type="back"/>
+            <Street name="street 46" type="back"/>
+            <Street name="street 107" type="back"/>
+            <Street name="street 102" type="back"/>
+            <Street name="street 100" type="back"/>
+            <Street name="street 101" type="forward"/>
+            <Street name="street 104" type="forward"/>
+        </Streets>
+    </Line>
 </Transports>

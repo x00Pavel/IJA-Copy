@@ -349,19 +349,19 @@ public class MainController{
                         String name = tmp_street.getAttribute("name");
                         String type = tmp_street.getAttribute("type");
 
-                        boolean addStreetFlag = false;
+                        String addStreetFlag = name;
 
                         for (Street need_this_street : list_streets) {
                             if (name.equals(need_this_street.getId())) {
                                 tempLine.addStreet(need_this_street); // add street in Line
                                 tempLine.addStreetType(need_this_street.getId(),type); // add street type
-                                addStreetFlag = true;
+                                addStreetFlag = null;
                                 break;
                             }
                         }
 
-                        if (!addStreetFlag) {
-                            System.out.println("Street with this name does not exist!");
+                        if (addStreetFlag != null) {
+                            System.out.println("Street with this name does not exist: " + addStreetFlag);
                             return null;
                         }
                     }

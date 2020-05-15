@@ -462,4 +462,73 @@
             <Coordinate x="520" y="350"/>
         </Coordinates>
     </Street>
+
+    <Street name="street 100">
+        <Stops>
+            <Stop name="stop 100_1">
+                <Coordinate x="650" y="610"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="650" y="650"/>
+            <Coordinate x="650" y="580"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 101">
+        <Stops>
+            <Stop name="stop 101_1">
+                <Coordinate x="580" y="650"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="650" y="650"/>
+            <Coordinate x="550" y="650"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 102">
+        <Coordinates>
+            <Coordinate x="650" y="580"/>
+            <Coordinate x="800" y="580"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 103">
+        <Coordinates>
+            <Coordinate x="550" y="650"/>
+            <Coordinate x="625" y="780"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 104">
+        <Coordinates>
+            <Coordinate x="550" y="650"/>
+            <Coordinate x="420" y="610"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 105">
+        <Stops>
+            <Stop name="stop 105_1">
+                <Coordinate x="419" y="550"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="420" y="610"/>
+            <Coordinate x="420" y="475"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 106">
+        <Coordinates>
+            <Coordinate x="420" y="475"/>
+            <Coordinate x="339" y="419"/>
+        </Coordinates>
+    </Street>
+    <Street name="street 107">
+        <Stops>
+            <Stop name="stop 107_1">
+                <Coordinate x="701" y="476"/>
+            </Stop>
+        </Stops>
+        <Coordinates>
+            <Coordinate x="800" y="580"/>
+            <Coordinate x="630" y="400"/>
+        </Coordinates>
+    </Street>
 </Map>
