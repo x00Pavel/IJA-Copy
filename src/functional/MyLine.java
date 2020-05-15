@@ -47,7 +47,7 @@ public class MyLine {
 		this.streets = new ArrayList<>(newLine.getStreets());
 		this.stops = new ArrayList<>(newLine.getStops());
 		this.line = newLine.getRoute();
-		this.streets_types = newLine.getStreetsTypes();
+		this.streets_types = new HashMap<>(newLine.getStreetsTypes());
 		this.stops_flags = newLine.getStopsFlags();
 		this.stops_times = newLine.getStopsTimes();
 	}

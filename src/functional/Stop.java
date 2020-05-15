@@ -163,7 +163,7 @@ public class Stop implements Drawable {
                 System.out.println("buses_need: " + buses_need);
                 if(!buses_need.isEmpty()){
                     Bus bus = buses_need.get(0);
-                    MyLine bus_line = bus.getBusLineForUse();
+                    MyLine bus_line = bus.getBusLine();
                     Street last_clicked_street = bus_line.getTempNewStreet().get(bus_line.getTempNewStreet().size()-1);
                     if(last_clicked_street.getStops().contains(this)){
                         bus_line.addTempNewStop(this);

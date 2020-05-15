@@ -39,7 +39,7 @@
                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="123.0">
                            <children>
                               <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeSlower" prefHeight="26.0" prefWidth="26.0" text="-" />
-                              <TextField fx:id="timeSpeedField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="5" />
+                              <TextField fx:id="timeSpeedField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="74.0" text="50" />
                               <Button alignment="TOP_CENTER" mnemonicParsing="false" onAction="#makeFaster" prefHeight="26.0" prefWidth="26.0" text="+" />
                            </children>
                         </HBox>
