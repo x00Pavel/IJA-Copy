@@ -408,37 +408,12 @@ public class Street implements Drawable {
                         System.out.println("NEW ROAD WAS CREATED!");
                         System.out.println(bus_line.getTempNewStreet());
                         System.out.println(bus_line.getTempNewStops());
-                        // last_street.rollBackLineColor(Color.DEEPSKYBLUE);
                         last_street.color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
 
                         for(Street street: bus_line.getPaintedStreet()){
                             street.rollBackLineColor(bus.getColor());
                         }
-                        // System.out.println("Color: " + this.color_stack);
-    
-                        // create new stops
-                        // int blocked_street_index = bus_line.getStreets().indexOf(bus_line.getBlockedStreet());
-                        // if (blocked_street_index == 0) {
-                        //     blocked_street_index = blocked_street_index + bus_line.getStreets().size();
-                        // }
-                        // Street street_for_start = bus_line.getStreets().get(blocked_street_index - 1);
 
-                        // Stop stop_for_start = findStopForStart(bus_line, street_for_start);
-                        // assert stop_for_start != null;
-                        // System.out.println("stop_for_start "+stop_for_start.getId());
-    
-                        // int stop_for_start_index = 0;
-                        // stop_for_start_index = bus_line.getStops().indexOf(stop_for_start);
-
-                        // Stop stop_for_end = findStopForEnd(bus_line, last_street);
-    
-                        // int stop_for_end_index = 999;
-                        // if (stop_for_end != null) {
-                        //     stop_for_end_index = bus_line.getStops().indexOf(stop_for_end);
-                        // }
-
-                        // System.out.println("stop_for_end_index: " + stop_for_end_index);
-    
                         List<Stop> new_stops_for_line = new ArrayList<>();
 
                         for(Stop stop: bus.getStreetForContinue().getStops()){
@@ -446,47 +421,21 @@ public class Street implements Drawable {
                                 new_stops_for_line.add(stop);
                             }
                         }
-    
-                        // if(stop_for_end_index > stop_for_start_index){
-                        //     for (int i = 0; i <= stop_for_start_index; i++) {
-                        //         new_stops_for_line.add(bus_line.getStops().get(i));
-                        //     }
-                        // }
                         new_stops_for_line.addAll(bus_line.getTempNewStops());
-                        // for (int i = stop_for_end_index; i < bus_line.getStops().size(); i++) {
-                        //     try{
-                        //         new_stops_for_line.add(bus_line.getStops().get(i));
-                        //     }catch(ArrayIndexOutOfBoundsException ignored){
-                        //     }
-                        // }
-    
-                        // System.out.println("new_stops_for_line "+new_stops_for_line);
-    
                         bus_line.setNewStops(new_stops_for_line);
-                        // create new streets
-    
-                        // int street_for_start_index = blocked_street_index - 1;
-                        // int street_for_end_index = bus_line.getStreets().indexOf(last_street);
-    
+
+                        for (Stop stop: new_stops_for_line){
+                            stop.addBus(bus, bus_line.getStopsTimes().get(stop.getId()));
+                        }
+
                         List<Street> new_streets_for_line = new ArrayList<>();
                         new_streets_for_line.add(bus.getStreetForContinue());
-                        // if(street_for_start_index < street_for_end_index){
-                        //     for (int i = 0; i <= street_for_start_index; i++) {
-                        //         new_streets_for_line.add(bus_line.getStreets().get(i));
-                        //     }
-                        // }
+
                         for (Street new_street_in_line : bus_line.getTempNewStreet()) {
                             if (!new_streets_for_line.contains(new_street_in_line)) {
                                 new_streets_for_line.add(new_street_in_line);
                             }
                         }
-                        // if(street_for_end_index != 0){
-                            // for (int i = street_for_end_index + 1; i < bus_line.getStreets().size(); i++) {
-                            //     new_streets_for_line.add(bus_line.getStreets().get(i));
-                            // }
-                        // }
-
-                        // System.out.println("new_streets_for_line "+new_streets_for_line);
                         bus_line.setNewStreets(new_streets_for_line);
     
                         for (Stop stop : bus_line.getStops()) {
@@ -733,7 +682,6 @@ public class Street implements Drawable {
      *
      * @param street_start  Street for begin painting
      * @param bus_line      Line for painting
-     * @param color         Color for painting
      */
     public void showNextRoads(Street street_start, MyLine bus_line, Bus bus){
         if(street_start.equals(bus.getStreetForContinue())){

@@ -67,6 +67,7 @@ public class MyLine {
 	 * @param new_stops		New list of stops
      */
 	public void setNewStops(List<Stop> new_stops){
+
 		this.stops = new_stops;
 	}
 

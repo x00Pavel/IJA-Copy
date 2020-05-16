@@ -9,6 +9,7 @@
 
 package src.functional;
 
+import com.sun.javafx.collections.ElementObservableListDecorator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -34,6 +35,7 @@ public class Stop implements Drawable {
     private Circle elements_gui;
     private List<Bus> listBuses;
     private List<HBox> listHBox;
+    private List<MyLine> listLines;
 
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
@@ -45,6 +47,7 @@ public class Stop implements Drawable {
         } catch (Exception ignored) { }
         this.listBuses = new ArrayList<>();
         this.listHBox = new ArrayList<>();
+        this.listLines = new ArrayList<>();
     }
 
     /**
@@ -192,12 +195,18 @@ public class Stop implements Drawable {
     }
 
     public void addBus(Bus bus, Integer time) {
-        this.listBuses.add(bus);
-        HBox box = new HBox(2);
-        Text busName = new Text(bus.getBusName() + "->");
-        VBox vBox = new VBox(1);
-        vBox.getChildren().add(new Text(String.valueOf(time)));
-        box.getChildren().addAll(busName, vBox);
-        this.listHBox.add(box);
+        if (!this.listBuses.contains(bus)){
+            if(!this.listLines.contains(bus.getBusLine())){
+                this.listLines.add(bus.getBusLine());
+                this.listBuses.add(bus);
+                HBox box = new HBox(2);
+                Text busName = new Text(bus.getBusName() + "->");
+                VBox vBox = new VBox(1);
+                vBox.getChildren().add(new Text(String.valueOf(time)));
+                box.getChildren().addAll(busName, vBox);
+                this.listHBox.add(box);
+
+            }
+        }
     }
 }
