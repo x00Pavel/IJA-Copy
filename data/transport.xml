@@ -91,7 +91,7 @@
             <Stop name="stop 16.1"/>
         </Stops>
     </Line>
-    <Line name="1010" color="#FFD700" time="250">\
+    <Line name="1010" color="#FFD700" time="353">\
         <Stops>
             <Stop name="stop 32_1"/>
             <Stop name="stop 44_1"/>
@@ -117,7 +117,7 @@
             <Street name="street 26" type="forward"/>
         </Streets>
     </Line>
-    <Line name="0011" color="#98FB98" time="300">
+    <Line name="0011" color="#98FB98" time="273">
         <Stops>
             <Stop name="stop 21_1"/>
             <Stop name="stop 23_1"/>
@@ -139,7 +139,7 @@
             <Street name="street 32" type="forward"/>
         </Streets>
     </Line>
-    <Line name="666" color="#FF00FF" time="300">
+    <Line name="666" color="#FF00FF" time="341">
         <Stops>
             <Stop name="stop 105_1"/>
             <Stop name="stop 18.1"/>
