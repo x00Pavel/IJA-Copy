@@ -152,6 +152,7 @@
         </Stops>
         <Streets>
             <Street name="street 105" type="forward"/>
+            <Street name="street 106" type="forward"/>
             <Street name="street 41" type="forward"/>
             <Street name="street 18" type="forward"/>
             <Street name="street 17" type="forward"/>
@@ -166,4 +167,9 @@
             <Street name="street 104" type="forward"/>
         </Streets>
     </Line>
+<!--    <Line name="999" color="#00008B" time="400">-->
+<!--        <Streets>-->
+<!--            <Street name=""-->
+<!--        </Streets>-->
+<!--    </Line>-->
 </Transports>

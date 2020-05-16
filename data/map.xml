@@ -491,12 +491,6 @@
             <Coordinate x="800" y="580"/>
         </Coordinates>
     </Street>
-    <Street name="street 103">
-        <Coordinates>
-            <Coordinate x="550" y="650"/>
-            <Coordinate x="625" y="780"/>
-        </Coordinates>
-    </Street>
     <Street name="street 104">
         <Coordinates>
             <Coordinate x="550" y="650"/>
