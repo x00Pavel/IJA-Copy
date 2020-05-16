@@ -9,7 +9,6 @@
 
 package src.functional;
 
-import com.sun.javafx.collections.ElementObservableListDecorator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -79,6 +78,10 @@ public class Stop implements Drawable {
         return res;
     }
 
+    /**
+     * Represent a stop as string
+     *
+     */
     public String toString() {
         return "stop(" + this.stop_id+")";
 

@@ -16,7 +16,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import src.Main;
 import src.functional.*;
@@ -56,7 +55,6 @@ public class MainController{
     private Clock clock;
     private String mode = "default";
     private Bus lineClicked;
-    private Street streetClicked;
 
 
     @FXML
@@ -413,8 +411,8 @@ public class MainController{
      */
     @FXML
     private void makeFaster(){
-        if (Main.clock.getSpeed() > 20){
-            int new_speed = Main.clock.getSpeed() - 20;
+        if (Main.clock.getSpeed() > 100){
+            int new_speed = Main.clock.getSpeed() - 100;
             Main.clock.setSpeed(new_speed);
             int tmp = Integer.parseInt(timeSpeedField.getText()) + 1;
             timeSpeedField.setText(String.valueOf(tmp));
@@ -426,8 +424,8 @@ public class MainController{
      */
     @FXML
     private  void makeSlower(){
-        if (Main.clock.getSpeed() < 1980){
-            int new_speed = Main.clock.getSpeed() + 20;
+        if (Main.clock.getSpeed() < 1900){
+            int new_speed = Main.clock.getSpeed() + 100;
             Main.clock.setSpeed(new_speed);
             int tmp = Integer.parseInt(timeSpeedField.getText()) - 1;
             timeSpeedField.setText(String.valueOf(tmp));
