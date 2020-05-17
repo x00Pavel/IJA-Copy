@@ -247,11 +247,6 @@ public class Street implements Drawable {
         return this.street_name;
     }
 
-    // TODO what is it?
-    private void setElements(Shape item) {
-        this.elements.add(item);
-    }
-
     /**
      * Get a list of street`s stops
      *
@@ -426,8 +421,6 @@ public class Street implements Drawable {
                     if (last_street != null) {
                         System.out.println("NEW ROAD WAS CREATED!");
                         last_street.setStreetWasClicked(false);
-                        System.out.println(bus_line.getTempNewStreet());
-                        System.out.println(bus_line.getTempNewStops());
                         last_street.color_stack = new ArrayList<>(Arrays.asList(Color.BLACK));
 
                         for(Street street: bus_line.getPaintedStreet()){
@@ -464,11 +457,6 @@ public class Street implements Drawable {
                                 bus_line.addStopsFlags(stop.getId(), 0);
                             }
                         }
-
-                        System.out.println("Streets: " + bus.getBusLine().getStreets());
-                        System.out.println("Streets types: " + bus.getBusLine().getStreetsTypes());
-                        System.out.println("Stops: " + bus.getBusLine().getStops());
-    
                         bus.continueBus();
     
                         buses_need.remove(0);
@@ -541,10 +529,7 @@ public class Street implements Drawable {
 
                     if(!buses_need.isEmpty()){
                         MyLine bus_line = buses_need.get(0).getBusLine();
-                        System.out.println("Bus Line For Use: " + bus_line.getStreets());
-                        System.out.println(bus_line.getStops());
                         int street_for_continue_index = bus_line.getStreets().indexOf(Street.this)-1;
-                        System.out.println("street_for_continue_index: " + street_for_continue_index);
                         if(street_for_continue_index < 0){
                             street_for_continue_index = street_for_continue_index + bus_line.getStreets().size();
                         }
@@ -597,7 +582,6 @@ public class Street implements Drawable {
             for(Bus bus: list_buses){
                 if(bus.getActualBusStreet().getId().equals(this.getId())){
                     System.out.println("Bus in blocked street will end his actual road!");
-                    // bus.setGoBack();
                     break;
                 }
             }
@@ -702,9 +686,6 @@ public class Street implements Drawable {
         List<Street> painted_streets = bus_line.getPaintedStreet();
         street_type = bus_line.getStreetsTypes().get(street_start.getId());
         List<Street> all_streets = Main.controller.getListStreets();
-
-        System.out.println("street_start: " + street_start.getId());
-        System.out.println("street_start type: " + street_type);
 
         Coordinate end_coord;
         if (street_type.equals("back")) {
