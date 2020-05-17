@@ -35,6 +35,10 @@ public class Main extends Application {
     public static MainController controller;
     public static Clock clock;
 
+    /**
+     * //TODO some comments here too (idk what is primaryStage)
+     * 
+     */
     @Override
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("layout.fxml")));

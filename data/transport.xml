@@ -91,7 +91,7 @@
             <Stop name="stop 16.1"/>
         </Stops>
     </Line>
-    <Line name="1010" color="#FFD700" time="353">\
+    <Line name="1010" color="#FFD700" time="353">
         <Stops>
             <Stop name="stop 32_1"/>
             <Stop name="stop 44_1"/>

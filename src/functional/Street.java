@@ -247,6 +247,7 @@ public class Street implements Drawable {
         return this.street_name;
     }
 
+    // TODO what is it?
     private void setElements(Shape item) {
         this.elements.add(item);
     }

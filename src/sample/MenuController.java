@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Controller of side menu of street.
  */
-public class MenuController {
+public class MenuController { //TODO we need a comments here
 
     private Street street;
 
