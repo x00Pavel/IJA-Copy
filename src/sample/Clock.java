@@ -89,8 +89,6 @@ public class Clock implements Runnable{
                     clock_text.setText(Clock.this.hours_for_print+":"+Clock.this.minutes_for_print+":"+Clock.this.seconds_for_print);
                 }
             });
-
-            System.out.println(this.hours_for_print+":"+this.minutes_for_print+":"+this.seconds_for_print);
             try {
                 Thread.sleep(getSpeed());
             } catch (InterruptedException e) {
