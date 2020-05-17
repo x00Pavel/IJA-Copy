@@ -595,7 +595,6 @@ public class Bus implements Drawable {
      * @param start                 Previously point
      */
     public void calculateAndGo(Coordinate end, Street actual_street, Coordinate start) {
-        System.out.println("Im a " + this.getBusName() + " and i`m going to: X = " + end.getX() + " Y = " + end.getY());
         double rangeX = end.getX() - this.busX;
         double rangeY = end.getY() - this.busY;
         double stepX;

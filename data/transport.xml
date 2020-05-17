@@ -6,7 +6,7 @@
 <!--  Date: 04.2020                         -->
 <!--  Description: Definition of map        -->
 <Transports>
-    <Line name="109" color="#800080" time="147">
+    <Line name="109" color="#800080" time="150">
         <Streets>
             <Street name="Street 1" type="forward"/>
             <Street name="street 1_1" type="forward"/>
@@ -19,11 +19,12 @@
             <Stop name="Stop 1"/>
             <Stop name="Stop 2"/>
             <Stop name="Stop 3"/>
+            <Stop name="Stop 4"/>
             <Stop name="Stop 5"/>
             <Stop name="Stop 6"/>
         </Stops>
     </Line>
-    <Line name="999" color="#FF0000" time="186">
+    <Line name="999" color="#FF0000" time="189">
         <Streets>
             <Street name="street 20" type="forward"/>
             <Street name="street 21" type="forward"/>
@@ -36,6 +37,7 @@
         </Streets>
         <Stops>
             <Stop name="stop 20.1"/>
+            <Stop name="stop 21_1"/>
             <Stop name="stop 13.3"/>
             <Stop name="stop 13.2"/>
             <Stop name="Stop 11"/>
@@ -91,11 +93,16 @@
             <Stop name="stop 16.1"/>
         </Stops>
     </Line>
-    <Line name="1010" color="#FFD700" time="353">
+    <Line name="1010" color="#FFD700" time="296">
         <Stops>
             <Stop name="stop 32_1"/>
-            <Stop name="stop 44_1"/>
+            <Stop name="stop 21_1"/>
+            <Stop name="stop 16.1"/>
+            <Stop name="stop 17.1"/>
+            <Stop name="stop 17.2"/>
+            <Stop name="stop 18.1"/>
             <Stop name="stop 40_1"/>
+            <Stop name="stop 24_2"/>
             <Stop name="stop 24_1"/>
             <Stop name="stop 26_1"/>
         </Stops>
@@ -108,68 +115,48 @@
             <Street name="street 16" type="back"/>
             <Street name="street 17" type="back"/>
             <Street name="street 18" type="back"/>
-            <Street name="street 19" type="back"/>
-            <Street name="street 42" type="forward"/>
-            <Street name="street 43" type="forward"/>
-            <Street name="street 44" type="forward"/>
+            <Street name="street 41" type="back"/>
             <Street name="street 40" type="back"/>
             <Street name="street 24" type="forward"/>
             <Street name="street 26" type="forward"/>
         </Streets>
     </Line>
-    <Line name="0011" color="#98FB98" time="273">
+    <Line name="0011" color="#98FB98" time="211">
         <Stops>
             <Stop name="stop 21_1"/>
-            <Stop name="stop 23_1"/>
+            <Stop name="stop 25_1"/>
             <Stop name="stop 24_2"/>
-            <Stop name="stop 45_1"/>
-            <Stop name="stop 30_1"/>
-            <Stop name="stop 31_2"/>
+            <Stop name="stop 24_1"/>
+            <Stop name="stop 26_1"/>
             <Stop name="stop 32_1"/>
         </Stops>
         <Streets>
             <Street name="street 21" type="forward"/>
-            <Street name="street 23" type="forward"/>
-            <Street name="street 24" type="back"/>
-            <Street name="street 46" type="back"/>
-            <Street name="street 45" type="back"/>
-            <Street name="street 29" type="back"/>
-            <Street name="street 30" type="forward"/>
-            <Street name="street 31" type="forward"/>
+            <Street name="street 14" type="back"/>
+            <Street name="street 15" type="back"/>
+            <Street name="street 25" type="back"/>
+            <Street name="street 24" type="forward"/>
+            <Street name="street 26" type="forward"/>
             <Street name="street 32" type="forward"/>
         </Streets>
     </Line>
-    <Line name="666" color="#FF00FF" time="341">
+    <Line name="666" color="#FF00FF" time="163">
         <Stops>
-            <Stop name="stop 105_1"/>
             <Stop name="stop 18.1"/>
+            <Stop name="stop 17.2"/>
             <Stop name="stop 17.1"/>
             <Stop name="stop 16.1"/>
             <Stop name="stop 25_1"/>
-            <Stop name="stop 107_1"/>
-            <Stop name="stop 100_1"/>
-            <Stop name="stop 101_1"/>
+            <Stop name="stop 40_1"/>
         </Stops>
         <Streets>
-            <Street name="street 105" type="forward"/>
-            <Street name="street 106" type="forward"/>
-            <Street name="street 41" type="forward"/>
             <Street name="street 18" type="forward"/>
             <Street name="street 17" type="forward"/>
             <Street name="street 16" type="forward"/>
             <Street name="street 15_1" type="forward"/>
             <Street name="street 25" type="back"/>
-            <Street name="street 46" type="back"/>
-            <Street name="street 107" type="back"/>
-            <Street name="street 102" type="back"/>
-            <Street name="street 100" type="back"/>
-            <Street name="street 101" type="forward"/>
-            <Street name="street 104" type="forward"/>
+            <Street name="street 40" type="forward"/>
+            <Street name="street 41" type="forward"/>
         </Streets>
     </Line>
-<!--    <Line name="999" color="#00008B" time="400">-->
-<!--        <Streets>-->
-<!--            <Street name=""-->
-<!--        </Streets>-->
-<!--    </Line>-->
 </Transports>

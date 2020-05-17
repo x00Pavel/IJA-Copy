@@ -182,17 +182,6 @@ public class MyLine {
 	public void addStopsTimes(String stop_name, Integer stop_times, Integer delay){
 		this.stops_times.put(stop_name, stop_times);
 		this.line_delay = delay;
-		int seconds = stop_times;
-        int hours = seconds/3600;
-        int minutes = seconds/60;
-        String dopLine = "";
-        if(seconds == 0){
-            dopLine = "<---------------------------bus is here!";
-            System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine + "     delay: " + this.line_delay);
-        }else{
-            dopLine = "";
-		}
-		// System.out.println(this.id+"   "+stop_name+"   "+hours+":"+minutes+":"+(seconds-hours*3600-minutes*60)+dopLine + "     delay: " + this.line_delay);
 	}
 
 	/**
