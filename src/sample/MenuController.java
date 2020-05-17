@@ -18,7 +18,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Controller of side menu of street.
+ * Controller of side menu for street.
  */
 public class MenuController {
 
@@ -45,66 +45,84 @@ public class MenuController {
     @FXML
     private CheckBox streetBlock;
 
-
+    /**
+     * Get street side menu corresponds to
+     * @return Street object
+     */
     public Street getStreet() {
         return street;
     }
 
+    /**
+     * Set Street object for instance of controller
+     * @param street Street to be added
+     */
     public void setStreet(Street street) {
         this.street = street;
     }
 
-    public TextField getStreetNameField() {
-        return streetNameField;
+    /**
+     * Set text to street name field
+     * @param name String to set in field
+     */
+    public void setStreetNameField(String name) {
+        this.streetNameField.setText(name);
     }
 
-    public void setStreetNameField(String streetNameField) {
-        this.streetNameField.setText(streetNameField);
-    }
-
+    /**
+     * Set selection of check box for blocking street
+     * @param streetBlock Flag for selecting bix
+     */
     public void setStreetBlock(Boolean streetBlock) {
         this.streetBlock.setSelected(streetBlock);
     }
 
+    /**
+     * Get check box for blocking street
+     * @return Check box
+     */
     public CheckBox getStreetBlock() {
         return streetBlock;
     }
 
-    public AnchorPane getSideMenu() {
-        return sideMenu;
-    }
-
+    /**
+     * Get tree view of elements in street menu
+     * @return Tree View
+     */
     public TreeView<String> getInfo() {
         return info;
     }
 
+    /**
+     * Get field with street loading
+     * @return Text field
+     */
     public TextField getStreetLoading() {
         return streetLoading;
     }
 
+    /**
+     * Update value of loading in text field
+     * @param streetLoading New value of loading
+     */
     public void setStreetLoading(String streetLoading) {
         this.streetLoading.setText(streetLoading);
     }
 
+    /**
+     * Get button to unload street
+     * @return Button
+     */
     public Button getStreetLoadingMinus() {
         return streetLoadingMinus;
     }
 
+    /**
+     * Get button to load street
+     * @return Button
+     */
     public Button getStreetLoadingPlus() {
         return streetLoadingPlus;
     }
-
-    @FXML
-    private void loadStreet(){
-        int load = Integer.parseInt(streetLoading.getText());
-
-    }
-
-    @FXML
-    private void unloadStreet(){
-
-    }
-
-
 
 }

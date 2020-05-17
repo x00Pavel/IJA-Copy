@@ -323,7 +323,7 @@ public class Street implements Drawable {
     }
 
     /**
-     * @brief Set interactiv activity for given street
+     * Set interactiv activity for given street
      *
      * @param mainController Main controller of scene
      */

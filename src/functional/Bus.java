@@ -92,8 +92,8 @@ public class Bus implements Drawable {
         TreeItem<String> streets = new TreeItem<>("Streets");
         for (Map.Entry<String, Integer> entry: this.busLine.getStopsTimes().entrySet()){
             for (Stop stop : this.busLine.getStops()){
-                stops.getChildren().add(new TreeItem<>(stop.getId()));
                 if (stop.getId().equals(entry.getKey())){
+                    stops.getChildren().add(new TreeItem<>(stop.getId()));
                     stop.addBus(this, entry.getValue());
                     break;
                 }
