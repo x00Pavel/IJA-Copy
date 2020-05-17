@@ -38,12 +38,20 @@ public class MyLine {
 	List<SimpleImmutableEntry<Street, Stop>> line = new ArrayList<SimpleImmutableEntry<Street, Stop>> ();
 	private Street blocked_street;
 	
-	// TODO doc
+	/**
+     * Constructor for create new line
+	 * 
+	 * @param id			Name (id) for new line
+     */
 	public MyLine(String id) {
 		this.id = id;
 	}
 
-	// TODO doc
+	/**
+     * Constructor for copy existing line
+	 * 
+	 * @param newLine		Line for copy
+     */
 	public MyLine(MyLine newLine){
 		this.id = newLine.getId();
 		this.streets = new ArrayList<>(newLine.getStreets());

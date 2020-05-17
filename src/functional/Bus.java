@@ -51,7 +51,7 @@ public class Bus implements Drawable {
      * @param busLine Bus line to which bus corresponds
      * @param color Color of new bus. This color would be used to color this bus
      *              on map
-     * @param timeForRing //TODO 
+     * @param timeForRing Bus need this time to goes whole ring
      */
     public Bus(String busName, MyLine busLine, String color, int timeForRing) {
         this.checked = false;
@@ -61,7 +61,7 @@ public class Bus implements Drawable {
         this.busX = busLine.getStreets().get(0).getCoordinates().get(0).getX();
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
-        this.time_for_ring = timeForRing; // FIXME does we really need this?
+        this.time_for_ring = timeForRing;
         this.busLineForUse = new MyLine(this.busLine);
         this.root = new TreeItem<>();
         this.setBusForStops();

@@ -247,10 +247,6 @@ public class Street implements Drawable {
         return this.street_name;
     }
 
-    private void setElements(Shape item) {
-        this.elements.add(item);
-    }
-
     /**
      * Get a list of street`s stops
      *
