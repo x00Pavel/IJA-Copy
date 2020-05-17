@@ -36,8 +36,9 @@ public class Main extends Application {
     public static Clock clock;
 
     /**
-     * //TODO some comments here too (idk what is primaryStage)
-     * 
+     * Starting of main window
+     *
+     * @param primaryStage Main stage to be shown
      */
     @Override
     public void start(Stage primaryStage) {
@@ -81,6 +82,10 @@ public class Main extends Application {
         });
     }
 
+    /**
+     * Invocation method
+     * @param args Arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
