@@ -21,13 +21,14 @@
 
 
     <target name="doc">
+    
         <mkdir dir="${doc}"/>
         <javadoc destdir="${doc}">
             <fileset dir="${src}"/>
         </javadoc>
     </target>
 
-    <target name="compile" depends="clean" description="Compile project">
+    <target name="compile" depends="clean, doc" description="Compile project">
         <copy file="${src}/layout.fxml" todir="${build}/src" overwrite="true"/>
         <copy file="${src}/sideMenu.fxml" todir="${build}/src/functional" overwrite="true"/>
 

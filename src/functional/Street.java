@@ -46,6 +46,11 @@ public class Street implements Drawable {
     private MenuController controller;
     private boolean street_was_clicked = false;
 
+    /**
+     * Constructor for Street object
+     * 
+     * @param name Name of new street
+     */
     public Street(String name) {
         this.street_name = name;
         this.cords = new ArrayList<>();
@@ -112,10 +117,6 @@ public class Street implements Drawable {
         return this.getCoordinates().get(lst.size() - 1);
     }
 
-    // public void setEnd(Coordinate new_end) {
-    //     this.getCoordinates().add(new_end);
-    // }
-
     /**
      * Return a coordinate of street`s begin
      *
@@ -125,10 +126,6 @@ public class Street implements Drawable {
         List<Coordinate> lst = this.getCoordinates();
         return lst.get(0);
     }
-
-    // public void setBegin(Coordinate begin) {
-    //     this.getCoordinates().add(0, begin);
-    // }
 
     /**
      * Check if actual street follows another one
@@ -250,7 +247,7 @@ public class Street implements Drawable {
         return this.street_name;
     }
 
-    private void setElements(Shape item) { // check that ----------------------------------------------------------------------------------------
+    private void setElements(Shape item) {
         this.elements.add(item);
     }
 

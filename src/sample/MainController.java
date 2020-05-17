@@ -102,24 +102,47 @@ public class MainController{
     @FXML
     private TreeView<String> info;
 
+    /**
+     * Get container of side Stop menu
+     *
+     * @return Anchor pane where side menu should be placed
+     */
     public AnchorPane getStopMenu() {
         return stopMenu;
     }
 
+    /**
+     * Get object with Stop
+     * 
+     * @return Text field
+     */
     public TextField getStopNameField() {
         return stopNameField;
     }
 
-
-    public TreeView<String> getBusTreeView() {
+    /**
+     * Get tree view in side menu of Bus
+     *
+     * @return Tree view
+     */ 
+     public TreeView<String> getBusTreeView() {
         return busTreeView;
     }
 
+    /**
+     * Get object where bus name should be shown
+     * 
+     * @return text field of name
+     */
     public TextField getBusNameField() {
         return busNameField;
     }
 
-
+    /**
+     * Get container with main side menu
+     * 
+     * @return Container with main side menu
+     */
     public AnchorPane getMainInfo() {
         return mainInfo;
     }

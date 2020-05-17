@@ -36,6 +36,12 @@ public class Stop implements Drawable {
     private List<HBox> listHBox;
     private List<MyLine> listLines;
 
+    /**
+     * Constructor for Stop object
+     * 
+     * @param stop_name Name of new stop
+     * @param cord Coordinates of stop
+     */
     public Stop(String stop_name, Coordinate... cord) {
         if (stop_name != null) {
             this.stop_id = stop_name;

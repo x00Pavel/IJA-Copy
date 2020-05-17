@@ -44,7 +44,16 @@ public class Bus implements Drawable {
     private Street street_for_continue = null;
     private boolean break_point = false;
 
-    public Bus(String busName, MyLine busLine, String color, int time_for_ring) {
+    /**
+     * Constructor for Bus object
+     * 
+     * @param busName Name of new Bus
+     * @param busLine Bus line to which bus corresponds
+     * @param color Color of new bus. This color would be used to color this bus
+     *              on map
+     * @param timeForRing //TODO 
+     */
+    public Bus(String busName, MyLine busLine, String color, int timeForRing) {
         this.checked = false;
         this.busName = busName;
         this.busLine = busLine;
@@ -52,7 +61,7 @@ public class Bus implements Drawable {
         this.busX = busLine.getStreets().get(0).getCoordinates().get(0).getX();
         this.busY = busLine.getStreets().get(0).getCoordinates().get(0).getY();
         this.gui = new Circle(busX, busY, 5, Color.web(color, 1.0));
-        this.time_for_ring = time_for_ring;
+        this.time_for_ring = timeForRing; // FIXME does we really need this?
         this.busLineForUse = new MyLine(this.busLine);
         this.root = new TreeItem<>();
         this.setBusForStops();
