@@ -400,11 +400,20 @@ public class Bus implements Drawable {
                 prev_time = street_time_in_seconds_with_delay;
                 streets_for_readd.add(actual_street);
 
+                List<Stop> temp_stops_for_back = new ArrayList<>();
                 for (Stop stop_for_readd : actual_street.getStops()) {
                     if (this.busLine.getStops().contains(stop_for_readd)) {
-                        this.busLine.getStops().remove(stop_for_readd);
-                        this.busLine.getStops().add(stop_for_readd);
+                        if (this.busLine.getStreetsTypes().get(actual_street.getId()).equals("back")){
+                            temp_stops_for_back.add(stop_for_readd);
+                        }else{
+                            this.busLine.getStops().remove(stop_for_readd);
+                            this.busLine.getStops().add(stop_for_readd); 
+                        }
                     }
+                }
+                for (Stop stop_for_readd : temp_stops_for_back) {
+                    this.busLine.getStops().remove(stop_for_readd);
+                    this.busLine.getStops().add(stop_for_readd); 
                 }
             }
         }

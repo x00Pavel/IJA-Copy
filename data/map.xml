@@ -116,11 +116,11 @@
 
     <Street name="street 10">
         <Stops>
-            <Stop name="stop 10.1">
-                <Coordinate x="170" y="330"/>
-            </Stop>
             <Stop name="stop 10.2">
                 <Coordinate x="170" y="250"/>
+            </Stop>
+            <Stop name="stop 10.1">
+                <Coordinate x="170" y="330"/>
             </Stop>
         </Stops>
         <Coordinates>
@@ -220,11 +220,11 @@
     </Street>
     <Street name="street 17">
         <Stops>
-            <Stop name="stop 17.1">
-                <Coordinate x="310" y="350"/>
-            </Stop>
             <Stop name="stop 17.2">
                 <Coordinate x="260" y="350"/>
+            </Stop>
+            <Stop name="stop 17.1">
+                <Coordinate x="310" y="350"/>
             </Stop>
         </Stops>
         <Coordinates>
